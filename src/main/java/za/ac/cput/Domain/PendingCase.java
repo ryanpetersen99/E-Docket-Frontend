@@ -1,16 +1,17 @@
 package za.ac.cput.Domain;
 
-public class Case {
+public class PendingCase {
 
-    private String caseID,caseDetails;
+    private String caseID,caseDetails, dateOpened;
     private  int caseNoOfDockets;
 
-    private Case(){}
+    private PendingCase(){}
 
-    private Case(Builder builder){
+    private PendingCase(Builder builder){
         this.caseID = builder.caseID;
         this.caseDetails =builder.caseDetails;
         this.caseNoOfDockets = builder.caseNoOfDockets;
+        this.dateOpened = builder.dateOpened;
     }
 
     public String getCaseID(){
@@ -25,9 +26,11 @@ public class Case {
         return caseNoOfDockets;
     }
 
+    public String getDateOpened() { return dateOpened; }
+
     public static class Builder{
 
-        private String caseID,caseDetails;
+        private String caseID,caseDetails,dateOpened;
         private Integer caseNoOfDockets;
 
         public Builder caseID(String caseID){
@@ -40,17 +43,22 @@ public class Case {
             return this;
         }
 
+        public Builder dateOpened(String dateOpened){
+            this.dateOpened = dateOpened;
+            return this;
+        }
+
         public Builder caseNoOfDockets(Integer caseNoOfDockets){
             this.caseNoOfDockets = caseNoOfDockets;
             return this;
         }
 
-        public Case build(){
-            return new Case(this);
+        public PendingCase build(){
+            return new PendingCase(this);
         }
     }
 
     public String toString(){
-        return "Case Details" + "\n" + "Case ID: " + caseID + "\n" + "Details of Case: " + caseDetails + "\n" + "Number of dockets in case: " + caseNoOfDockets;
+        return "Case Details" + "\n" + "Case ID: " + caseID + "\n" + "Details of Case: " + caseDetails + "\n" + "Number of dockets in case: " + caseNoOfDockets + "\n" + "Date Opened: " + dateOpened;
     }
 }
