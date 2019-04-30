@@ -1,11 +1,9 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.EvidenceTechnician;
-import za.ac.cput.Repository.EvidenceRepository;
-import za.ac.cput.Repository.Evidence_TechnicianRepository;
-import za.ac.cput.Service.Evidence_TechnicianService;
+import za.ac.cput.Domain.Police.EvidenceTechnician;
+import za.ac.cput.Repository.Police.Evidence_TechnicianRepository;
+import za.ac.cput.Service.Police.Evidence_TechnicianService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class EvidenceTechnicianServiceImplementation implements Evidence_TechnicianService{

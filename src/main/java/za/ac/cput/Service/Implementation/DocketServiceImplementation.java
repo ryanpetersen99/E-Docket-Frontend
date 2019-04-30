@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Docket;
-import za.ac.cput.Repository.DocketRepository;
-import za.ac.cput.Repository.Implementation.DocketRepositoryImplementation;
-import za.ac.cput.Service.DocketService;
+import za.ac.cput.Domain.System.Docket;
+import za.ac.cput.Repository.System.DocketRepository;
+import za.ac.cput.Repository.Implementation.System.DocketRepositoryImplementation;
+import za.ac.cput.Service.System.DocketService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DocketServiceImplementation implements DocketService{

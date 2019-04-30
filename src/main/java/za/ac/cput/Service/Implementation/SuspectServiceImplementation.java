@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Suspect;
-import za.ac.cput.Repository.Implementation.SuspectRepositoryImplementation;
-import za.ac.cput.Repository.SuspectRepository;
-import za.ac.cput.Service.SuspectService;
+import za.ac.cput.Domain.Civillian.Suspect;
+import za.ac.cput.Repository.Implementation.Civillian.SuspectRepositoryImplementation;
+import za.ac.cput.Repository.Civillian.SuspectRepository;
+import za.ac.cput.Service.Civillian.SuspectService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class SuspectServiceImplementation implements SuspectService{

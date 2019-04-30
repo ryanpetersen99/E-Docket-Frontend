@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.DataAnalyst;
-import za.ac.cput.Repository.DataAnalystRepository;
-import za.ac.cput.Repository.Implementation.DataAnalystRepositoryImplementation;
-import za.ac.cput.Service.DataAnalystService;
+import za.ac.cput.Domain.Police.DataAnalyst;
+import za.ac.cput.Repository.Police.DataAnalystRepository;
+import za.ac.cput.Repository.Implementation.Police.DataAnalystRepositoryImplementation;
+import za.ac.cput.Service.Police.DataAnalystService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class DataAnalystServiceImplementation implements DataAnalystService{

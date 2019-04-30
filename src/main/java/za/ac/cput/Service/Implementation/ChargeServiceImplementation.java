@@ -2,12 +2,11 @@ package za.ac.cput.Service.Implementation;
 
 
 
-import za.ac.cput.Domain.Charge;
-import za.ac.cput.Repository.ChargeRepository;
-import za.ac.cput.Repository.Implementation.ChargeRepositoryImplementation;
-import za.ac.cput.Service.ChargeService;
+import za.ac.cput.Domain.System.Charge;
+import za.ac.cput.Repository.System.ChargeRepository;
+import za.ac.cput.Repository.Implementation.System.ChargeRepositoryImplementation;
+import za.ac.cput.Service.System.ChargeService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ChargeServiceImplementation implements ChargeService{

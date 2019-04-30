@@ -1,10 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
 
-import za.ac.cput.Domain.Chief;
-import za.ac.cput.Repository.ChiefRepository;
-import za.ac.cput.Repository.Implementation.ChiefRepositoryImplementation;
-import za.ac.cput.Service.ChiefService;
+import za.ac.cput.Domain.Police.Chief;
+import za.ac.cput.Repository.Police.ChiefRepository;
+import za.ac.cput.Repository.Implementation.Police.ChiefRepositoryImplementation;
+import za.ac.cput.Service.Police.ChiefService;
 
 import java.util.Set;
 

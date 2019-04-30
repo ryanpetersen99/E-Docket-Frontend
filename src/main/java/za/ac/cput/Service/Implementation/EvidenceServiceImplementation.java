@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Evidence;
-import za.ac.cput.Repository.EvidenceRepository;
-import za.ac.cput.Repository.Implementation.EvidenceRepositoryImplementation;
-import za.ac.cput.Service.EvidenceService;
+import za.ac.cput.Domain.System.Evidence;
+import za.ac.cput.Repository.System.EvidenceRepository;
+import za.ac.cput.Repository.Implementation.System.EvidenceRepositoryImplementation;
+import za.ac.cput.Service.System.EvidenceService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class EvidenceServiceImplementation implements EvidenceService{

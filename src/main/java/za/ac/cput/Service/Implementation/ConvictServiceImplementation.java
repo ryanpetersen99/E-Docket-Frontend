@@ -2,12 +2,11 @@ package za.ac.cput.Service.Implementation;
 
 
 
-import za.ac.cput.Domain.Convict;
-import za.ac.cput.Repository.ConvictRepository;
-import za.ac.cput.Repository.Implementation.ConvictRepositoryImplementation;
-import za.ac.cput.Service.ConvictService;
+import za.ac.cput.Domain.Civillian.Convict;
+import za.ac.cput.Repository.Civillian.ConvictRepository;
+import za.ac.cput.Repository.Implementation.Civillian.ConvictRepositoryImplementation;
+import za.ac.cput.Service.Civillian.ConvictService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class ConvictServiceImplementation implements ConvictService{

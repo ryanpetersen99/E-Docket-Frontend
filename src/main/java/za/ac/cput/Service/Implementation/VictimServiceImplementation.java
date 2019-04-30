@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Victim;
-import za.ac.cput.Repository.Implementation.VictimRepositoryImplementation;
-import za.ac.cput.Repository.VictimRepository;
-import za.ac.cput.Service.VictimService;
+import za.ac.cput.Domain.Civillian.Victim;
+import za.ac.cput.Repository.Implementation.Civillian.VictimRepositoryImplementation;
+import za.ac.cput.Repository.Civillian.VictimRepository;
+import za.ac.cput.Service.Civillian.VictimService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class VictimServiceImplementation implements VictimService{

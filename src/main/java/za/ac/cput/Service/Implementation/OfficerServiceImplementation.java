@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Officer;
-import za.ac.cput.Repository.Implementation.OfficerRepositoryImplementation;
-import za.ac.cput.Repository.OfficerRepository;
-import za.ac.cput.Service.OfficerService;
+import za.ac.cput.Domain.Police.Officer;
+import za.ac.cput.Repository.Implementation.Police.OfficerRepositoryImplementation;
+import za.ac.cput.Repository.Police.OfficerRepository;
+import za.ac.cput.Service.Police.OfficerService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class OfficerServiceImplementation implements OfficerService{

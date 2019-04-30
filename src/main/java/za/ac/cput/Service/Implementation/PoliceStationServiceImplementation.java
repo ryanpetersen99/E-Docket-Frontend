@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.PoliceStation;
-import za.ac.cput.Repository.Implementation.PoliceStationRepositoryImplementation;
-import za.ac.cput.Repository.PoliceStationRepository;
-import za.ac.cput.Service.PoliceStationService;
+import za.ac.cput.Domain.System.PoliceStation;
+import za.ac.cput.Repository.Implementation.System.PoliceStationRepositoryImplementation;
+import za.ac.cput.Repository.System.PoliceStationRepository;
+import za.ac.cput.Service.System.PoliceStationService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class PoliceStationServiceImplementation implements PoliceStationService{

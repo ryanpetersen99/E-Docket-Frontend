@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Witness;
-import za.ac.cput.Repository.Implementation.WitnessRepositoryImplementation;
-import za.ac.cput.Repository.WitnessRepository;
-import za.ac.cput.Service.WitnessService;
+import za.ac.cput.Domain.Civillian.Witness;
+import za.ac.cput.Repository.Implementation.Civillian.WitnessRepositoryImplementation;
+import za.ac.cput.Repository.Civillian.WitnessRepository;
+import za.ac.cput.Service.Civillian.WitnessService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class WitnessServiceImplementation implements WitnessService{

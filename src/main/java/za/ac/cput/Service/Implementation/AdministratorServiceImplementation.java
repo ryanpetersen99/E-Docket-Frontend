@@ -1,12 +1,11 @@
 package za.ac.cput.Service.Implementation;
 
 
-import za.ac.cput.Domain.Administrator;
-import za.ac.cput.Repository.AdministratorRepository;
-import za.ac.cput.Repository.Implementation.AdministratorRepositoryImplementation;
-import za.ac.cput.Service.AdministratorService;
+import za.ac.cput.Domain.Police.Administrator;
+import za.ac.cput.Repository.Police.AdministratorRepository;
+import za.ac.cput.Repository.Implementation.Police.AdministratorRepositoryImplementation;
+import za.ac.cput.Service.Police.AdministratorService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class AdministratorServiceImplementation implements AdministratorService{

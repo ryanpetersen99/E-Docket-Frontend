@@ -1,10 +1,9 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Inspector;
-import za.ac.cput.Repository.InspectorRepository;
-import za.ac.cput.Service.InspectorService;
+import za.ac.cput.Domain.Police.Inspector;
+import za.ac.cput.Repository.Police.InspectorRepository;
+import za.ac.cput.Service.Police.InspectorService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class InspectorServiceImplementation implements InspectorService{

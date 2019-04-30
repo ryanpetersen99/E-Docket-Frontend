@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.SolvedCase;
-import za.ac.cput.Repository.Implementation.SolvedCaseRepositoryImplementation;
-import za.ac.cput.Repository.SolvedCaseRepository;
-import za.ac.cput.Service.SolvedCaseService;
+import za.ac.cput.Domain.System.SolvedCase;
+import za.ac.cput.Repository.Implementation.System.SolvedCaseRepositoryImplementation;
+import za.ac.cput.Repository.System.SolvedCaseRepository;
+import za.ac.cput.Service.System.SolvedCaseService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class SolvedCaseServiceImplementation implements SolvedCaseService {

@@ -1,11 +1,10 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.PendingCase;
-import za.ac.cput.Repository.Implementation.PendingCaseRepositoryImplementation;
-import za.ac.cput.Repository.PendingCaseRepository;
-import za.ac.cput.Service.PendingCaseService;
+import za.ac.cput.Domain.System.PendingCase;
+import za.ac.cput.Repository.Implementation.System.PendingCaseRepositoryImplementation;
+import za.ac.cput.Repository.System.PendingCaseRepository;
+import za.ac.cput.Service.System.PendingCaseService;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class PendingCaseServiceImplementation implements PendingCaseService {
