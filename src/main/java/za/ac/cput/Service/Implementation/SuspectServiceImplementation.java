@@ -1,9 +1,9 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Civillian.Suspect;
+import za.ac.cput.Domain.Civilian.Suspect;
 import za.ac.cput.Repository.Implementation.Civillian.SuspectRepositoryImplementation;
-import za.ac.cput.Repository.Civillian.SuspectRepository;
-import za.ac.cput.Service.Civillian.SuspectService;
+import za.ac.cput.Repository.Civilian.SuspectRepository;
+import za.ac.cput.Service.Civilian.SuspectService;
 
 import java.util.Set;
 

@@ -13,6 +13,7 @@ public class OfficerRepositoryImplementationTest {
 
     private OfficerRepository officerRepository;
     private Officer officer;
+    private Officer officer2;
 
     public Officer getSavedOfficer() {
         Set<Officer> officerSet = this.officerRepository.getOfficerSet();
@@ -23,20 +24,23 @@ public class OfficerRepositoryImplementationTest {
     public void setUp() throws Exception{
         this.officerRepository = OfficerRepositoryImplementation.getRepository();
         this.officer = OfficerFactory.getOfficer("90011","Nbolo","May","7004");
+        this.officer2 = OfficerFactory.getOfficer("90012","Olo","June","7005");
     }
 
     @Test
     public void create(){
         Officer createdO = this.officerRepository.create(this.officer);
+        Officer createdO2 = this.officerRepository.create(this.officer2);
         System.out.println("Successfully created officer" + "\n" + officer);
+        System.out.println("Successfully created officer 2" + "\n" + officer2);
         Assert.assertSame(createdO,this.officer);
+        Assert.assertSame(createdO2,this.officer2);
     }
 
     @Test
     public void update(){
         String id = "90012";
         Officer officer =  new Officer.Builder().copy(getSavedOfficer()).officerID(id).build();
-        System.out.println("Updating" + "\n" + officer );
         Officer updatedID = this.officerRepository.update(officer);
         System.out.println("Updated" + "\n" + updatedID);
         Assert.assertSame(id,updatedID.getOfficerID());
@@ -45,13 +49,13 @@ public class OfficerRepositoryImplementationTest {
     @Test
     public void delete(){
         Officer officerSaved = getSavedOfficer();
-        this.officerRepository.delete(getSavedOfficer().getOfficerID());
+        this.officerRepository.delete(officerSaved.getOfficerID());
+        getOfficerSet();
     }
 
     @Test
     public void read(){
         Officer officerSaved = getSavedOfficer();
-        System.out.println("Read officer id" + "\n" + officerSaved.getOfficerID());
         Officer read = this.officerRepository.read(officerSaved.getOfficerID());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(officerSaved,read);
@@ -61,5 +65,6 @@ public class OfficerRepositoryImplementationTest {
     public void getOfficerSet(){
         Set<Officer> officerSet = this.officerRepository.getOfficerSet();
         System.out.println("List of Officers" + "\n" + officerSet);
+        Assert.assertEquals(1,officerSet.size());
     }
 }

@@ -39,9 +39,8 @@ public class AdministratorRepositoryImplementationTest {
     public void update(){
         String updatedID = "90002";
         Administrator administrator =  new Administrator.Builder().copy(getSavedAdmin()).adminID(updatedID).build();
-        System.out.println("Updating" + "\n" + administrator );
         Administrator updatedAdmin = this.administratorRepository.update(administrator);
-        System.out.println("Updated" + "\n" + updatedID);
+        System.out.println("Updated" + "\n" + updatedAdmin);
         Assert.assertSame(updatedID,updatedAdmin.getAdminID());
     }
 /*
@@ -50,21 +49,20 @@ public class AdministratorRepositoryImplementationTest {
         Administrator administratorSaved = getSavedAdmin();
         this.administratorRepository.delete(getSavedAdmin().getAdminID());
     }
-
+*/
     @Test
     public void read(){
         Administrator administratorSaved = getSavedAdmin();
-        System.out.println("Read admin id number" + "\n" + getSavedAdmin().getAdminID());
         Administrator read = this.administratorRepository.read(getSavedAdmin().getAdminID());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(getSavedAdmin(),read);
     }
 
     @Test
-    public void getAdminSet(){
+    public void getAdminSet() {
         Set<Administrator> administratorSet = this.administratorRepository.getAdministratorSet();
         System.out.println("List of Administrators" + "\n" + administratorSet);
-        //     Assert.assertEquals(1,complainantSet.size());
-        */
+        Assert.assertEquals(1,administratorSet.size());
 
+    }
 }

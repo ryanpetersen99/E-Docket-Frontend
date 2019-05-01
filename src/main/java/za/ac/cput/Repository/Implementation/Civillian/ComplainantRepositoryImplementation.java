@@ -1,7 +1,7 @@
 package za.ac.cput.Repository.Implementation.Civillian;
 
-import za.ac.cput.Domain.Civillian.Complainant;
-import za.ac.cput.Repository.Civillian.ComplainantRepository;
+import za.ac.cput.Domain.Civilian.Complainant;
+import za.ac.cput.Repository.Civilian.ComplainantRepository;
 
 import java.util.HashSet;
 import java.util.Set;

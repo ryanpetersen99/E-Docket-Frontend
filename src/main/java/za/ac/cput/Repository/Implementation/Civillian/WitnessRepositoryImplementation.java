@@ -1,7 +1,7 @@
 package za.ac.cput.Repository.Implementation.Civillian;
 
-import za.ac.cput.Domain.Civillian.Witness;
-import za.ac.cput.Repository.Civillian.WitnessRepository;
+import za.ac.cput.Domain.Civilian.Witness;
+import za.ac.cput.Repository.Civilian.WitnessRepository;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -14,6 +14,7 @@ public class ChargeRepositoryImplementationTest {
 
     private ChargeRepository chargeRepository;
     private Charge charge;
+    private Charge charge2;
 
     public Charge getSavedCharges() {
         Set<Charge> chargeSet = this.chargeRepository.getChargeSet();
@@ -24,20 +25,23 @@ public class ChargeRepositoryImplementationTest {
     public void setUp() throws Exception{
         this.chargeRepository = ChargeRepositoryImplementation.getRepository();
         this.charge = ChargeFactory.getCharge("Murder",1);
+        this.charge2 = ChargeFactory.getCharge("Rape,Murder",1);
     }
 
     @Test
     public void create(){
         Charge createdI = this.chargeRepository.create(this.charge);
+        Charge createdI2 = this.chargeRepository.create(this.charge2);
         System.out.println("Successfully created charge" + "\n" + charge);
+        System.out.println("Successfully created charge 2" + "\n" + charge2);
         Assert.assertSame(createdI,this.charge);
+        Assert.assertSame(createdI2,this.charge2);
     }
 
     @Test
     public void update(){
         int no = 2;
         Charge charge =  new Charge.Builder().copy(getSavedCharges()).noOfChargers(no).build();
-        System.out.println("Updating" + "\n" + charge );
         Charge updatedNO = this.chargeRepository.update(charge);
         System.out.println("Updated" + "\n" + updatedNO);
         Assert.assertSame(no,updatedNO.getNoOfCharges());
@@ -46,21 +50,22 @@ public class ChargeRepositoryImplementationTest {
     @Test
     public void delete(){
         Charge chargeSaved = getSavedCharges();
-        this.chargeRepository.delete(getSavedCharges().getNatureOfCharge());
+        this.chargeRepository.delete(chargeSaved.getNatureOfCharge());
+        getChargeSet();
     }
 
     @Test
     public void read(){
         Charge chargeSaved = getSavedCharges();
-        System.out.println("Read charge" + "\n" + chargeSaved.getNatureOfCharge());
         Charge read = this.chargeRepository.read(chargeSaved.getNatureOfCharge());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(chargeSaved,read);
     }
 
     @Test
-    public void getInspectorSet(){
+    public void getChargeSet(){
         Set<Charge> chargeSet = this.chargeRepository.getChargeSet();
         System.out.println("List of Charges" + "\n" + chargeSet);
+        Assert.assertEquals(1,chargeSet.size());
     }
 }

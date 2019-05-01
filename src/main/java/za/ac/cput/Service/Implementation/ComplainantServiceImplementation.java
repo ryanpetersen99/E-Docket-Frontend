@@ -1,9 +1,9 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Civillian.Complainant;
-import za.ac.cput.Repository.Civillian.ComplainantRepository;
+import za.ac.cput.Domain.Civilian.Complainant;
+import za.ac.cput.Repository.Civilian.ComplainantRepository;
 import za.ac.cput.Repository.Implementation.Civillian.ComplainantRepositoryImplementation;
-import za.ac.cput.Service.Civillian.ComplainantService;
+import za.ac.cput.Service.Civilian.ComplainantService;
 
 import java.util.Set;
 

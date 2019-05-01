@@ -15,6 +15,7 @@ public class DocketRepositoryImplementationTest {
 
     private DocketRepository docketRepository;
     private Docket docket;
+    private Docket docket2;
 
     public Docket getSavedDockets() {
         Set<Docket> docketSet = this.docketRepository.getDocketSet();
@@ -25,20 +26,23 @@ public class DocketRepositoryImplementationTest {
     public void setUp() throws Exception{
         this.docketRepository = DocketRepositoryImplementation.getRepository();
         this.docket = DocketFactory.getDocket("CAS10009");
+        this.docket2 = DocketFactory.getDocket("CAS10010");
     }
 
     @Test
     public void create(){
         Docket createdI = this.docketRepository.create(this.docket);
+        Docket createdI2 = this.docketRepository.create(this.docket2);
         System.out.println("Successfully created Docket" + "\n" + docket);
+        System.out.println("Successfully created Docket 2" + "\n" + docket2);
         Assert.assertSame(createdI,this.docket);
+        Assert.assertSame(createdI2,this.docket2);
     }
 
     @Test
     public void update(){
-        String id = "CAS10010";
+        String id = "CAS10011";
         Docket docket =  new Docket.Builder().copy(getSavedDockets()).docketID(id).build();
-        System.out.println("Updating" + "\n" + docket );
         Docket updatedID = this.docketRepository.update(docket);
         System.out.println("Updated" + "\n" + updatedID);
         Assert.assertSame(id,updatedID.getDocketID());
@@ -47,13 +51,13 @@ public class DocketRepositoryImplementationTest {
     @Test
     public void delete(){
         Docket docketSaved = getSavedDockets();
-        this.docketRepository.delete(getSavedDockets().getDocketID());
+        this.docketRepository.delete(docketSaved.getDocketID());
+        getDocketSet();
     }
 
     @Test
     public void read(){
         Docket docketSaved = getSavedDockets();
-        System.out.println("Read docket id" + "\n" + getSavedDockets().getDocketID());
         Docket read = this.docketRepository.read(docketSaved.getDocketID());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(getSavedDockets(),read);
@@ -63,5 +67,6 @@ public class DocketRepositoryImplementationTest {
     public void getDocketSet(){
         Set<Docket> docketSet = this.docketRepository.getDocketSet();
         System.out.println("List of Dockets" + "\n" + docketSet);
+        Assert.assertEquals(1,docketSet.size());
     }
 }

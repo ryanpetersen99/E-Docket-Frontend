@@ -2,8 +2,8 @@ package za.ac.cput.Repository.Implementation.Civillian;
 
 
 
-import za.ac.cput.Domain.Civillian.Convict;
-import za.ac.cput.Repository.Civillian.ConvictRepository;
+import za.ac.cput.Domain.Civilian.Convict;
+import za.ac.cput.Repository.Civilian.ConvictRepository;
 
 import java.util.HashSet;
 import java.util.Set;

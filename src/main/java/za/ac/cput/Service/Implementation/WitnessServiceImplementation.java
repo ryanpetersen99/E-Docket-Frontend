@@ -1,9 +1,9 @@
 package za.ac.cput.Service.Implementation;
 
-import za.ac.cput.Domain.Civillian.Witness;
+import za.ac.cput.Domain.Civilian.Witness;
 import za.ac.cput.Repository.Implementation.Civillian.WitnessRepositoryImplementation;
-import za.ac.cput.Repository.Civillian.WitnessRepository;
-import za.ac.cput.Service.Civillian.WitnessService;
+import za.ac.cput.Repository.Civilian.WitnessRepository;
+import za.ac.cput.Service.Civilian.WitnessService;
 
 import java.util.Set;
 

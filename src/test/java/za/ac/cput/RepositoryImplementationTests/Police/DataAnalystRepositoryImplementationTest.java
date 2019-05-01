@@ -14,6 +14,8 @@ public class DataAnalystRepositoryImplementationTest {
 
     private DataAnalystRepository dataAnalystRepository;
     private DataAnalyst dataAnalyst;
+    private DataAnalyst dataAnalyst2;
+
 
     public DataAnalyst getSavedDA() {
         Set<DataAnalyst> dataAnalystSet = this.dataAnalystRepository.getDataAnalystSet();
@@ -24,20 +26,23 @@ public class DataAnalystRepositoryImplementationTest {
     public void setUp() throws Exception{
         this.dataAnalystRepository = DataAnalystRepositoryImplementation.getRepository();
         this.dataAnalyst = DataAnalystFactory.getDataAnalyst("90005","Jane","Watson");
+        this.dataAnalyst2 = DataAnalystFactory.getDataAnalyst("90002","Manny","Wanny");
     }
 
     @Test
     public void create(){
         DataAnalyst createdDA = this.dataAnalystRepository.create(this.dataAnalyst);
-        System.out.println("Successfully created Data Analyst" + "\n" + dataAnalyst);
+        DataAnalyst createdDA2 = this.dataAnalystRepository.create(this.dataAnalyst2);
+        System.out.println("Successfully created Data Analyst" + "\n" + createdDA);
+        System.out.println("Successfully created Data Analyst 2" + "\n" + createdDA2);
         Assert.assertSame(createdDA,this.dataAnalyst);
+        Assert.assertSame(createdDA2,this.dataAnalyst2);
     }
 
     @Test
     public void update(){
         String name = "Jamie";
         DataAnalyst dataAnalyst =  new DataAnalyst.Builder().copy(getSavedDA()).daName(name).build();
-        System.out.println("Updating" + "\n" + dataAnalyst );
         DataAnalyst updatedName = this.dataAnalystRepository.update(dataAnalyst);
         System.out.println("Updated" + "\n" + updatedName);
         Assert.assertSame(name,updatedName.getDaName());
@@ -47,19 +52,19 @@ public class DataAnalystRepositoryImplementationTest {
     public void delete(){
         DataAnalyst dataAnalystSaved = getSavedDA();
         this.dataAnalystRepository.delete(dataAnalystSaved.getDaID());
+        getDASet();
     }
 
     @Test
     public void read(){
         DataAnalyst dataAnalystSaved = getSavedDA();
-        System.out.println("Read Data Analyst id" + "\n" + dataAnalystSaved.getDaID());
         DataAnalyst read = this.dataAnalystRepository.read(dataAnalystSaved.getDaID());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(dataAnalystSaved,read);
     }
 
     @Test
-    public void getConvictSet(){
+    public void getDASet(){
         Set<DataAnalyst> dataAnalystSet = this.dataAnalystRepository.getDataAnalystSet();
         System.out.println("List of Data Analysts" + "\n" + dataAnalystSet);
     }

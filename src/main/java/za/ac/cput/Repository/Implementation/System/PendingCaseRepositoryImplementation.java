@@ -52,7 +52,7 @@ public class PendingCaseRepositoryImplementation implements PendingCaseRepositor
     public void delete(String caseID) {
         PendingCase pendingCase = findCase(caseID);
         if(caseID != null) {
-            this.pendingCaseSet.remove(caseID);
+            this.pendingCaseSet.remove(pendingCase);
         }
     }
 

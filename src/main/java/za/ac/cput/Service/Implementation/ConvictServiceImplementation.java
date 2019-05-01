@@ -2,10 +2,10 @@ package za.ac.cput.Service.Implementation;
 
 
 
-import za.ac.cput.Domain.Civillian.Convict;
-import za.ac.cput.Repository.Civillian.ConvictRepository;
+import za.ac.cput.Domain.Civilian.Convict;
+import za.ac.cput.Repository.Civilian.ConvictRepository;
 import za.ac.cput.Repository.Implementation.Civillian.ConvictRepositoryImplementation;
-import za.ac.cput.Service.Civillian.ConvictService;
+import za.ac.cput.Service.Civilian.ConvictService;
 
 import java.util.Set;
 
