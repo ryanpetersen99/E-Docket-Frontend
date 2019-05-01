@@ -12,7 +12,6 @@ public class ConvictRepositoryImplementation implements ConvictRepository{
 
     private static ConvictRepositoryImplementation convictRepositoryImplementation = null;
     private Set<Convict> convictSet;
-    private Convict convict;
 
     private Convict findConvict(String convictID){
         return  this.convictSet.stream()

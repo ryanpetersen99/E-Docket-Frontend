@@ -70,11 +70,4 @@ public class Complainant {
         return "Complainant Details" + "\n" + "ID: " + complainantID + "\n" + "Name: " + complainantName + "\n" + "Surname: " +complainantSurname + "\n" + "Statement: " + complainantStatement;
         }
 
-        /*@Override
-        public boolean equals(Object o){
-        if (this == o) return  true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Complainant complainant = (Complainant) o;
-        return complainantID.equals(complainant.complainantID);
-        }*/
 }

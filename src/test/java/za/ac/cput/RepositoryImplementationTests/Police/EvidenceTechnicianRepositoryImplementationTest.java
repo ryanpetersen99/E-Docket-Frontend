@@ -3,9 +3,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import za.ac.cput.Domain.Police.EvidenceTechnician;
-import za.ac.cput.Domain.System.Evidence;
-import za.ac.cput.Factory.Police.Evidence_TechnicianFactory;
-import za.ac.cput.Factory.System.EvidenceFactory;
+import za.ac.cput.Factory.Police.Evidence_TechnicianFactory;;
 import za.ac.cput.Repository.Police.Evidence_TechnicianRepository;
 import za.ac.cput.Repository.Implementation.Police.EvidenceTechnicianRepositoryImplementation;
 
@@ -33,7 +31,7 @@ public class EvidenceTechnicianRepositoryImplementationTest {
     @Test
     public void create(){
         EvidenceTechnician createdET = this.evidenceTechnicianRepository.create(this.evidenceTechnician);
-        EvidenceTechnician createdET2 = this.evidenceTechnicianRepository.create(this.evidenceTechnician);
+        EvidenceTechnician createdET2 = this.evidenceTechnicianRepository.create(this.evidenceTechnician2);
         System.out.println("Successfully created Evidence Technician" + "\n" + evidenceTechnician);
         System.out.println("Successfully created Evidence Technician 2" + "\n" + evidenceTechnician2);
         Assert.assertSame(createdET,this.evidenceTechnician);
