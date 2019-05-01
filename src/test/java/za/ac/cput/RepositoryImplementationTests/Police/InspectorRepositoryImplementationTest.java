@@ -42,9 +42,9 @@ public class InspectorRepositoryImplementationTest {
     public void update(){
         String id = "90009";
         Inspector inspector =  new Inspector.Builder().copy(getSavedInspector()).inspectorID(id).build();
-        Inspector updatedID = this.inspectorRepository.update(inspector);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getInspectorID());
+        this.inspectorRepository.update(inspector);
+        System.out.println("Updated" + "\n" + inspector);
+        Assert.assertSame(id,inspector.getInspectorID());
     }
 
     @Test

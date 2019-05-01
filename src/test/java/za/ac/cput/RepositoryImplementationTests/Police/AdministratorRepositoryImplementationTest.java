@@ -14,6 +14,7 @@ public class AdministratorRepositoryImplementationTest {
 
     private AdministratorRepository administratorRepository;
     private Administrator administrator;
+    private Administrator administrator2;
 
 
     public Administrator getSavedAdmin() {
@@ -25,35 +26,39 @@ public class AdministratorRepositoryImplementationTest {
     public void setUp() throws Exception{
         this.administratorRepository = AdministratorRepositoryImplementation.getRepository();
         this.administrator = AdministratorFactory.getAdministrator("90001","Banks","Kim");
+        this.administrator2 = AdministratorFactory.getAdministrator("90002","Lee","Kim");
 
     }
 
     @Test
     public void create(){
         Administrator createdAdmin = this.administratorRepository.create(this.administrator);
+        Administrator createdAdmin2 = this.administratorRepository.create(this.administrator2);
         System.out.println("Successfully created administrator" + "\n" + createdAdmin);
+        System.out.println("Successfully created administrator 2" + "\n" + createdAdmin2);
         Assert.assertSame(createdAdmin,this.administrator);
+        Assert.assertSame(createdAdmin2,this.administrator2);
     }
 
     @Test
     public void update(){
-        String updatedID = "90002";
+        String updatedID = "90003";
         Administrator administrator =  new Administrator.Builder().copy(getSavedAdmin()).adminID(updatedID).build();
-        Administrator updatedAdmin = this.administratorRepository.update(administrator);
-        System.out.println("Updated" + "\n" + updatedAdmin);
-        Assert.assertSame(updatedID,updatedAdmin.getAdminID());
+        this.administratorRepository.update(administrator);
+        System.out.println("Updated" + "\n" + administrator);
+        Assert.assertSame(updatedID,administrator.getAdminID());
     }
-/*
+
     @Test
     public void delete(){
         Administrator administratorSaved = getSavedAdmin();
-        this.administratorRepository.delete(getSavedAdmin().getAdminID());
+        this.administratorRepository.delete(administratorSaved.getAdminID());
     }
-*/
+
     @Test
     public void read(){
         Administrator administratorSaved = getSavedAdmin();
-        Administrator read = this.administratorRepository.read(getSavedAdmin().getAdminID());
+        Administrator read = this.administratorRepository.read(administratorSaved.getAdminID());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(getSavedAdmin(),read);
     }

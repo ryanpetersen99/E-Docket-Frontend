@@ -41,9 +41,9 @@ public class OfficerRepositoryImplementationTest {
     public void update(){
         String id = "90012";
         Officer officer =  new Officer.Builder().copy(getSavedOfficer()).officerID(id).build();
-        Officer updatedID = this.officerRepository.update(officer);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getOfficerID());
+        this.officerRepository.update(officer);
+        System.out.println("Updated" + "\n" + officer);
+        Assert.assertSame(id,officer.getOfficerID());
     }
 
     @Test

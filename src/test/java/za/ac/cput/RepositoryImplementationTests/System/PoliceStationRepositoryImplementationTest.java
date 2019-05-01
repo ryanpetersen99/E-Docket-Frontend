@@ -42,9 +42,9 @@ public class PoliceStationRepositoryImplementationTest {
     public void update(){
         String name = "Woodstock Station";
         PoliceStation policeStation =  new PoliceStation.Builder().copy(getSavedStation()).stationName(name).build();
-        PoliceStation updatedName = this.policeStationRepository.update(policeStation);
-        System.out.println("Updated" + "\n" + updatedName);
-        Assert.assertSame(name,updatedName.getStationName());
+        this.policeStationRepository.update(policeStation);
+        System.out.println("Updated" + "\n" + policeStation);
+        Assert.assertSame(name,policeStation.getStationName());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PoliceStationRepositoryImplementationTest {
     @Test
     public void read(){
         PoliceStation policeStation = getSavedStation();
-        PoliceStation read = this.policeStationRepository.read(getSavedStation().getStationName());
+        PoliceStation read = this.policeStationRepository.read(policeStation.getStationName());
         System.out.println("Read" + "\n" + read);
         Assert.assertEquals(getSavedStation(),read);
     }

@@ -42,9 +42,9 @@ public class EvidenceTechnicianRepositoryImplementationTest {
     public void update(){
         String id = "90010";
         EvidenceTechnician evidenceTechnician =  new EvidenceTechnician.Builder().copy(getSavedET()).evidenceTechID(id).build();
-        EvidenceTechnician updatedID = this.evidenceTechnicianRepository.update(evidenceTechnician);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getEvidenceTechID());
+        this.evidenceTechnicianRepository.update(evidenceTechnician);
+        System.out.println("Updated" + "\n" + evidenceTechnician);
+        Assert.assertSame(id,evidenceTechnician.getEvidenceTechID());
     }
 
     @Test

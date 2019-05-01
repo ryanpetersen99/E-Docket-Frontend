@@ -41,9 +41,9 @@ public class ChiefRepositoryImplementationTest {
     public void update(){
         String updatedID = "90002";
         Chief chief =  new Chief.Builder().copy(getSavedChief()).chiefID(updatedID).build();
-        Chief updatedChiefID = this.chiefRepository.update(chief);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(updatedID,updatedChiefID.getChiefID());
+        this.chiefRepository.update(chief);
+        System.out.println("Updated" + "\n" + chief);
+        Assert.assertSame(updatedID,chief.getChiefID());
     }
 
     @Test

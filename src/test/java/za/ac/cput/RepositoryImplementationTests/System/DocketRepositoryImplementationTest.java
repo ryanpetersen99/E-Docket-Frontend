@@ -43,9 +43,9 @@ public class DocketRepositoryImplementationTest {
     public void update(){
         String id = "CAS10011";
         Docket docketU =  new Docket.Builder().copy(getSavedDockets()).docketID(id).build();
-        Docket updatedID = this.docketRepository.update(docketU);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getDocketID());
+        this.docketRepository.update(docketU);
+        System.out.println("Updated" + "\n" + docketU);
+        Assert.assertSame(id,docketU.getDocketID());
     }
 
     @Test

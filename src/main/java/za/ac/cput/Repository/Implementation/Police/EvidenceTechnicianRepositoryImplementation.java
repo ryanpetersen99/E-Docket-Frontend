@@ -53,7 +53,7 @@ public class EvidenceTechnicianRepositoryImplementation implements Evidence_Tech
     public void delete(String evidTechID) {
         EvidenceTechnician evidenceTechnician = findEvidenceTech(evidTechID);
         if(evidenceTechnician != null) {
-            this.evidence_technicianSet.remove(evidTechID);
+            this.evidence_technicianSet.remove(evidenceTechnician);
         }
     }
 

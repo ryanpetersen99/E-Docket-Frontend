@@ -43,9 +43,9 @@ public class EvidenceRepositoryImplementationTest {
     public void update(){
         String id = "E1003193";
         Evidence evidence =  new Evidence.Builder().copy(getSavedEvidence()).evidenceID(id).build();
-        Evidence updatedID = this.evidenceRepository.update(evidence);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getEvidenceID());
+        this.evidenceRepository.update(evidence);
+        System.out.println("Updated" + "\n" + evidence);
+        Assert.assertSame(id,evidence.getEvidenceID());
     }
 
     @Test

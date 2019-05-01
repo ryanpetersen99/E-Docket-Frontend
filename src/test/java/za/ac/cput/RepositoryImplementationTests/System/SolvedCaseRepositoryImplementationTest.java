@@ -44,9 +44,9 @@ public class SolvedCaseRepositoryImplementationTest {
     public void update(){
         String id = "CASE14021910";
         SolvedCase solvedCase =  new SolvedCase.Builder().copy(getSavedCase()).caseID(id).build();
-        SolvedCase updatedID = this.solvedCaseRepository.update(solvedCase);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getCaseID());
+        this.solvedCaseRepository.update(solvedCase);
+        System.out.println("Updated" + "\n" + solvedCase);
+        Assert.assertSame(id,solvedCase.getCaseID());
     }
 
     @Test

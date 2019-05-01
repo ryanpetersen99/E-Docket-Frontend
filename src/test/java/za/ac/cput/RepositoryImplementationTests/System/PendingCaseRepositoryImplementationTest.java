@@ -42,9 +42,9 @@ public class PendingCaseRepositoryImplementationTest {
     public void update(){
         String id = "CASE14021910";
         PendingCase pendingCase =  new PendingCase.Builder().copy(getSavedCase()).caseID(id).build();
-        PendingCase updatedID = this.pendingCaseRepository.update(pendingCase);
-        System.out.println("Updated" + "\n" + updatedID);
-        Assert.assertSame(id,updatedID.getCaseID());
+        this.pendingCaseRepository.update(pendingCase);
+        System.out.println("Updated" + "\n" + pendingCase);
+        Assert.assertSame(id,pendingCase.getCaseID());
     }
 
     @Test
