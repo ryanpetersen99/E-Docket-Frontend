@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Civilian.Witness;
 import za.ac.cput.repository.Civilian.WitnessRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("WitnessRepository")
 public class WitnessRepositoryImplementation implements WitnessRepository {
 
-    private static WitnessRepositoryImplementation witnessRepImp = null;
-    private Set<Witness> witnessSet;
+    private static WitnessRepositoryImplementation compRepImp = null;
+    private Map<String, Witness> witnessSet;
 
     private WitnessRepositoryImplementation() {
-        this.witnessSet = new HashSet<>();
-    }
-
-
-    private Witness findWitness(String witnessID) {
-        return this.witnessSet.stream()
-                .filter(witness -> witness.getWitnessID().trim().equals(witnessID))
-                .findAny()
-                .orElse(null);
+        this.witnessSet = new HashMap<>();
     }
 
     public static WitnessRepositoryImplementation getRepository() {
-        if (witnessRepImp == null) witnessRepImp = new WitnessRepositoryImplementation();
-        return witnessRepImp;
+        if (compRepImp == null) compRepImp = new WitnessRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private Witness findWitness(String witnessID) {
+//        return this.witnessSet.stream()
+//                .filter(witness -> witness.getWitnessID().trim().equals(witnessID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Witness create(Witness witness) {
-        this.witnessSet.add(witness);
+        if (read(witness.getWitnessID()) == null) {
+            this.witnessSet.put(witness.getWitnessID(), witness);
+        }
         return witness;
     }
 
     @Override
-    public Witness read(String witnessID) {
-        return findWitness(witnessID);
+    public Witness read(String id) {
+        return this.witnessSet.get(id);
     }
 
     @Override
     public Witness update(Witness witness) {
-        Witness delete = findWitness(witness.getWitnessID());
-        if (delete != null) {
-            this.witnessSet.remove(delete);
-            return create(witness);
+        if (read(witness.getWitnessID()) != null) {
+            witnessSet.replace(witness.getWitnessID(), witness);
         }
-        return null;
+        return witness;
     }
 
     @Override
-    public void delete(String witnessID) {
-        Witness witness = findWitness(witnessID);
-        if (witness != null) {
-            this.witnessSet.remove(witness);
-        }
+    public void delete(String id) {
+        Witness witness = read(id);
+        this.witnessSet.remove(id, witness);
+
     }
 
     public Set<Witness> getWitnessSet() {
-        return this.witnessSet;
+        Collection<Witness> witness = this.witnessSet.values();
+        Set<Witness> set = new HashSet<>();
+        set.addAll(witness);
+        return set;
     }
 }

@@ -62,7 +62,7 @@ public class InspectorServiceImplementationTest {
         service.create(inspector);
         System.out.println(service.read("8888"));
 
-        Inspector inspectorUpdated = InspectorFactory.getInspector("5555", "Ryaaan", "Petersen", "5555");
+        Inspector inspectorUpdated = InspectorFactory.getInspector("8888", "Ryaaan", "Petersen", "5555");
         service.update(inspectorUpdated);
 
         Inspector comp = service.read("8888");

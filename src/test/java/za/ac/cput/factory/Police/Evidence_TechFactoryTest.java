@@ -17,7 +17,7 @@ public class Evidence_TechFactoryTest {
         String surname = "Walker";
         String badgeID = "79238";
 
-        EvidenceTechnician technician = Evidence_TechnicianFactory.getEvidence_Technician(id, name, surname, badgeID);
+        EvidenceTechnician technician = EvidenceTechnicianFactory.getEvidence_Technician(id, name, surname, badgeID);
         System.out.println(technician);
         Assert.assertNotNull(technician.getEvidenceTechID());
         Assert.assertNotNull(technician.getEvidenceTechName());

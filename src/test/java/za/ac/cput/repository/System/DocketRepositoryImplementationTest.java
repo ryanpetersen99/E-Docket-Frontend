@@ -29,7 +29,7 @@ public class DocketRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         dokcetRepository = DocketRepositoryImplementation.getRepository();
-        dokcet = DocketFactory.getDocket("8888");
+        dokcet = DocketFactory.getDocket("8888","10 May 2019");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class DocketRepositoryImplementationTest {
 
         dokcetRepository.create(dokcet);
 
-        Docket updatedDocket = DocketFactory.getDocket("37443");
+        Docket updatedDocket = DocketFactory.getDocket("37443","12 May 2019");
 
         dokcetRepository.update(updatedDocket);
 

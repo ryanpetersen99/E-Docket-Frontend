@@ -43,7 +43,7 @@ public class OfficerController {
 
     @GetMapping("/getAll")
     public Set<Officer> getAll() {
-        return officerServiceImplementation.getOfficerSet();
+        return officerServiceImplementation.getAll();
     }
 
 

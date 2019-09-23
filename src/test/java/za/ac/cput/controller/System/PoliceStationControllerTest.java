@@ -29,7 +29,7 @@ public class PoliceStationControllerTest {
 
     @Test
     public void create() {
-        PoliceStation policeStation = PoliceStationFactory.getPoliceStation(null);
+        PoliceStation policeStation = PoliceStationFactory.getPoliceStation(null,"5555");
         policeStation.setStationName("Plain");
         ResponseEntity<PoliceStation> postResponse = restTemplate.postForEntity(baseURL + "/new", policeStation, PoliceStation.class);
         assertNotNull(postResponse);

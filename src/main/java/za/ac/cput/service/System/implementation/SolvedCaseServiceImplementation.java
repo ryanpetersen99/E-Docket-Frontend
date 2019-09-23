@@ -31,7 +31,7 @@ public class SolvedCaseServiceImplementation implements SolvedCaseService {
 
     @Override
     public SolvedCase read(String c) {
-        return this.read(c);
+        return this.solvedCaseRepository.read(c);
     }
 
     @Override

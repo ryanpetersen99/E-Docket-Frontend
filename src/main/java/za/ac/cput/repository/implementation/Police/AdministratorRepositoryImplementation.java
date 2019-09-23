@@ -5,63 +5,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.Administrator;
 import za.ac.cput.repository.Police.AdministratorRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("AdministratorRepository")
 public class AdministratorRepositoryImplementation implements AdministratorRepository {
 
-    private static AdministratorRepositoryImplementation adminRepImp = null;
-    private Set<Administrator> administratorSet;
+    private static AdministratorRepositoryImplementation compRepImp = null;
+    private Map<String, Administrator> adminSet;
 
     private AdministratorRepositoryImplementation() {
-        this.administratorSet = new HashSet<>();
-    }
-
-
-    private Administrator findAdministrator(String administratorID) {
-        return this.administratorSet.stream()
-                .filter(administrator -> administrator.getAdminID().trim().equals(administratorID))
-                .findAny()
-                .orElse(null);
+        this.adminSet = new HashMap<>();
     }
 
     public static AdministratorRepositoryImplementation getRepository() {
-        if (adminRepImp == null) adminRepImp = new AdministratorRepositoryImplementation();
-        return adminRepImp;
+        if (compRepImp == null) compRepImp = new AdministratorRepositoryImplementation();
+        return compRepImp;
     }
 
-    @Override
-    public Administrator create(Administrator administrator) {
-        this.administratorSet.add(administrator);
-        return administrator;
-    }
+//    private Administrator findAdministrator(String adminID) {
+//        return this.adminSet.stream()
+//                .filter(admin -> admin.getAdministratorID().trim().equals(adminID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
-    public Administrator read(String adminID) {
-        return findAdministrator(adminID);
-    }
-
-    @Override
-    public Administrator update(Administrator administrator) {
-        Administrator delete = findAdministrator(administrator.getAdminID());
-        if (delete != null) {
-            this.administratorSet.remove(delete);
-            return create(administrator);
+    public Administrator create(Administrator admin) {
+        if (read(admin.getAdminID()) == null) {
+            this.adminSet.put(admin.getAdminID(), admin);
         }
-        return null;
+        return admin;
     }
 
     @Override
-    public void delete(String adminID) {
-        Administrator administrator = findAdministrator(adminID);
-        if (administrator != null) {
-            this.administratorSet.remove(administrator);
+    public Administrator read(String id) {
+        return this.adminSet.get(id);
+    }
+
+    @Override
+    public Administrator update(Administrator admin) {
+        if (read(admin.getAdminID()) != null) {
+            adminSet.replace(admin.getAdminID(), admin);
         }
+        return admin;
+    }
+
+    @Override
+    public void delete(String id) {
+        Administrator admin = read(id);
+        this.adminSet.remove(id, admin);
 
     }
 
     public Set<Administrator> getAdministratorSet() {
-        return this.administratorSet;
+        Collection<Administrator> admin = this.adminSet.values();
+        Set<Administrator> set = new HashSet<>();
+        set.addAll(admin);
+        return set;
     }
 }

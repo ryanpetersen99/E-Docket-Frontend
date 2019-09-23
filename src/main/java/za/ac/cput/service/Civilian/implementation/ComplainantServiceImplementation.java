@@ -43,10 +43,6 @@ public class ComplainantServiceImplementation implements ComplainantService {
         this.complainantRepository.delete(c);
     }
 
-    public Set<Complainant> getComplainantSet() {
-        return this.complainantRepository.getComplainantSet();
-    }
-
     @Override
     public Set<Complainant> getAll() {
         return this.complainantRepository.getComplainantSet();

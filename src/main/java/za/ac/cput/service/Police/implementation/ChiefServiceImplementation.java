@@ -26,22 +26,22 @@ public class ChiefServiceImplementation implements ChiefService {
 
     @Override
     public Chief create(Chief chief) {
-        return this.create(chief);
+        return this.chiefRepository.create(chief);
     }
 
     @Override
     public Chief read(String c) {
-        return this.read(c);
+        return this.chiefRepository.read(c);
     }
 
     @Override
     public Chief update(Chief chief) {
-        return this.update(chief);
+        return this.chiefRepository.update(chief);
     }
 
     @Override
     public void delete(String c) {
-        this.delete(c);
+        this.chiefRepository.delete(c);
     }
 
     public Set<Chief> getChiefSet() {

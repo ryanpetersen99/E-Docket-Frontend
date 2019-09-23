@@ -27,7 +27,7 @@ public class OfficerServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = OfficerServiceImplementation.getOfficerService();
-        officer = OfficerFactory.getOfficer("8888", "Ryan", "Petersen", "5555");
+        officer = OfficerFactory.getOfficer("8888", "8888", "Petersen", "5555");
     }
 
     @Test
@@ -39,8 +39,8 @@ public class OfficerServiceImplementationTest {
     @Test
     public void getAll() {
         service.create(officer);
-        assertNotNull(service.getOfficerSet());
-        System.out.println("Get All\n" + service.getOfficerSet());
+        assertNotNull(service.getAll());
+        System.out.println("Get All\n" + service.getAll());
     }
 
     @Test
@@ -61,11 +61,11 @@ public class OfficerServiceImplementationTest {
         service.create(officer);
         System.out.println(service.read("8888"));
 
-        Officer officerUpdated = OfficerFactory.getOfficer("5555", "Ryan", "Petersen", "5555");
+        Officer officerUpdated = OfficerFactory.getOfficer("8888", "8888", "Peteersen", "5555");
         service.update(officerUpdated);
 
         Officer comp = service.read("8888");
-        Assert.assertNotEquals(officer.getOfficerID(), comp.getOfficerID());
+        Assert.assertNotEquals(officer.getOfficerName(), comp.getOfficerName());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

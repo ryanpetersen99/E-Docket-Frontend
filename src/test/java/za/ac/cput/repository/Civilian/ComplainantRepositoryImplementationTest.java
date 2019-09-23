@@ -49,13 +49,9 @@ public class ComplainantRepositoryImplementationTest {
 
     @Test
     public void update() {
-
         complainantRepository.create(complainant);
-
         Complainant updatedComplainant = ComplainantFactory.getComplainant("37443", "Ryan", "Petersen", "murder");
-
         complainantRepository.update(updatedComplainant);
-
         Assert.assertNotEquals(complainant.getComplainantID(), updatedComplainant.getComplainantID());
     }
 

@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.SolvedCase;
 import za.ac.cput.repository.System.SolvedCaseRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("SolvedCaseRepository")
 public class SolvedCaseRepositoryImplementation implements SolvedCaseRepository {
 
-    private static SolvedCaseRepositoryImplementation solvedCaseRepositoryImplementation = null;
-    private Set<SolvedCase> solvedCaseSet;
+    private static SolvedCaseRepositoryImplementation compRepImp = null;
+    private Map<String, SolvedCase> solvedCaseSet;
 
     private SolvedCaseRepositoryImplementation() {
-        this.solvedCaseSet = new HashSet<>();
-    }
-
-    private SolvedCase findCase(String caseID) {
-        return this.solvedCaseSet.stream()
-                .filter(solvedCase -> solvedCase.getCaseID().trim().equals(caseID))
-                .findAny()
-                .orElse(null);
+        this.solvedCaseSet = new HashMap<>();
     }
 
     public static SolvedCaseRepositoryImplementation getRepository() {
-        if (solvedCaseRepositoryImplementation == null)
-            solvedCaseRepositoryImplementation = new SolvedCaseRepositoryImplementation();
-        return solvedCaseRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new SolvedCaseRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private SolvedCase findSolvedCase(String solvedCaseID) {
+//        return this.solvedCaseSet.stream()
+//                .filter(solvedCase -> solvedCase.getSolvedCaseID().trim().equals(solvedCaseID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public SolvedCase create(SolvedCase solvedCase) {
-        this.solvedCaseSet.add(solvedCase);
+        if (read(solvedCase.getCaseID()) == null) {
+            this.solvedCaseSet.put(solvedCase.getCaseID(), solvedCase);
+        }
         return solvedCase;
     }
 
     @Override
-    public SolvedCase read(String caseID) {
-        return findCase(caseID);
+    public SolvedCase read(String id) {
+        return this.solvedCaseSet.get(id);
     }
 
     @Override
     public SolvedCase update(SolvedCase solvedCase) {
-        SolvedCase delete = findCase(solvedCase.getCaseID());
-        if (delete != null) {
-            this.solvedCaseSet.remove(delete);
-            return create(solvedCase);
+        if (read(solvedCase.getCaseID()) != null) {
+            solvedCaseSet.replace(solvedCase.getCaseID(), solvedCase);
         }
-        return null;
+        return solvedCase;
     }
 
     @Override
-    public void delete(String caseID) {
-        SolvedCase solvedCase = findCase(caseID);
-        if (solvedCase != null) {
-            this.solvedCaseSet.remove(solvedCase);
-        }
+    public void delete(String id) {
+        SolvedCase solvedCase = read(id);
+        this.solvedCaseSet.remove(id, solvedCase);
+
     }
 
     public Set<SolvedCase> getSolvedCaseSet() {
-        return this.solvedCaseSet;
+        Collection<SolvedCase> solvedCase = this.solvedCaseSet.values();
+        Set<SolvedCase> set = new HashSet<>();
+        set.addAll(solvedCase);
+        return set;
     }
 }

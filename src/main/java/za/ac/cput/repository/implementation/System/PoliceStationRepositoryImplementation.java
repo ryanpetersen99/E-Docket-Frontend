@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.PoliceStation;
 import za.ac.cput.repository.System.PoliceStationRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("PoliceStationRepository")
 public class PoliceStationRepositoryImplementation implements PoliceStationRepository {
 
-    private static PoliceStationRepositoryImplementation policeStationRepositoryImplementation = null;
-    private Set<PoliceStation> policeStationSet;
+    private static PoliceStationRepositoryImplementation compRepImp = null;
+    private Map<String, PoliceStation> policeStationSet;
 
     private PoliceStationRepositoryImplementation() {
-        this.policeStationSet = new HashSet<>();
-    }
-
-    private PoliceStation findStation(String stationName) {
-        return this.policeStationSet.stream()
-                .filter(station -> station.getStationName().trim().equals(stationName))
-                .findAny()
-                .orElse(null);
+        this.policeStationSet = new HashMap<>();
     }
 
     public static PoliceStationRepositoryImplementation getRepository() {
-        if (policeStationRepositoryImplementation == null)
-            policeStationRepositoryImplementation = new PoliceStationRepositoryImplementation();
-        return policeStationRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new PoliceStationRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private PoliceStation findPoliceStation(String policeStationID) {
+//        return this.policeStationSet.stream()
+//                .filter(policeStation -> policeStation.getPoliceStationID().trim().equals(policeStationID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public PoliceStation create(PoliceStation policeStation) {
-        this.policeStationSet.add(policeStation);
+        if (read(policeStation.getStationName()) == null) {
+            this.policeStationSet.put(policeStation.getStationName(), policeStation);
+        }
         return policeStation;
     }
 
     @Override
-    public PoliceStation read(String stationName) {
-        return findStation(stationName);
+    public PoliceStation read(String id) {
+        return this.policeStationSet.get(id);
     }
 
     @Override
     public PoliceStation update(PoliceStation policeStation) {
-        PoliceStation delete = findStation(policeStation.getStationName());
-        if (delete != null) {
-            this.policeStationSet.remove(delete);
-            return create(policeStation);
+        if (read(policeStation.getStationName()) != null) {
+            policeStationSet.replace(policeStation.getStationName(), policeStation);
         }
-        return null;
+        return policeStation;
     }
 
     @Override
-    public void delete(String stationName) {
-        PoliceStation policeStation = findStation(stationName);
-        if (policeStation != null) {
-            this.policeStationSet.remove(policeStation);
-        }
+    public void delete(String id) {
+        PoliceStation policeStation = read(id);
+        this.policeStationSet.remove(id, policeStation);
+
     }
 
     public Set<PoliceStation> getPoliceStationSet() {
-        return this.policeStationSet;
+        Collection<PoliceStation> policeStation = this.policeStationSet.values();
+        Set<PoliceStation> set = new HashSet<>();
+        set.addAll(policeStation);
+        return set;
     }
 }

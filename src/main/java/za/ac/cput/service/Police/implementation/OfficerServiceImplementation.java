@@ -25,25 +25,26 @@ public class OfficerServiceImplementation implements OfficerService {
 
     @Override
     public Officer create(Officer officer) {
-        return this.create(officer);
+        return this.officerRepository.create(officer);
     }
 
     @Override
     public Officer read(String o) {
-        return this.read(o);
+        return this.officerRepository.read(o);
     }
 
     @Override
     public Officer update(Officer officer) {
-        return this.update(officer);
+        return this.officerRepository.update(officer);
     }
 
     @Override
     public void delete(String o) {
-        this.delete(o);
+        this.officerRepository.delete(o);
     }
 
-    public Set<Officer> getOfficerSet() {
+    @Override
+    public Set<Officer> getAll() {
         return this.officerRepository.getOfficerSet();
     }
 }

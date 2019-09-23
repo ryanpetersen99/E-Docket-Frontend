@@ -28,7 +28,7 @@ public class PoliceStationServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = PoliceStationServiceImplementation.getPoliceStationService();
-        ps = PoliceStationFactory.getPoliceStation("name");
+        ps = PoliceStationFactory.getPoliceStation("name","5555");
     }
 
     @Test
@@ -60,19 +60,19 @@ public class PoliceStationServiceImplementationTest {
     @Test
     public void update() {
         service.create(ps);
-        System.out.println(service.read("8888"));
+        System.out.println(service.read("name"));
 
-        PoliceStation psUpdated = PoliceStationFactory.getPoliceStation("differentname");
+        PoliceStation psUpdated = PoliceStationFactory.getPoliceStation("name","6666");
         service.update(psUpdated);
 
-        PoliceStation comp = service.read("8888");
-        Assert.assertNotEquals(ps.getStationName(), comp.getStationName());
-        System.out.println("Updated\n" + service.read("8888"));
+        PoliceStation comp = service.read("name");
+        Assert.assertNotEquals(ps.getStationNum(), comp.getStationNum());
+        System.out.println("Updated\n" + service.read("name"));
     }
 
     @Test
     public void delete() {
-        service.delete("8888");
+        service.delete("name");
         assertNull(service.read(ps.getStationName()));
         System.out.println("Delete\n" + service.read(ps.getStationName()));
     }

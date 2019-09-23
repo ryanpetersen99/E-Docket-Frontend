@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.EvidenceTechnician;
-import za.ac.cput.factory.Police.Evidence_TechnicianFactory;
+import za.ac.cput.factory.Police.EvidenceTechnicianFactory;
 import za.ac.cput.repository.implementation.Police.EvidenceTechnicianRepositoryImplementation;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class EvidenceTechnicianRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         etRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
-        et = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen", "5555");
+        et = EvidenceTechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test

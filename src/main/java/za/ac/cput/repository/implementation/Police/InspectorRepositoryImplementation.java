@@ -4,63 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.Inspector;
 import za.ac.cput.repository.Police.InspectorRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("InspectorRepository")
 public class InspectorRepositoryImplementation implements InspectorRepository {
 
-    private static InspectorRepositoryImplementation inspectorRepositoryImplementation = null;
-    private Set<Inspector> inspectorSet;
+    private static InspectorRepositoryImplementation compRepImp = null;
+    private Map<String, Inspector> inspectorSet;
 
     private InspectorRepositoryImplementation() {
-        this.inspectorSet = new HashSet<>();
+        this.inspectorSet = new HashMap<>();
     }
 
     public static InspectorRepositoryImplementation getRepository() {
-        if (inspectorRepositoryImplementation == null)
-            inspectorRepositoryImplementation = new InspectorRepositoryImplementation();
-        return inspectorRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new InspectorRepositoryImplementation();
+        return compRepImp;
     }
 
-    private Inspector findInspector(String inspectorID) {
-        return this.inspectorSet.stream()
-                .filter(inspector -> inspector.getInspectorID().trim().equals(inspectorID))
-                .findAny()
-                .orElse(null);
-    }
-
+//    private Inspector findInspector(String inspectorID) {
+//        return this.inspectorSet.stream()
+//                .filter(inspector -> inspector.getInspectorID().trim().equals(inspectorID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Inspector create(Inspector inspector) {
-        this.inspectorSet.add(inspector);
+        if (read(inspector.getInspectorID()) == null) {
+            this.inspectorSet.put(inspector.getInspectorID(), inspector);
+        }
         return inspector;
     }
 
     @Override
-    public Inspector read(String inspectorID) {
-        return findInspector(inspectorID);
+    public Inspector read(String id) {
+        return this.inspectorSet.get(id);
     }
 
     @Override
     public Inspector update(Inspector inspector) {
-        Inspector delete = findInspector(inspector.getInspectorID());
-        if (delete != null) {
-            this.inspectorSet.remove(delete);
-            return create(inspector);
+        if (read(inspector.getInspectorID()) != null) {
+            inspectorSet.replace(inspector.getInspectorID(), inspector);
         }
-        return null;
+        return inspector;
     }
 
     @Override
-    public void delete(String inspectorID) {
-        Inspector inspector = findInspector(inspectorID);
-        if (inspector != null) {
-            this.inspectorSet.remove(inspector);
-        }
+    public void delete(String id) {
+        Inspector inspector = read(id);
+        this.inspectorSet.remove(id, inspector);
+
     }
 
     public Set<Inspector> getInspectorSet() {
-        return this.inspectorSet;
+        Collection<Inspector> inspector = this.inspectorSet.values();
+        Set<Inspector> set = new HashSet<>();
+        set.addAll(inspector);
+        return set;
     }
 }

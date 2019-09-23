@@ -29,7 +29,7 @@ public class DocketControllerTest {
 
     @Test
     public void create() {
-        Docket docket = DocketFactory.getDocket(null);
+        Docket docket = DocketFactory.getDocket(null,"10 May 2019");
         docket.setDocketID("555");
         ResponseEntity<Docket> postResponse = restTemplate.postForEntity(baseURL + "/new", docket, Docket.class);
         assertNotNull(postResponse);

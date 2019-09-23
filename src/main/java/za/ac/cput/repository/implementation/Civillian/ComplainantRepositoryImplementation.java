@@ -4,17 +4,17 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Civilian.Complainant;
 import za.ac.cput.repository.Civilian.ComplainantRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 
 @Repository("ComplainantRepository")
 public class ComplainantRepositoryImplementation implements ComplainantRepository {
 
     private static ComplainantRepositoryImplementation compRepImp = null;
-    private Set<Complainant> complainantSet;
+    private Map<String, Complainant> complainantSet;
 
     private ComplainantRepositoryImplementation() {
-        this.complainantSet = new HashSet<>();
+        this.complainantSet = new HashMap<>();
     }
 
     public static ComplainantRepositoryImplementation getRepository() {
@@ -22,43 +22,45 @@ public class ComplainantRepositoryImplementation implements ComplainantRepositor
         return compRepImp;
     }
 
-    private Complainant findComplainant(String complainantID) {
-        return this.complainantSet.stream()
-                .filter(complainant -> complainant.getComplainantID().trim().equals(complainantID))
-                .findAny()
-                .orElse(null);
-    }
+//    private Complainant findComplainant(String complainantID) {
+//        return this.complainantSet.stream()
+//                .filter(complainant -> complainant.getComplainantID().trim().equals(complainantID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Complainant create(Complainant complainant) {
-        this.complainantSet.add(complainant);
+        if (read(complainant.getComplainantID()) == null) {
+            this.complainantSet.put(complainant.getComplainantID(), complainant);
+        }
         return complainant;
     }
 
     @Override
-    public Complainant read(String complainantID) {
-        return findComplainant(complainantID);
+    public Complainant read(String id) {
+        return this.complainantSet.get(id);
     }
 
     @Override
     public Complainant update(Complainant complainant) {
-        Complainant delete = findComplainant(complainant.getComplainantID());
-        if (delete != null) {
-            this.complainantSet.remove(delete);
-            return create(complainant);
+        if (read(complainant.getComplainantID()) != null) {
+            complainantSet.replace(complainant.getComplainantID(), complainant);
         }
-        return null;
+        return complainant;
     }
 
     @Override
-    public void delete(String complainantID) {
-        Complainant complainant = findComplainant(complainantID);
-        if (complainant != null) {
-            this.complainantSet.remove(complainant);
-        }
+    public void delete(String id) {
+        Complainant complainant = read(id);
+        this.complainantSet.remove(id, complainant);
+
     }
 
     public Set<Complainant> getComplainantSet() {
-        return this.complainantSet;
+        Collection<Complainant> comp = this.complainantSet.values();
+        Set<Complainant> set = new HashSet<>();
+        set.addAll(comp);
+        return set;
     }
 }

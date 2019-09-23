@@ -29,7 +29,7 @@ public class PoliceStationRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         policeStationRepository = PoliceStationRepositoryImplementation.getRepository();
-        policeStation = PoliceStationFactory.getPoliceStation("Manenburg");
+        policeStation = PoliceStationFactory.getPoliceStation("Manenburg","6666");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class PoliceStationRepositoryImplementationTest {
 
         policeStationRepository.create(policeStation);
 
-        PoliceStation updatedPoliceStation = PoliceStationFactory.getPoliceStation("Woodstock");
+        PoliceStation updatedPoliceStation = PoliceStationFactory.getPoliceStation("Woodstock","6666");
 
         policeStationRepository.update(updatedPoliceStation);
 

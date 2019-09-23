@@ -4,7 +4,7 @@ import za.ac.cput.domain.System.PoliceStation;
 
 public class PoliceStationFactory {
 
-    public static PoliceStation getPoliceStation(String stationName) {
-        return new PoliceStation.Builder().stationName(stationName).build();
+    public static PoliceStation getPoliceStation(String stationName,String number) {
+        return new PoliceStation.Builder().stationName(stationName).stationNum(number).build();
     }
 }

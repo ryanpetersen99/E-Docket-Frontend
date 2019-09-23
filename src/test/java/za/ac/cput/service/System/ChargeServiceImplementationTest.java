@@ -62,7 +62,7 @@ public class ChargeServiceImplementationTest {
         service.create(charge);
         System.out.println(service.read("8888"));
 
-        Charge chargeUpdated = ChargeFactory.getCharge("5555", "15");
+        Charge chargeUpdated = ChargeFactory.getCharge("8888", "15");
         service.update(chargeUpdated);
 
         Charge comp = service.read("8888");

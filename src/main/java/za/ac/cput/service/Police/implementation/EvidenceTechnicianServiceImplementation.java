@@ -2,20 +2,20 @@ package za.ac.cput.service.Police.implementation;
 
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.Police.EvidenceTechnician;
-import za.ac.cput.repository.Police.Evidence_TechnicianRepository;
+import za.ac.cput.repository.Police.EvidenceTechnicianRepository;
 import za.ac.cput.repository.implementation.Police.EvidenceTechnicianRepositoryImplementation;
-import za.ac.cput.service.Police.Evidence_TechnicianService;
+import za.ac.cput.service.Police.EvidenceTechnicianService;
 
 import java.util.Set;
 
 @Service("EvidenceTechnicianServiceImplementation")
-public class EvidenceTechnicianServiceImplementation implements Evidence_TechnicianService {
+public class EvidenceTechnicianServiceImplementation implements EvidenceTechnicianService {
 
     private static EvidenceTechnicianServiceImplementation etService = null;
-    private Evidence_TechnicianRepository dataAnalystRepository;
+    private EvidenceTechnicianRepository etRepository;
 
     private EvidenceTechnicianServiceImplementation() {
-        this.dataAnalystRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
+        this.etRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
     }
 
     public static EvidenceTechnicianServiceImplementation getETService() {
@@ -24,26 +24,26 @@ public class EvidenceTechnicianServiceImplementation implements Evidence_Technic
     }
 
     @Override
-    public EvidenceTechnician create(EvidenceTechnician dataAnalyst) {
-        return this.dataAnalystRepository.create(dataAnalyst);
+    public EvidenceTechnician create(EvidenceTechnician et) {
+        return this.etRepository.create(et);
     }
 
     @Override
     public EvidenceTechnician read(String d) {
-        return this.dataAnalystRepository.read(d);
+        return this.etRepository.read(d);
     }
 
     @Override
-    public EvidenceTechnician update(EvidenceTechnician dataAnalyst) {
-        return this.dataAnalystRepository.update(dataAnalyst);
+    public EvidenceTechnician update(EvidenceTechnician et) {
+        return this.etRepository.update(et);
     }
 
     @Override
     public void delete(String d) {
-        this.dataAnalystRepository.delete(d);
+        this.etRepository.delete(d);
     }
 
     public Set<EvidenceTechnician> getEvidenceTechnicianSet() {
-        return this.dataAnalystRepository.getEvidenceTechnicianSet();
+        return this.etRepository.getEvidenceTechnicianSet();
     }
 }

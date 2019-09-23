@@ -13,7 +13,8 @@ public class DocketFactoryTest {
     public void getDocket() {
 
         String docketID = "14314";
-        Docket docket = DocketFactory.getDocket(docketID);
+        String date = "May";
+        Docket docket = DocketFactory.getDocket(docketID,date);
         System.out.println(docket);
         Assert.assertNotNull(docket.getDocketID());
     }

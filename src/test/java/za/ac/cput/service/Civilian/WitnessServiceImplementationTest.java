@@ -62,11 +62,11 @@ public class WitnessServiceImplementationTest {
         service.create(witness);
         System.out.println(service.read("8888"));
 
-        Witness witnessUpdated = WitnessFactory.getWitness("7777", "Ryan", "Petersen", "Mugged");
+        Witness witnessUpdated = WitnessFactory.getWitness("8888", "Ty", "Petersen", "Mugged");
         service.update(witnessUpdated);
 
         Witness wit = service.read("8888");
-        Assert.assertNotEquals(witness.getWitnessID(), wit.getWitnessID());
+        Assert.assertNotEquals(witness.getWitnessName(), wit.getWitnessName());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.Chief;
 import za.ac.cput.repository.Police.ChiefRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("ChefRepository")
 public class ChiefRepositoryImplementation implements ChiefRepository {
 
-    private static ChiefRepositoryImplementation chiefImp = null;
-    private Set<Chief> chiefSet;
+    private static ChiefRepositoryImplementation compRepImp = null;
+    private Map<String, Chief> chiefSet;
 
     private ChiefRepositoryImplementation() {
-        this.chiefSet = new HashSet<>();
-    }
-
-
-    private Chief findChief(String chiefID) {
-        return this.chiefSet.stream()
-                .filter(chief -> chief.getChiefID().trim().equals(chiefID))
-                .findAny()
-                .orElse(null);
+        this.chiefSet = new HashMap<>();
     }
 
     public static ChiefRepositoryImplementation getRepository() {
-        if (chiefImp == null) chiefImp = new ChiefRepositoryImplementation();
-        return chiefImp;
+        if (compRepImp == null) compRepImp = new ChiefRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private Chief findChief(String chiefID) {
+//        return this.chiefSet.stream()
+//                .filter(chief -> chief.getChiefID().trim().equals(chiefID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Chief create(Chief chief) {
-        this.chiefSet.add(chief);
+        if (read(chief.getChiefID()) == null) {
+            this.chiefSet.put(chief.getChiefID(), chief);
+        }
         return chief;
     }
 
     @Override
-    public Chief read(String chiefID) {
-        return findChief(chiefID);
+    public Chief read(String id) {
+        return this.chiefSet.get(id);
     }
 
     @Override
     public Chief update(Chief chief) {
-        Chief delete = findChief(chief.getChiefID());
-        if (delete != null) {
-            this.chiefSet.remove(delete);
-            return create(chief);
+        if (read(chief.getChiefID()) != null) {
+            chiefSet.replace(chief.getChiefID(), chief);
         }
-        return null;
+        return chief;
     }
 
     @Override
-    public void delete(String chiefID) {
-        Chief chief = findChief(chiefID);
-        if (chief != null) {
-            this.chiefSet.remove(chief);
-        }
+    public void delete(String id) {
+        Chief chief = read(id);
+        this.chiefSet.remove(id, chief);
+
     }
 
     public Set<Chief> getChiefSet() {
-        return this.chiefSet;
+        Collection<Chief> chief = this.chiefSet.values();
+        Set<Chief> set = new HashSet<>();
+        set.addAll(chief);
+        return set;
     }
 }

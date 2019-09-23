@@ -11,7 +11,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.HttpClientErrorException;
 import za.ac.cput.domain.Police.EvidenceTechnician;
-import za.ac.cput.factory.Police.Evidence_TechnicianFactory;
+import za.ac.cput.factory.Police.EvidenceTechnicianFactory;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertNotNull;
@@ -23,31 +23,31 @@ import static junit.framework.TestCase.assertNotNull;
 public class EvidenceTechnicianControllerTest {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private TestRestTemplate testRestTemplate;
 
     private String baseURL = "http://localhost:8080/evidenceTechnician";
 
     @Test
     public void create() {
-        EvidenceTechnician evidenceTech = Evidence_TechnicianFactory.getEvidence_Technician(null, "Ryan", "Petersen", "5555");
-        evidenceTech.setEvidenceTechID("555");
-        ResponseEntity<EvidenceTechnician> postResponse = restTemplate.postForEntity(baseURL + "/new", evidenceTech, EvidenceTechnician.class);
+        EvidenceTechnician evidenceTech = EvidenceTechnicianFactory.getEvidence_Technician(null, "Ryan", "Petersen", "5566");
+        evidenceTech.setEvidenceTechID("5555");
+        ResponseEntity<EvidenceTechnician> postResponse = testRestTemplate.postForEntity(baseURL + "/new", evidenceTech, EvidenceTechnician.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
     }
 
     @Test
     public void findById() {
-        EvidenceTechnician lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
+        EvidenceTechnician lookingFor = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        EvidenceTechnician evidenceTech = restTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
+        EvidenceTechnician evidenceTech = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
         evidenceTech.setEvidenceTechName("Bryan");
-        restTemplate.put(baseURL + "/update/" + "5555", evidenceTech);
-        EvidenceTechnician evidenceTechUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", EvidenceTechnician.class);
+        testRestTemplate.put(baseURL + "/update/" + "5555", evidenceTech);
+        EvidenceTechnician evidenceTechUpdated = testRestTemplate.getForObject(baseURL + "/update/" + "5555", EvidenceTechnician.class);
         assertNotNull(evidenceTechUpdated);
 
     }
@@ -55,12 +55,12 @@ public class EvidenceTechnicianControllerTest {
     @Test
     public void delete() {
 
-        EvidenceTechnician evidenceTech = restTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
+        EvidenceTechnician evidenceTech = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
         assertNotNull(evidenceTech);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        testRestTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
-            evidenceTech = restTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
+            evidenceTech = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
@@ -70,7 +70,7 @@ public class EvidenceTechnicianControllerTest {
     public void getAll() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = testRestTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
     }
 }

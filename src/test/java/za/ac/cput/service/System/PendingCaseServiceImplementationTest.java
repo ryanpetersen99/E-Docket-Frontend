@@ -62,11 +62,11 @@ public class PendingCaseServiceImplementationTest {
         service.create(pc);
         System.out.println(service.read("8888"));
 
-        PendingCase pcUpdated = PendingCaseFactory.getPendingCase("5555", "Ryan", 5, "14 may 2010");
+        PendingCase pcUpdated = PendingCaseFactory.getPendingCase("8888", "Ryan", 5, "14 may 2010");
         service.update(pcUpdated);
 
         PendingCase comp = service.read("8888");
-        Assert.assertNotEquals(pc.getCaseID(), comp.getCaseID());
+        Assert.assertNotEquals(pc.getCaseNoOfDockets(), comp.getCaseNoOfDockets());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

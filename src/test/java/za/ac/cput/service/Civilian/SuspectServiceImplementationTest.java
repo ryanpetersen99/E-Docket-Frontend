@@ -62,11 +62,11 @@ public class SuspectServiceImplementationTest {
         service.create(suspect);
         System.out.println(service.read("8888"));
 
-        Suspect suspectUpdated = SuspectFactory.getSuspect("7777", "Ryan", "Petersen", "Mugged");
+        Suspect suspectUpdated = SuspectFactory.getSuspect("8888", "Ty", "Petersen", "Mugged");
         service.update(suspectUpdated);
 
         Suspect sus = service.read("8888");
-        Assert.assertNotEquals(suspect.getSuspectID(), sus.getSuspectID());
+        Assert.assertNotEquals(suspect.getSuspectName(), sus.getSuspectName());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

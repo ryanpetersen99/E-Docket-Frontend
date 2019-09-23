@@ -5,62 +5,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.Charge;
 import za.ac.cput.repository.System.ChargeRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("ChargeRepository")
 public class ChargeRepositoryImplementation implements ChargeRepository {
 
-    private static ChargeRepositoryImplementation chargeRepositoryImplementation = null;
-    private Set<Charge> chargeSet;
+    private static ChargeRepositoryImplementation compRepImp = null;
+    private Map<String, Charge> chargeSet;
 
     private ChargeRepositoryImplementation() {
-        this.chargeSet = new HashSet<>();
-    }
-
-    private Charge findCharge(String chargeDetails) {
-        return this.chargeSet.stream()
-                .filter(charge -> charge.getNatureOfCharge().trim().equals(chargeDetails))
-                .findAny()
-                .orElse(null);
+        this.chargeSet = new HashMap<>();
     }
 
     public static ChargeRepositoryImplementation getRepository() {
-        if (chargeRepositoryImplementation == null)
-            chargeRepositoryImplementation = new ChargeRepositoryImplementation();
-        return chargeRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new ChargeRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private Charge findCharge(String chargeID) {
+//        return this.chargeSet.stream()
+//                .filter(charge -> charge.getChargeID().trim().equals(chargeID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Charge create(Charge charge) {
-        this.chargeSet.add(charge);
+        if (read(charge.getNatureOfCharge()) == null) {
+            this.chargeSet.put(charge.getNatureOfCharge(), charge);
+        }
         return charge;
     }
 
     @Override
-    public Charge read(String natureOfCharge) {
-        return findCharge(natureOfCharge);
+    public Charge read(String id) {
+        return this.chargeSet.get(id);
     }
 
     @Override
     public Charge update(Charge charge) {
-        Charge delete = findCharge(charge.getNatureOfCharge());
-        if (delete != null) {
-            this.chargeSet.remove(delete);
-            return create(charge);
+        if (read(charge.getNatureOfCharge()) != null) {
+            chargeSet.replace(charge.getNatureOfCharge(), charge);
         }
-        return null;
+        return charge;
     }
 
     @Override
-    public void delete(String natureOfCharge) {
-        Charge charge = findCharge(natureOfCharge);
-        if (natureOfCharge != null) {
-            this.chargeSet.remove(charge);
-        }
+    public void delete(String id) {
+        Charge charge = read(id);
+        this.chargeSet.remove(id, charge);
+
     }
 
     public Set<Charge> getChargeSet() {
-        return this.chargeSet;
+        Collection<Charge> charge = this.chargeSet.values();
+        Set<Charge> set = new HashSet<>();
+        set.addAll(charge);
+        return set;
     }
 }

@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.Docket;
 import za.ac.cput.repository.System.DocketRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("DocketRepository")
 public class DocketRepositoryImplementation implements DocketRepository {
 
-    private static DocketRepositoryImplementation docketRepImp = null;
-    private Set<Docket> docketSet;
+    private static DocketRepositoryImplementation compRepImp = null;
+    private Map<String, Docket> docketSet;
 
     private DocketRepositoryImplementation() {
-        this.docketSet = new HashSet<>();
-    }
-
-
-    private Docket findDocket(String docketID) {
-        return this.docketSet.stream()
-                .filter(docket -> docket.getDocketID().trim().equals(docketID))
-                .findAny()
-                .orElse(null);
+        this.docketSet = new HashMap<>();
     }
 
     public static DocketRepositoryImplementation getRepository() {
-        if (docketRepImp == null) docketRepImp = new DocketRepositoryImplementation();
-        return docketRepImp;
+        if (compRepImp == null) compRepImp = new DocketRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private Docket findDocket(String docketID) {
+//        return this.docketSet.stream()
+//                .filter(docket -> docket.getDocketID().trim().equals(docketID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Docket create(Docket docket) {
-        this.docketSet.add(docket);
+        if (read(docket.getDocketID()) == null) {
+            this.docketSet.put(docket.getDocketID(), docket);
+        }
         return docket;
     }
 
     @Override
-    public Docket read(String docketID) {
-        return findDocket(docketID);
+    public Docket read(String id) {
+        return this.docketSet.get(id);
     }
 
     @Override
     public Docket update(Docket docket) {
-        Docket delete = findDocket(docket.getDocketID());
-        if (delete != null) {
-            this.docketSet.remove(delete);
-            return create(docket);
+        if (read(docket.getDocketID()) != null) {
+            docketSet.replace(docket.getDocketID(), docket);
         }
-        return null;
+        return docket;
     }
 
     @Override
-    public void delete(String docketID) {
-        Docket docket = findDocket(docketID);
-        if (docket != null) {
-            this.docketSet.remove(docket);
-        }
+    public void delete(String id) {
+        Docket docket = read(id);
+        this.docketSet.remove(id, docket);
+
     }
 
     public Set<Docket> getDocketSet() {
-        return this.docketSet;
+        Collection<Docket> docket = this.docketSet.values();
+        Set<Docket> set = new HashSet<>();
+        set.addAll(docket);
+        return set;
     }
 }

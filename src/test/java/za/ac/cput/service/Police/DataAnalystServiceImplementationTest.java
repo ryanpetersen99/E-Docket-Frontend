@@ -62,7 +62,7 @@ public class DataAnalystServiceImplementationTest {
         service.create(da);
         System.out.println(service.read("8888"));
 
-        DataAnalyst daUpdated = DataAnalystFactory.getDataAnalyst("5555", "Ryaaan", "Petersen");
+        DataAnalyst daUpdated = DataAnalystFactory.getDataAnalyst("8888", "Ryaaan", "Petersen");
         service.update(daUpdated);
 
         DataAnalyst comp = service.read("8888");

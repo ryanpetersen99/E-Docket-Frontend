@@ -61,11 +61,11 @@ public class ChiefServiceImplementationTest {
         service.create(chief);
         System.out.println(service.read("8888"));
 
-        Chief chiefUpdated = ChiefFactory.getChief("5555", "Ryan", "Petersen", "5555");
+        Chief chiefUpdated = ChiefFactory.getChief("8888", "Ty", "Petersen", "5555");
         service.update(chiefUpdated);
 
         Chief comp = service.read("8888");
-        Assert.assertNotEquals(chief.getChiefID(), comp.getChiefID());
+        Assert.assertNotEquals(chief.getChiefName(), comp.getChiefName());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

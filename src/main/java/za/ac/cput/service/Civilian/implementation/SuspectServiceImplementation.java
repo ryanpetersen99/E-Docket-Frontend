@@ -25,22 +25,22 @@ public class SuspectServiceImplementation implements SuspectService {
 
     @Override
     public Suspect create(Suspect suspect) {
-        return this.create(suspect);
+        return this.suspectRepository.create(suspect);
     }
 
     @Override
     public Suspect read(String s) {
-        return this.read(s);
+        return this.suspectRepository.read(s);
     }
 
     @Override
     public Suspect update(Suspect suspect) {
-        return this.update(suspect);
+        return this.suspectRepository.update(suspect);
     }
 
     @Override
     public void delete(String s) {
-        this.delete(s);
+        this.suspectRepository.delete(s);
     }
 
     public Set<Suspect> getSuspectSet() {

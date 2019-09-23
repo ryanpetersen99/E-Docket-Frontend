@@ -43,7 +43,7 @@ public class ComplainantController {
 
     @GetMapping("/getAll")
     public Set<Complainant> getAll() {
-        return complainantServiceImplementation.getComplainantSet();
+        return complainantServiceImplementation.getAll();
     }
 
 

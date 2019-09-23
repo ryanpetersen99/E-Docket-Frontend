@@ -25,22 +25,22 @@ public class PoliceStationServiceImplementation implements PoliceStationService 
 
     @Override
     public PoliceStation create(PoliceStation policeStation) {
-        return this.create(policeStation);
+        return this.policeStationRepository.create(policeStation);
     }
 
     @Override
     public PoliceStation read(String s) {
-        return this.read(s);
+        return this.policeStationRepository.read(s);
     }
 
     @Override
     public PoliceStation update(PoliceStation policeStation) {
-        return this.update(policeStation);
+        return this.policeStationRepository.update(policeStation);
     }
 
     @Override
     public void delete(String s) {
-        this.delete(s);
+        this.policeStationRepository.delete(s);
     }
 
     public Set<PoliceStation> getPoliceStationSet() {

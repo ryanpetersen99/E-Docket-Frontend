@@ -62,11 +62,11 @@ public class EvidenceServiceImplementationTest {
         service.create(evidence);
         System.out.println(service.read("8888"));
 
-        Evidence evidenceUpdated = EvidenceFactory.getEvidence("5555", "Ryan");
+        Evidence evidenceUpdated = EvidenceFactory.getEvidence("8888", "Ryaan");
         service.update(evidenceUpdated);
 
         Evidence comp = service.read("8888");
-        Assert.assertNotEquals(evidence.getEvidenceID(), comp.getEvidenceID());
+        Assert.assertNotEquals(evidence.getEvidenceDetails(), comp.getEvidenceDetails());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

@@ -41,7 +41,7 @@ public class PendingCaseServiceImplementation implements PendingCaseService {
 
     @Override
     public void delete(String c) {
-        this.delete(c);
+        this.pendingCaseRepository.delete(c);
     }
 
     public Set<PendingCase> getPendingCaseSet() {

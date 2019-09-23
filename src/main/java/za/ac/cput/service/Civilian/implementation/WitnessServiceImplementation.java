@@ -25,22 +25,22 @@ public class WitnessServiceImplementation implements WitnessService {
 
     @Override
     public Witness create(Witness witness) {
-        return this.create(witness);
+        return this.witnessRepository.create(witness);
     }
 
     @Override
     public Witness read(String w) {
-        return this.read(w);
+        return this.witnessRepository.read(w);
     }
 
     @Override
     public Witness update(Witness witness) {
-        return this.update(witness);
+        return this.witnessRepository.update(witness);
     }
 
     @Override
     public void delete(String w) {
-        this.delete(w);
+        this.witnessRepository.delete(w);
     }
 
     public Set<Witness> getWitnessSet() {

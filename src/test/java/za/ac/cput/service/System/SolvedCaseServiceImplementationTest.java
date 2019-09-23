@@ -62,11 +62,11 @@ public class SolvedCaseServiceImplementationTest {
         service.create(sc);
         System.out.println(service.read("8888"));
 
-        SolvedCase scUpdated = SolvedCaseFactory.getSolvedCase("5555", "Ryan", 5, "14 may 2010");
+        SolvedCase scUpdated = SolvedCaseFactory.getSolvedCase("8888", "Ryaaan", 5, "14 may 2010");
         service.update(scUpdated);
 
         SolvedCase comp = service.read("8888");
-        Assert.assertNotEquals(sc.getCaseID(), comp.getCaseID());
+        Assert.assertNotEquals(sc.getCaseDetails(), comp.getCaseDetails());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

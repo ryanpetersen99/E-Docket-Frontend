@@ -28,7 +28,7 @@ public class DocketServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = DocketServiceImplementation.getDocketService();
-        dokcet = DocketFactory.getDocket("8888");
+        dokcet = DocketFactory.getDocket("8888","10 may 2019");
     }
 
     @Test
@@ -62,11 +62,12 @@ public class DocketServiceImplementationTest {
         service.create(dokcet);
         System.out.println(service.read("8888"));
 
-        Docket dokcetUpdated = DocketFactory.getDocket("6666");
+        Docket dokcetUpdated = DocketFactory.getDocket("8888","12 may 2019");
         service.update(dokcetUpdated);
 
         Docket comp = service.read("8888");
-        Assert.assertNotEquals(dokcet.getDocketID(), comp.getDocketID());
+        System.out.println(comp);
+        Assert.assertNotEquals(dokcet.getDate(), comp.getDate());
         System.out.println("Updated\n" + service.read("8888"));
     }
 

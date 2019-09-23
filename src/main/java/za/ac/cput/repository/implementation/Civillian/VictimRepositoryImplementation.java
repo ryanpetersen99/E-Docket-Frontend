@@ -4,63 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Civilian.Victim;
 import za.ac.cput.repository.Civilian.VictimRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("VictimRepository")
 public class VictimRepositoryImplementation implements VictimRepository {
 
-    private static VictimRepositoryImplementation victimRepositoryImplementation = null;
-    private Set<Victim> victimSet;
+    private static VictimRepositoryImplementation compRepImp = null;
+    private Map<String, Victim> victimSet;
 
     private VictimRepositoryImplementation() {
-        this.victimSet = new HashSet<>();
-    }
-
-
-    private Victim findVictim(String victimID) {
-        return this.victimSet.stream()
-                .filter(victim -> victim.getVictimID().trim().equals(victimID))
-                .findAny()
-                .orElse(null);
+        this.victimSet = new HashMap<>();
     }
 
     public static VictimRepositoryImplementation getRepository() {
-        if (victimRepositoryImplementation == null)
-            victimRepositoryImplementation = new VictimRepositoryImplementation();
-        return victimRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new VictimRepositoryImplementation();
+        return compRepImp;
     }
+
+//    private Victim findVictim(String victimID) {
+//        return this.victimSet.stream()
+//                .filter(victim -> victim.getVictimID().trim().equals(victimID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
     public Victim create(Victim victim) {
-        this.victimSet.add(victim);
+        if (read(victim.getVictimID()) == null) {
+            this.victimSet.put(victim.getVictimID(), victim);
+        }
         return victim;
     }
 
     @Override
-    public Victim read(String victimID) {
-        return findVictim(victimID);
+    public Victim read(String id) {
+        return this.victimSet.get(id);
     }
 
     @Override
     public Victim update(Victim victim) {
-        Victim delete = findVictim(victim.getVictimID());
-        if (delete != null) {
-            this.victimSet.remove(delete);
-            return create(victim);
+        if (read(victim.getVictimID()) != null) {
+            victimSet.replace(victim.getVictimID(), victim);
         }
-        return null;
+        return victim;
     }
 
     @Override
-    public void delete(String victimID) {
-        Victim victim = findVictim(victimID);
-        if (victim != null) {
-            this.victimSet.remove(victim);
-        }
+    public void delete(String id) {
+        Victim victim = read(id);
+        this.victimSet.remove(id, victim);
+
     }
 
     public Set<Victim> getVictimSet() {
-        return this.victimSet;
+        Collection<Victim> victim = this.victimSet.values();
+        Set<Victim> set = new HashSet<>();
+        set.addAll(victim);
+        return set;
     }
 }

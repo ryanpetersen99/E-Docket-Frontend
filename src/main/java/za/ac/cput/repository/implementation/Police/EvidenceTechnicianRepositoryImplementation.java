@@ -2,65 +2,64 @@ package za.ac.cput.repository.implementation.Police;
 
 import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.EvidenceTechnician;
-import za.ac.cput.repository.Police.Evidence_TechnicianRepository;
+import za.ac.cput.repository.Police.EvidenceTechnicianRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("EvidenceTechnicianRepository")
-public class EvidenceTechnicianRepositoryImplementation implements Evidence_TechnicianRepository {
+public class EvidenceTechnicianRepositoryImplementation implements EvidenceTechnicianRepository {
 
-    private static EvidenceTechnicianRepositoryImplementation evidenceTechnicianRepositoryImplementation = null;
-    private Set<EvidenceTechnician> evidence_technicianSet;
+    private static EvidenceTechnicianRepositoryImplementation compRepImp = null;
+    private Map<String, EvidenceTechnician> etSet;
 
     private EvidenceTechnicianRepositoryImplementation() {
-        this.evidence_technicianSet = new HashSet<>();
-    }
-
-
-    private EvidenceTechnician findEvidenceTech(String evidenceTechID) {
-        return this.evidence_technicianSet.stream()
-                .filter(evidenceTechnician -> evidenceTechnician.getEvidenceTechID().trim().equals(evidenceTechID))
-                .findAny()
-                .orElse(null);
+        this.etSet = new HashMap<>();
     }
 
     public static EvidenceTechnicianRepositoryImplementation getRepository() {
-        if (evidenceTechnicianRepositoryImplementation == null)
-            evidenceTechnicianRepositoryImplementation = new EvidenceTechnicianRepositoryImplementation();
-        return evidenceTechnicianRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new EvidenceTechnicianRepositoryImplementation();
+        return compRepImp;
     }
 
-    @Override
-    public EvidenceTechnician create(EvidenceTechnician evidenceTechnician) {
-        this.evidence_technicianSet.add(evidenceTechnician);
-        return evidenceTechnician;
-    }
+//    private EvidenceTechnician findEvidenceTechnician(String etID) {
+//        return this.etSet.stream()
+//                .filter(et -> et.getEvidenceTechnicianID().trim().equals(etID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
-    public EvidenceTechnician read(String evidTechID) {
-        return findEvidenceTech(evidTechID);
-    }
-
-    @Override
-    public EvidenceTechnician update(EvidenceTechnician evidenceTechnician) {
-        EvidenceTechnician delete = findEvidenceTech(evidenceTechnician.getEvidenceTechID());
-        if (delete != null) {
-            this.evidence_technicianSet.remove(delete);
-            return create(evidenceTechnician);
+    public EvidenceTechnician create(EvidenceTechnician et) {
+        if (read(et.getEvidenceTechID()) == null) {
+            this.etSet.put(et.getEvidenceTechID(), et);
         }
-        return null;
+        return et;
     }
 
     @Override
-    public void delete(String evidTechID) {
-        EvidenceTechnician evidenceTechnician = findEvidenceTech(evidTechID);
-        if (evidenceTechnician != null) {
-            this.evidence_technicianSet.remove(evidenceTechnician);
+    public EvidenceTechnician read(String id) {
+        return this.etSet.get(id);
+    }
+
+    @Override
+    public EvidenceTechnician update(EvidenceTechnician et) {
+        if (read(et.getEvidenceTechID()) != null) {
+            etSet.replace(et.getEvidenceTechID(), et);
         }
+        return et;
+    }
+
+    @Override
+    public void delete(String id) {
+        EvidenceTechnician et = read(id);
+        this.etSet.remove(id, et);
+
     }
 
     public Set<EvidenceTechnician> getEvidenceTechnicianSet() {
-        return this.evidence_technicianSet;
+        Collection<EvidenceTechnician> et = this.etSet.values();
+        Set<EvidenceTechnician> set = new HashSet<>();
+        set.addAll(et);
+        return set;
     }
 }

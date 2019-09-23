@@ -4,62 +4,62 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.PendingCase;
 import za.ac.cput.repository.System.PendingCaseRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Repository("PendingCaseRepository")
 public class PendingCaseRepositoryImplementation implements PendingCaseRepository {
 
-    private static PendingCaseRepositoryImplementation pendingCaseRepositoryImplementation = null;
-    private Set<PendingCase> pendingCaseSet;
+    private static PendingCaseRepositoryImplementation compRepImp = null;
+    private Map<String, PendingCase> pendingcaseSet;
 
     private PendingCaseRepositoryImplementation() {
-        this.pendingCaseSet = new HashSet<>();
-    }
-
-    private PendingCase findCase(String caseID) {
-        return this.pendingCaseSet.stream()
-                .filter(pendingCase -> pendingCase.getCaseID().trim().equals(caseID))
-                .findAny()
-                .orElse(null);
+        this.pendingcaseSet = new HashMap<>();
     }
 
     public static PendingCaseRepositoryImplementation getRepository() {
-        if (pendingCaseRepositoryImplementation == null)
-            pendingCaseRepositoryImplementation = new PendingCaseRepositoryImplementation();
-        return pendingCaseRepositoryImplementation;
+        if (compRepImp == null) compRepImp = new PendingCaseRepositoryImplementation();
+        return compRepImp;
     }
 
-    @Override
-    public PendingCase create(PendingCase pendingCase) {
-        this.pendingCaseSet.add(pendingCase);
-        return pendingCase;
-    }
+//    private PendingCase findPendingCase(String pendingcaseID) {
+//        return this.pendingcaseSet.stream()
+//                .filter(pendingcase -> pendingcase.getPendingCaseID().trim().equals(pendingcaseID))
+//                .findAny()
+//                .orElse(null);
+//    }
 
     @Override
-    public PendingCase read(String caseID) {
-        return findCase(caseID);
-    }
-
-    @Override
-    public PendingCase update(PendingCase pendingCase) {
-        PendingCase delete = findCase(pendingCase.getCaseID());
-        if (delete != null) {
-            this.pendingCaseSet.remove(delete);
-            return create(pendingCase);
+    public PendingCase create(PendingCase pendingcase) {
+        if (read(pendingcase.getCaseID()) == null) {
+            this.pendingcaseSet.put(pendingcase.getCaseID(), pendingcase);
         }
-        return null;
+        return pendingcase;
     }
 
     @Override
-    public void delete(String caseID) {
-        PendingCase pendingCase = findCase(caseID);
-        if (caseID != null) {
-            this.pendingCaseSet.remove(pendingCase);
+    public PendingCase read(String id) {
+        return this.pendingcaseSet.get(id);
+    }
+
+    @Override
+    public PendingCase update(PendingCase pendingcase) {
+        if (read(pendingcase.getCaseID()) != null) {
+            pendingcaseSet.replace(pendingcase.getCaseID(), pendingcase);
         }
+        return pendingcase;
+    }
+
+    @Override
+    public void delete(String id) {
+        PendingCase pendingcase = read(id);
+        this.pendingcaseSet.remove(id, pendingcase);
+
     }
 
     public Set<PendingCase> getPendingCaseSet() {
-        return this.pendingCaseSet;
+        Collection<PendingCase> pendingcase = this.pendingcaseSet.values();
+        Set<PendingCase> set = new HashSet<>();
+        set.addAll(pendingcase);
+        return set;
     }
 }

@@ -25,22 +25,22 @@ public class EvidenceServiceImplementation implements EvidenceService {
 
     @Override
     public Evidence create(Evidence evidence) {
-        return this.create(evidence);
+        return this.evidenceRepository.create(evidence);
     }
 
     @Override
     public Evidence read(String e) {
-        return this.read(e);
+        return this.evidenceRepository.read(e);
     }
 
     @Override
     public Evidence update(Evidence evidence) {
-        return this.update(evidence);
+        return this.evidenceRepository.update(evidence);
     }
 
     @Override
     public void delete(String e) {
-        this.delete(e);
+        this.evidenceRepository.delete(e);
     }
 
     public Set<Evidence> getEvidenceSet() {

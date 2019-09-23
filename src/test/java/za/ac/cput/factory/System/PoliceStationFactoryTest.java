@@ -13,7 +13,8 @@ public class PoliceStationFactoryTest {
     public void getPoliceStation() {
 
         String name = "Woodstock Police Station";
-        PoliceStation policeStation = PoliceStationFactory.getPoliceStation(name);
+        String number = "5555";
+        PoliceStation policeStation = PoliceStationFactory.getPoliceStation(name,number);
         System.out.println(policeStation);
         Assert.assertNotNull(policeStation.getStationName());
     }
