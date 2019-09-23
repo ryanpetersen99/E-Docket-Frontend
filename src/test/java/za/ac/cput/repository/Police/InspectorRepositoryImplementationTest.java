@@ -12,7 +12,6 @@ import za.ac.cput.factory.Police.InspectorFactory;
 import za.ac.cput.repository.implementation.Police.InspectorRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -30,7 +29,7 @@ public class InspectorRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         inspectorRepository = InspectorRepositoryImplementation.getRepository();
-        inspector = InspectorFactory.getInspector("8888", "Ryan", "Petersen","5555");
+        inspector = InspectorFactory.getInspector("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -52,7 +51,7 @@ public class InspectorRepositoryImplementationTest {
 
         inspectorRepository.create(inspector);
 
-        Inspector updatedInspector = InspectorFactory.getInspector("37443", "Ryan", "Petersen","5555");
+        Inspector updatedInspector = InspectorFactory.getInspector("37443", "Ryan", "Petersen", "5555");
 
         inspectorRepository.update(updatedInspector);
 

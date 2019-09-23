@@ -13,8 +13,6 @@ import za.ac.cput.domain.Police.EvidenceTechnician;
 import za.ac.cput.factory.Police.Evidence_TechnicianFactory;
 import za.ac.cput.service.Police.implementation.EvidenceTechnicianServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -29,8 +27,8 @@ public class EvidenceServiceRepositoryImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (EvidenceTechnicianServiceImplementation) EvidenceTechnicianServiceImplementation.getETService();
-        evidence = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan","Petersen","5555");
+        service = EvidenceTechnicianServiceImplementation.getETService();
+        evidence = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class EvidenceServiceRepositoryImplementationTest {
         service.create(evidence);
         System.out.println(service.read("8888"));
 
-        EvidenceTechnician evidenceUpdated = Evidence_TechnicianFactory.getEvidence_Technician("5555", "Ryaaan","Petersen","5555");
+        EvidenceTechnician evidenceUpdated = Evidence_TechnicianFactory.getEvidence_Technician("5555", "Ryaaan", "Petersen", "5555");
         service.update(evidenceUpdated);
 
         EvidenceTechnician comp = service.read("8888");

@@ -8,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.PoliceStation;
-import za.ac.cput.domain.System.PoliceStation;
 import za.ac.cput.factory.System.PoliceStationFactory;
-import za.ac.cput.factory.System.PoliceStationFactory;
-import za.ac.cput.repository.implementation.System.PoliceStationRepositoryImplementation;
 import za.ac.cput.repository.implementation.System.PoliceStationRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;

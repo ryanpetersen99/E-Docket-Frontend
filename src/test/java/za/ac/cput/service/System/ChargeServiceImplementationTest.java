@@ -13,8 +13,6 @@ import za.ac.cput.domain.System.Charge;
 import za.ac.cput.factory.System.ChargeFactory;
 import za.ac.cput.service.System.implementation.ChargeServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -29,7 +27,7 @@ public class ChargeServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (ChargeServiceImplementation) ChargeServiceImplementation.getRepository();
+        service = ChargeServiceImplementation.getRepository();
         charge = ChargeFactory.getCharge("8888", "12");
     }
 

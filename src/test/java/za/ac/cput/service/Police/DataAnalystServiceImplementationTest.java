@@ -13,8 +13,6 @@ import za.ac.cput.domain.Police.DataAnalyst;
 import za.ac.cput.factory.Police.DataAnalystFactory;
 import za.ac.cput.service.Police.implementation.DataAnalystServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -29,8 +27,8 @@ public class DataAnalystServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (DataAnalystServiceImplementation) DataAnalystServiceImplementation.getDaService();
-        da = DataAnalystFactory.getDataAnalyst("8888", "Ryan","Petersen");
+        service = DataAnalystServiceImplementation.getDaService();
+        da = DataAnalystFactory.getDataAnalyst("8888", "Ryan", "Petersen");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class DataAnalystServiceImplementationTest {
         service.create(da);
         System.out.println(service.read("8888"));
 
-        DataAnalyst daUpdated = DataAnalystFactory.getDataAnalyst("5555", "Ryaaan","Petersen");
+        DataAnalyst daUpdated = DataAnalystFactory.getDataAnalyst("5555", "Ryaaan", "Petersen");
         service.update(daUpdated);
 
         DataAnalyst comp = service.read("8888");

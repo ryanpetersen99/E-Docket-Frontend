@@ -8,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Victim;
-import za.ac.cput.domain.Civilian.Victim;
 import za.ac.cput.factory.Civilian.VictimFactory;
-import za.ac.cput.factory.Civilian.VictimFactory;
-import za.ac.cput.repository.implementation.Civillian.VictimRepositoryImplementation;
 import za.ac.cput.repository.implementation.Civillian.VictimRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -33,7 +29,7 @@ public class VictimRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         victimeRep = VictimRepositoryImplementation.getRepository();
-        victim = VictimFactory.getVictim("8888", "Ryan", "Petersen","Fraud");
+        victim = VictimFactory.getVictim("8888", "Ryan", "Petersen", "Fraud");
     }
 
     @Test
@@ -47,7 +43,7 @@ public class VictimRepositoryImplementationTest {
     public void VictimCreateTest() throws IOException {
         victimeRep.create(victim);
         Assert.assertNotNull(victimeRep.getVictimSet());
-        System.out.println("Created\n" + victimeRep.getVictimSet() );
+        System.out.println("Created\n" + victimeRep.getVictimSet());
     }
 
     @Test
@@ -55,7 +51,7 @@ public class VictimRepositoryImplementationTest {
 
         victimeRep.create(victim);
 
-        Victim updatedVictim = VictimFactory.getVictim("37443", "Ryan", "Petersen","murder");
+        Victim updatedVictim = VictimFactory.getVictim("37443", "Ryan", "Petersen", "murder");
 
         victimeRep.update(updatedVictim);
 

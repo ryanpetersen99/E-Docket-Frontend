@@ -13,8 +13,6 @@ import za.ac.cput.domain.System.Docket;
 import za.ac.cput.factory.System.DocketFactory;
 import za.ac.cput.service.System.implementation.DocketServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -29,7 +27,7 @@ public class DocketServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (DocketServiceImplementation) DocketServiceImplementation.getDocketService();
+        service = DocketServiceImplementation.getDocketService();
         dokcet = DocketFactory.getDocket("8888");
     }
 

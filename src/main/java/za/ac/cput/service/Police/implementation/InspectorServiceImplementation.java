@@ -2,11 +2,8 @@ package za.ac.cput.service.Police.implementation;
 
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.Police.Inspector;
-import za.ac.cput.domain.Police.Inspector;
-import za.ac.cput.repository.Police.InspectorRepository;
 import za.ac.cput.repository.Police.InspectorRepository;
 import za.ac.cput.repository.implementation.Police.InspectorRepositoryImplementation;
-import za.ac.cput.service.Police.InspectorService;
 import za.ac.cput.service.Police.InspectorService;
 
 import java.util.Set;

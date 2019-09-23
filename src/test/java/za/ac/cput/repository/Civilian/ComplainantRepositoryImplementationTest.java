@@ -1,5 +1,6 @@
 package za.ac.cput.repository.Civilian;
 //RyanPetersen
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +16,6 @@ import java.io.IOException;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringRunner.class)
@@ -30,7 +30,7 @@ public class ComplainantRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         complainantRepository = ComplainantRepositoryImplementation.getRepository();
-        complainant = ComplainantFactory.getComplainant("8888", "Ryan", "Petersen","Fraud");
+        complainant = ComplainantFactory.getComplainant("8888", "Ryan", "Petersen", "Fraud");
     }
 
     @Test
@@ -41,10 +41,10 @@ public class ComplainantRepositoryImplementationTest {
     }
 
     @Test
-    public void ComplainantCreateTest() throws IOException{
+    public void ComplainantCreateTest() throws IOException {
         complainantRepository.create(complainant);
         Assert.assertNotNull(complainantRepository.getComplainantSet());
-        System.out.println("Created\n" + complainantRepository.getComplainantSet() );
+        System.out.println("Created\n" + complainantRepository.getComplainantSet());
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ComplainantRepositoryImplementationTest {
 
         complainantRepository.create(complainant);
 
-        Complainant updatedComplainant = ComplainantFactory.getComplainant("37443", "Ryan", "Petersen","murder");
+        Complainant updatedComplainant = ComplainantFactory.getComplainant("37443", "Ryan", "Petersen", "murder");
 
         complainantRepository.update(updatedComplainant);
 

@@ -49,12 +49,12 @@ public class ChargeControllerTest {
     @Test
     public void delete() {
 
-        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "assault" , Charge.class);
+        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "assault", Charge.class);
         assertNotNull(charge);
-        restTemplate.delete(baseURL + "/delete/" + "assault" );
+        restTemplate.delete(baseURL + "/delete/" + "assault");
 
         try {
-            charge = restTemplate.getForObject(baseURL + "/find/" + "assault" , Charge.class);
+            charge = restTemplate.getForObject(baseURL + "/find/" + "assault", Charge.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

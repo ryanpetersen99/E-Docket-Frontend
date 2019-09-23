@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Suspect;
-import za.ac.cput.domain.Civilian.Suspect;
 import za.ac.cput.factory.Civilian.SuspectFactory;
-import za.ac.cput.factory.Civilian.SuspectFactory;
-import za.ac.cput.repository.Civilian.SuspectRepository;
-import za.ac.cput.repository.implementation.Civillian.SuspectRepositoryImplementation;
 import za.ac.cput.service.Civilian.implementation.SuspectServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -34,7 +28,7 @@ public class SuspectServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = SuspectServiceImplementation.getSuspectService();
-        suspect = SuspectFactory.getSuspect("8888", "Ryan","Petersen","Mugged");
+        suspect = SuspectFactory.getSuspect("8888", "Ryan", "Petersen", "Mugged");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class SuspectServiceImplementationTest {
         service.create(suspect);
         System.out.println(service.read("8888"));
 
-        Suspect suspectUpdated = SuspectFactory.getSuspect("7777", "Ryan","Petersen","Mugged");
+        Suspect suspectUpdated = SuspectFactory.getSuspect("7777", "Ryan", "Petersen", "Mugged");
         service.update(suspectUpdated);
 
         Suspect sus = service.read("8888");

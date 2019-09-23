@@ -13,8 +13,6 @@ import za.ac.cput.domain.System.PendingCase;
 import za.ac.cput.factory.System.PendingCaseFactory;
 import za.ac.cput.service.System.implementation.PendingCaseServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -29,8 +27,8 @@ public class PendingCaseServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (PendingCaseServiceImplementation) PendingCaseServiceImplementation.getRepository();
-        pc = PendingCaseFactory.getPendingCase("8888", "Ryan",7,"15 may 2010");
+        service = PendingCaseServiceImplementation.getRepository();
+        pc = PendingCaseFactory.getPendingCase("8888", "Ryan", 7, "15 may 2010");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class PendingCaseServiceImplementationTest {
         service.create(pc);
         System.out.println(service.read("8888"));
 
-        PendingCase pcUpdated = PendingCaseFactory.getPendingCase("5555", "Ryan",5,"14 may 2010");
+        PendingCase pcUpdated = PendingCaseFactory.getPendingCase("5555", "Ryan", 5, "14 may 2010");
         service.update(pcUpdated);
 
         PendingCase comp = service.read("8888");

@@ -11,11 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Complainant;
 import za.ac.cput.factory.Civilian.ComplainantFactory;
-import za.ac.cput.repository.Civilian.ComplainantRepository;
-import za.ac.cput.repository.implementation.Civillian.ComplainantRepositoryImplementation;
 import za.ac.cput.service.Civilian.implementation.ComplainantServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -32,7 +28,7 @@ public class ComplainantServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = ComplainantServiceImplementation.getCompService();
-        complainant = ComplainantFactory.getComplainant("8888", "Ryan","Petersen","Mugged");
+        complainant = ComplainantFactory.getComplainant("8888", "Ryan", "Petersen", "Mugged");
     }
 
     @Test
@@ -66,7 +62,7 @@ public class ComplainantServiceImplementationTest {
         service.create(complainant);
         System.out.println(service.read("8888"));
 
-        Complainant complainantUpdated = ComplainantFactory.getComplainant("8888", "Ryann","Petersenn","Muggged");
+        Complainant complainantUpdated = ComplainantFactory.getComplainant("8888", "Ryann", "Petersenn", "Muggged");
         service.update(complainantUpdated);
 
         Complainant comp = service.read("8888");

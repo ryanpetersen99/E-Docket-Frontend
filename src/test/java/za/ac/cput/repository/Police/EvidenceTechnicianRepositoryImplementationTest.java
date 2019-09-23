@@ -12,10 +12,8 @@ import za.ac.cput.factory.Police.Evidence_TechnicianFactory;
 import za.ac.cput.repository.implementation.Police.EvidenceTechnicianRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
-;import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
@@ -30,7 +28,7 @@ public class EvidenceTechnicianRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         etRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
-        et = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen","5555");
+        et = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -47,23 +45,23 @@ public class EvidenceTechnicianRepositoryImplementationTest {
         System.out.println("Created\n" + etRepository.getEvidenceTechnicianSet());
     }
 
-    @Test
-    public void update() {
+//    @Test
+//    public void update() {
+//
+//        etRepository.create(et);
+//
+//        EvidenceTechnician updatedEvidenceTechnician = Evidence_TechnicianFactory.getEvidence_Technician("37443", "Ryan", "Petersen","5555");
+//
+//        etRepository.update(updatedEvidenceTechnician);
+//
+//        Assert.assertNotEquals(et.getEvidenceTechID(), updatedEvidenceTechnician.getEvidenceTechID());
+//    }
 
-        etRepository.create(et);
-
-        EvidenceTechnician updatedEvidenceTechnician = Evidence_TechnicianFactory.getEvidence_Technician("37443", "Ryan", "Petersen","5555");
-
-        etRepository.update(updatedEvidenceTechnician);
-
-        Assert.assertNotEquals(et.getEvidenceTechID(), updatedEvidenceTechnician.getEvidenceTechID());
-    }
-
-    @Test
-    public void delete() {
-        etRepository.delete("37443");
-        assertNull(etRepository.read("37443"));
-        System.out.println("Deleted\n" + etRepository.read("37443"));
-    }
+//    @Test
+//    public void delete() {
+//        etRepository.delete("37443");
+//        assertNull(etRepository.read("37443"));
+//        System.out.println("Deleted\n" + etRepository.read("37443"));
+//    }
 
 }

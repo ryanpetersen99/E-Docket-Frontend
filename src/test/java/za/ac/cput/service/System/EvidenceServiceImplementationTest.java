@@ -27,7 +27,7 @@ public class EvidenceServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (EvidenceServiceImplementation) EvidenceServiceImplementation.getRepository();
+        service = EvidenceServiceImplementation.getRepository();
         evidence = EvidenceFactory.getEvidence("8888", "Ryan");
     }
 

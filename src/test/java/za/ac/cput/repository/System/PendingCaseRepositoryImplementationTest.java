@@ -12,7 +12,6 @@ import za.ac.cput.factory.System.PendingCaseFactory;
 import za.ac.cput.repository.implementation.System.PendingCaseRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -30,7 +29,7 @@ public class PendingCaseRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         pendingCaseRepository = PendingCaseRepositoryImplementation.getRepository();
-        pendingCase = PendingCaseFactory.getPendingCase("8888", "Ryan", 5,"14 May 2010");
+        pendingCase = PendingCaseFactory.getPendingCase("8888", "Ryan", 5, "14 May 2010");
     }
 
     @Test
@@ -52,7 +51,7 @@ public class PendingCaseRepositoryImplementationTest {
 
         pendingCaseRepository.create(pendingCase);
 
-        PendingCase updatedPendingCase = PendingCaseFactory.getPendingCase("37443", "Ryan", 5,"14 may 2010");
+        PendingCase updatedPendingCase = PendingCaseFactory.getPendingCase("37443", "Ryan", 5, "14 may 2010");
 
         pendingCaseRepository.update(updatedPendingCase);
 

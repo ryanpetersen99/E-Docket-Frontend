@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.SolvedCase;
-import za.ac.cput.domain.System.SolvedCase;
 import za.ac.cput.factory.System.SolvedCaseFactory;
-import za.ac.cput.factory.System.SolvedCaseFactory;
-import za.ac.cput.repository.System.SolvedCaseRepository;
-import za.ac.cput.repository.implementation.System.SolvedCaseRepositoryImplementation;
 import za.ac.cput.service.System.implementation.SolvedCaseServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -33,8 +27,8 @@ public class SolvedCaseServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (SolvedCaseServiceImplementation) SolvedCaseServiceImplementation.getRepository();
-        sc = SolvedCaseFactory.getSolvedCase("8888", "Ryan",7,"15 may 2010");
+        service = SolvedCaseServiceImplementation.getRepository();
+        sc = SolvedCaseFactory.getSolvedCase("8888", "Ryan", 7, "15 may 2010");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class SolvedCaseServiceImplementationTest {
         service.create(sc);
         System.out.println(service.read("8888"));
 
-        SolvedCase scUpdated = SolvedCaseFactory.getSolvedCase("5555", "Ryan",5,"14 may 2010");
+        SolvedCase scUpdated = SolvedCaseFactory.getSolvedCase("5555", "Ryan", 5, "14 may 2010");
         service.update(scUpdated);
 
         SolvedCase comp = service.read("8888");

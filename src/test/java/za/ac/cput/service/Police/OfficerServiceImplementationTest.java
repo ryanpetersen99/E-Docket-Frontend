@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Officer;
-import za.ac.cput.domain.Police.Officer;
 import za.ac.cput.factory.Police.OfficerFactory;
-import za.ac.cput.factory.Police.OfficerFactory;
-import za.ac.cput.repository.Police.OfficerRepository;
-import za.ac.cput.repository.implementation.Police.OfficerRepositoryImplementation;
 import za.ac.cput.service.Police.implementation.OfficerServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -32,8 +26,8 @@ public class OfficerServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (OfficerServiceImplementation) OfficerServiceImplementation.getOfficerService();
-        officer = OfficerFactory.getOfficer("8888", "Ryan","Petersen","5555");
+        service = OfficerServiceImplementation.getOfficerService();
+        officer = OfficerFactory.getOfficer("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -67,7 +61,7 @@ public class OfficerServiceImplementationTest {
         service.create(officer);
         System.out.println(service.read("8888"));
 
-        Officer officerUpdated = OfficerFactory.getOfficer("5555", "Ryan","Petersen","5555");
+        Officer officerUpdated = OfficerFactory.getOfficer("5555", "Ryan", "Petersen", "5555");
         service.update(officerUpdated);
 
         Officer comp = service.read("8888");

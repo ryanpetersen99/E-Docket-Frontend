@@ -1,5 +1,6 @@
 package za.ac.cput.repository.Civilian;
 //Ryan Petersen 217027806
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,14 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Convict;
-import za.ac.cput.domain.Civilian.Convict;
 import za.ac.cput.factory.Civilian.ConvictFactory;
-import za.ac.cput.factory.Civilian.ConvictFactory;
-import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
 import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -33,7 +30,7 @@ public class ConvictRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         convictRep = ConvictRepositoryImplementation.getRepository();
-        convict = ConvictFactory.getConvict("8888", "Ryan", "Petersen","Fraud");
+        convict = ConvictFactory.getConvict("8888", "Ryan", "Petersen", "Fraud");
     }
 
     @Test
@@ -47,7 +44,7 @@ public class ConvictRepositoryImplementationTest {
     public void ConvictCreateTest() throws IOException {
         convictRep.create(convict);
         Assert.assertNotNull(convictRep.getConvictSet());
-        System.out.println("Created\n" + convictRep.getConvictSet() );
+        System.out.println("Created\n" + convictRep.getConvictSet());
     }
 
     @Test
@@ -55,7 +52,7 @@ public class ConvictRepositoryImplementationTest {
 
         convictRep.create(convict);
 
-        Convict updatedConvict = ConvictFactory.getConvict("37443", "Ryan", "Petersen","murder");
+        Convict updatedConvict = ConvictFactory.getConvict("37443", "Ryan", "Petersen", "murder");
 
         convictRep.update(updatedConvict);
 

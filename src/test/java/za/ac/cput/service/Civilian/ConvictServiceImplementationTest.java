@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Convict;
-import za.ac.cput.domain.Civilian.Convict;
 import za.ac.cput.factory.Civilian.ConvictFactory;
-import za.ac.cput.factory.Civilian.ConvictFactory;
-import za.ac.cput.repository.Civilian.ConvictRepository;
-import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
 import za.ac.cput.service.Civilian.implementation.ConvictServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -34,7 +28,7 @@ public class ConvictServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = ConvictServiceImplementation.getRepository();
-        convict = ConvictFactory.getConvict("8888", "Ryan","Petersen","Mugged");
+        convict = ConvictFactory.getConvict("8888", "Ryan", "Petersen", "Mugged");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class ConvictServiceImplementationTest {
         service.create(convict);
         System.out.println(service.read("8888"));
 
-        Convict convictUpdated = ConvictFactory.getConvict("8888", "Ty","Petersen","Mugged");
+        Convict convictUpdated = ConvictFactory.getConvict("8888", "Ty", "Petersen", "Mugged");
         service.update(convictUpdated);
 
         Convict con = service.read("8888");

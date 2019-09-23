@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Victim;
-import za.ac.cput.domain.Civilian.Victim;
 import za.ac.cput.factory.Civilian.VictimFactory;
-import za.ac.cput.factory.Civilian.VictimFactory;
-import za.ac.cput.repository.Civilian.VictimRepository;
-import za.ac.cput.repository.implementation.Civillian.VictimRepositoryImplementation;
 import za.ac.cput.service.Civilian.implementation.VictimServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -34,7 +28,7 @@ public class VictimServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = VictimServiceImplementation.getRepository();
-        vicitm = VictimFactory.getVictim("8888", "Ryan","Petersen","Mugged");
+        vicitm = VictimFactory.getVictim("8888", "Ryan", "Petersen", "Mugged");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class VictimServiceImplementationTest {
         service.create(vicitm);
         System.out.println(service.read("8888"));
 
-        Victim vicitmUpdated = VictimFactory.getVictim("8888", "Ryaan","Petersen","Mugged");
+        Victim vicitmUpdated = VictimFactory.getVictim("8888", "Ryaan", "Petersen", "Mugged");
         service.update(vicitmUpdated);
 
         Victim vic = service.read("8888");

@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Inspector;
-import za.ac.cput.domain.Police.Inspector;
 import za.ac.cput.factory.Police.InspectorFactory;
-import za.ac.cput.factory.Police.InspectorFactory;
-import za.ac.cput.repository.Police.InspectorRepository;
-import za.ac.cput.repository.implementation.Police.InspectorRepositoryImplementation;
 import za.ac.cput.service.Police.implementation.InspectorServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -33,8 +27,8 @@ public class InspectorServiceImplementationTest {
 
     @Before
     public void setUp() throws Exception {
-        service = (InspectorServiceImplementation) InspectorServiceImplementation.getInspectorService();
-        inspector = InspectorFactory.getInspector("8888", "Ryan","Petersen","5555");
+        service = InspectorServiceImplementation.getInspectorService();
+        inspector = InspectorFactory.getInspector("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class InspectorServiceImplementationTest {
         service.create(inspector);
         System.out.println(service.read("8888"));
 
-        Inspector inspectorUpdated = InspectorFactory.getInspector("5555", "Ryaaan","Petersen","5555");
+        Inspector inspectorUpdated = InspectorFactory.getInspector("5555", "Ryaaan", "Petersen", "5555");
         service.update(inspectorUpdated);
 
         Inspector comp = service.read("8888");

@@ -8,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Suspect;
-import za.ac.cput.domain.Civilian.Suspect;
 import za.ac.cput.factory.Civilian.SuspectFactory;
-import za.ac.cput.factory.Civilian.SuspectFactory;
-import za.ac.cput.repository.implementation.Civillian.SuspectRepositoryImplementation;
 import za.ac.cput.repository.implementation.Civillian.SuspectRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -33,7 +29,7 @@ public class SuspectRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         suspectRepository = SuspectRepositoryImplementation.getRepository();
-        suspect = SuspectFactory.getSuspect("8888", "Ryan", "Petersen","Fraud");
+        suspect = SuspectFactory.getSuspect("8888", "Ryan", "Petersen", "Fraud");
     }
 
     @Test
@@ -47,7 +43,7 @@ public class SuspectRepositoryImplementationTest {
     public void SuspectCreateTest() throws IOException {
         suspectRepository.create(suspect);
         Assert.assertNotNull(suspectRepository.getSuspectSet());
-        System.out.println("Created\n" + suspectRepository.getSuspectSet() );
+        System.out.println("Created\n" + suspectRepository.getSuspectSet());
     }
 
     @Test
@@ -55,7 +51,7 @@ public class SuspectRepositoryImplementationTest {
 
         suspectRepository.create(suspect);
 
-        Suspect updatedSuspect = SuspectFactory.getSuspect("37443", "Ryan", "Petersen","murder");
+        Suspect updatedSuspect = SuspectFactory.getSuspect("37443", "Ryan", "Petersen", "murder");
 
         suspectRepository.update(updatedSuspect);
 

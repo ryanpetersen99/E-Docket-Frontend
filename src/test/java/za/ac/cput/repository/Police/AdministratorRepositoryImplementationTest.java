@@ -12,7 +12,6 @@ import za.ac.cput.factory.Police.AdministratorFactory;
 import za.ac.cput.repository.implementation.Police.AdministratorRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -44,7 +43,7 @@ public class AdministratorRepositoryImplementationTest {
     public void AdministratorCreateTest() throws IOException {
         adminRepository.create(admin);
         Assert.assertNotNull(adminRepository.getAdministratorSet());
-        System.out.println("Created\n" + adminRepository.getAdministratorSet() );
+        System.out.println("Created\n" + adminRepository.getAdministratorSet());
     }
 
     @Test

@@ -8,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Officer;
-import za.ac.cput.domain.Police.Officer;
 import za.ac.cput.factory.Police.OfficerFactory;
-import za.ac.cput.factory.Police.OfficerFactory;
-import za.ac.cput.repository.implementation.Police.OfficerRepositoryImplementation;
 import za.ac.cput.repository.implementation.Police.OfficerRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -32,7 +28,7 @@ public class OfficerRepositoryImplementationTest {
     public void setUp() throws Exception {
 
         officerRepository = OfficerRepositoryImplementation.getRepository();
-        officer = OfficerFactory.getOfficer("8888", "Ryan", "Petersen","5555");
+        officer = OfficerFactory.getOfficer("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
@@ -54,7 +50,7 @@ public class OfficerRepositoryImplementationTest {
 
         officerRepository.create(officer);
 
-        Officer updatedOfficer = OfficerFactory.getOfficer("37443", "35555", "Petersen","5555");
+        Officer updatedOfficer = OfficerFactory.getOfficer("37443", "35555", "Petersen", "5555");
 
         officerRepository.update(updatedOfficer);
 

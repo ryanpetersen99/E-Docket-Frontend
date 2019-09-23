@@ -10,14 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Witness;
-import za.ac.cput.domain.Civilian.Witness;
 import za.ac.cput.factory.Civilian.WitnessFactory;
-import za.ac.cput.factory.Civilian.WitnessFactory;
-import za.ac.cput.repository.Civilian.WitnessRepository;
-import za.ac.cput.repository.implementation.Civillian.WitnessRepositoryImplementation;
 import za.ac.cput.service.Civilian.implementation.WitnessServiceImplementation;
-
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -34,7 +28,7 @@ public class WitnessServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = WitnessServiceImplementation.getWitnessService();
-        witness = WitnessFactory.getWitness("8888", "Ryan","Petersen","Mugged");
+        witness = WitnessFactory.getWitness("8888", "Ryan", "Petersen", "Mugged");
     }
 
     @Test
@@ -68,7 +62,7 @@ public class WitnessServiceImplementationTest {
         service.create(witness);
         System.out.println(service.read("8888"));
 
-        Witness witnessUpdated = WitnessFactory.getWitness("7777", "Ryan","Petersen","Mugged");
+        Witness witnessUpdated = WitnessFactory.getWitness("7777", "Ryan", "Petersen", "Mugged");
         service.update(witnessUpdated);
 
         Witness wit = service.read("8888");

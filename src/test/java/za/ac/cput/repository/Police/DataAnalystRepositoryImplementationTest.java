@@ -8,14 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.DataAnalyst;
-import za.ac.cput.domain.Police.DataAnalyst;
 import za.ac.cput.factory.Police.DataAnalystFactory;
-import za.ac.cput.factory.Police.DataAnalystFactory;
-import za.ac.cput.repository.implementation.Police.DataAnalystRepositoryImplementation;
 import za.ac.cput.repository.implementation.Police.DataAnalystRepositoryImplementation;
 
 import java.io.IOException;
-import java.util.Set;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -47,7 +43,7 @@ public class DataAnalystRepositoryImplementationTest {
     public void DataAnalystCreateTest() throws IOException {
         daRepository.create(da);
         Assert.assertNotNull(daRepository.getDataAnalystSet());
-        System.out.println("Created\n" + daRepository.getDataAnalystSet() );
+        System.out.println("Created\n" + daRepository.getDataAnalystSet());
     }
 
     @Test

@@ -13,8 +13,6 @@ import za.ac.cput.domain.Police.Administrator;
 import za.ac.cput.factory.Police.AdministratorFactory;
 import za.ac.cput.service.Police.implementation.AdministratorServiceImplementation;
 
-import java.util.Set;
-
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
@@ -30,7 +28,7 @@ public class AdministratorServiceImplementationTest {
     @Before
     public void setUp() throws Exception {
         service = (AdministratorServiceImplementation) AdministratorServiceImplementation.getAdminService();
-        admin = AdministratorFactory.getAdministrator("8888", "Ryan","Petersen");
+        admin = AdministratorFactory.getAdministrator("8888", "Ryan", "Petersen");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class AdministratorServiceImplementationTest {
         service.create(admin);
         System.out.println(service.read("8888"));
 
-        Administrator adminUpdated = AdministratorFactory.getAdministrator("8888", "Ryaan","Petersen");
+        Administrator adminUpdated = AdministratorFactory.getAdministrator("8888", "Ryaan", "Petersen");
         service.update(adminUpdated);
 
         Administrator adm = service.read("8888");

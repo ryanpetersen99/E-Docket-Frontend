@@ -5,7 +5,7 @@ public class Charge {
     private String natureOfCharge;
     private String noOfCharges;
 
-    public  Charge() {
+    public Charge() {
     }
 
     private Charge(Builder builder) {
@@ -13,7 +13,7 @@ public class Charge {
         this.noOfCharges = builder.noOfCharges;
     }
 
-    public  String getNoOfCharges() {
+    public String getNoOfCharges() {
         return noOfCharges;
     }
 
