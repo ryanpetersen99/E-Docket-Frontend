@@ -11,9 +11,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String USER_ROLE = "USER";
+    private static final String COMPLAINANT_ROLE = "COMPLAINANT";
     private static final String ADMIN_ROLE = "ADMIN";
 
     @Override
@@ -24,9 +24,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .password(encoder().encode("admin"))
                 .roles(ADMIN_ROLE)
                 .and()
-                .withUser("user")
-                .password(encoder().encode("user"))
-                .roles(USER_ROLE);
+                .withUser("complainant")
+                .password(encoder().encode("complainant"))
+                .roles(COMPLAINANT_ROLE);
     }
 
     @Override
