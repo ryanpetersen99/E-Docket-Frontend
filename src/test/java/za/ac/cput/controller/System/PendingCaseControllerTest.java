@@ -57,7 +57,7 @@ public class PendingCaseControllerTest {
 
         PendingCase pendingCase = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);
         assertNotNull(pendingCase);
-        restTemplate.delete(baseURL + "/delete/" + "555");
+        restTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
             pendingCase = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);

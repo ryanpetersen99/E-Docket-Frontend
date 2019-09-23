@@ -38,8 +38,8 @@ public class EvidenceTechnicianControllerTest {
 
     @Test
     public void findById() {
-        EvidenceTechnician lookingFor = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
-        assertNotNull(lookingFor);
+        EvidenceTechnician find = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
+        assertNotNull(find);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class EvidenceTechnicianControllerTest {
 
         EvidenceTechnician evidenceTech = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);
         assertNotNull(evidenceTech);
-        testRestTemplate.delete(baseURL + "/delete/" + "5555");
+        testRestTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             evidenceTech = testRestTemplate.getForObject(baseURL + "/find/" + "5555", EvidenceTechnician.class);

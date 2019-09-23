@@ -1,5 +1,8 @@
 package za.ac.cput.domain.Civilian;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@EntityScan
 public class Complainant {
 
     private String complainantID, complainantName, complainantSurname, complainantStatement;

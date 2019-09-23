@@ -31,7 +31,7 @@ public class EvidenceTechnician {
     }
 
     public String setEvidenceTechID(String evidenceTechID) {
-        return this.evidenceTechBadgeID = evidenceTechID;
+        return this.evidenceTechID = evidenceTechID;
     }
 
     public String setEvidenceTechName(String evidenceTechName) {

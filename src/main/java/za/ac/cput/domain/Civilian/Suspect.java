@@ -1,10 +1,13 @@
 package za.ac.cput.domain.Civilian;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
+@EntityScan
 public class Suspect {
 
     private String suspectID, suspectName, suspectSurname, suspectAccusation;
 
-    private Suspect() {
+    public Suspect() {
     }
 
     private Suspect(Builder builder) {

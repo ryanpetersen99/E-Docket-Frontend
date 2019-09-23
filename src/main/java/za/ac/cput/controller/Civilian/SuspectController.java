@@ -43,7 +43,7 @@ public class SuspectController {
 
     @GetMapping("/getAll")
     public Set<Suspect> getAll() {
-        return suspectServiceImplementation.getSuspectSet();
+        return suspectServiceImplementation.getAll();
     }
 
 

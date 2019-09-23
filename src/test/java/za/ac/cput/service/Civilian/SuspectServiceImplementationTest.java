@@ -40,8 +40,8 @@ public class SuspectServiceImplementationTest {
     @Test
     public void getAll() {
         service.create(suspect);
-        assertNotNull(service.getSuspectSet());
-        System.out.println("Get All\n" + service.getSuspectSet());
+        assertNotNull(service.getAll());
+        System.out.println("Get All\n" + service.getAll());
     }
 
     @Test

@@ -6,7 +6,6 @@ import za.ac.cput.repository.Civilian.ComplainantRepository;
 
 import java.util.*;
 
-
 @Repository("ComplainantRepository")
 public class ComplainantRepositoryImplementation implements ComplainantRepository {
 

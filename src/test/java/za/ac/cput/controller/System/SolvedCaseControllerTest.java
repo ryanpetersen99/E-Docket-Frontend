@@ -30,7 +30,7 @@ public class SolvedCaseControllerTest {
     @Test
     public void create() {
         SolvedCase solvedCase = SolvedCaseFactory.getSolvedCase(null, "Ryan", 10, "Assaulted");
-        solvedCase.setCaseID("555");
+        solvedCase.setCaseID("5555");
         ResponseEntity<SolvedCase> postResponse = restTemplate.postForEntity(baseURL + "/new", solvedCase, SolvedCase.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -57,7 +57,7 @@ public class SolvedCaseControllerTest {
 
         SolvedCase solvedCase = restTemplate.getForObject(baseURL + "/find/" + "5555", SolvedCase.class);
         assertNotNull(solvedCase);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             solvedCase = restTemplate.getForObject(baseURL + "/find/" + "5555", SolvedCase.class);

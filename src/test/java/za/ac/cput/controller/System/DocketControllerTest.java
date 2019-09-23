@@ -30,7 +30,7 @@ public class DocketControllerTest {
     @Test
     public void create() {
         Docket docket = DocketFactory.getDocket(null,"10 May 2019");
-        docket.setDocketID("555");
+        docket.setDocketID("5555");
         ResponseEntity<Docket> postResponse = restTemplate.postForEntity(baseURL + "/new", docket, Docket.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -57,7 +57,7 @@ public class DocketControllerTest {
 
         Docket docket = restTemplate.getForObject(baseURL + "/find/" + "5555", Docket.class);
         assertNotNull(docket);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             docket = restTemplate.getForObject(baseURL + "/find/" + "5555", Docket.class);

@@ -29,7 +29,7 @@ public class ChiefControllerTest {
     @Test
     public void create() {
         Chief chief = ChiefFactory.getChief(null, "Ryan", "Petersen", "Assaulted");
-        chief.setChiefID("555");
+        chief.setChiefID("5555");
         ResponseEntity<Chief> postResponse = restTemplate.postForEntity(baseURL + "/new", chief, Chief.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -56,7 +56,7 @@ public class ChiefControllerTest {
 
         Chief chief = restTemplate.getForObject(baseURL + "/find/" + "5555", Chief.class);
         assertNotNull(chief);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             chief = restTemplate.getForObject(baseURL + "/find/" + "5555", Chief.class);

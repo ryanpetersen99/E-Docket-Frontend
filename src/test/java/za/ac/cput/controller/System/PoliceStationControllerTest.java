@@ -38,16 +38,16 @@ public class PoliceStationControllerTest {
 
     @Test
     public void findById() {
-        PoliceStation lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", PoliceStation.class);
+        PoliceStation lookingFor = restTemplate.getForObject(baseURL + "/find/" + "Plain", PoliceStation.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        PoliceStation policeStation = restTemplate.getForObject(baseURL + "/find/" + "5555", PoliceStation.class);
-        policeStation.setStationName("Manenburg");
-        restTemplate.put(baseURL + "/update/" + "5555", policeStation);
-        PoliceStation policeStationUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", PoliceStation.class);
+        PoliceStation policeStation = restTemplate.getForObject(baseURL + "/find/" + "Plain", PoliceStation.class);
+        policeStation.setStationNum("5556");
+        restTemplate.put(baseURL + "/update/" + "Plain", policeStation);
+        PoliceStation policeStationUpdated = restTemplate.getForObject(baseURL + "/update/" + "Plain", PoliceStation.class);
         assertNotNull(policeStationUpdated);
 
     }
@@ -55,12 +55,12 @@ public class PoliceStationControllerTest {
     @Test
     public void delete() {
 
-        PoliceStation policeStation = restTemplate.getForObject(baseURL + "/find/" + "5555", PoliceStation.class);
+        PoliceStation policeStation = restTemplate.getForObject(baseURL + "/find/" + "Plain", PoliceStation.class);
         assertNotNull(policeStation);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "Plains");
 
         try {
-            policeStation = restTemplate.getForObject(baseURL + "/find/" + "5555", PoliceStation.class);
+            policeStation = restTemplate.getForObject(baseURL + "/find/" + "Plain", PoliceStation.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

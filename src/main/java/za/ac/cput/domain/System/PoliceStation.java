@@ -21,7 +21,8 @@ public class PoliceStation {
 
     public String setStationName(String stationName) {
         return this.stationName = stationName;
-    }public String setStationNum(String number) {
+    }
+    public String setStationNum(String number) {
         return this.number = number;
     }
 

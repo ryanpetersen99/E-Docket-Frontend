@@ -29,7 +29,7 @@ public class OfficerControllerTest {
     @Test
     public void create() {
         Officer officer = OfficerFactory.getOfficer(null, "Ryan", "Petersen", "Assaulted");
-        officer.setOfficerID("555");
+        officer.setOfficerID("5555");
         ResponseEntity<Officer> postResponse = restTemplate.postForEntity(baseURL + "/new", officer, Officer.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -56,7 +56,7 @@ public class OfficerControllerTest {
 
         Officer officer = restTemplate.getForObject(baseURL + "/find/" + "5555", Officer.class);
         assertNotNull(officer);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             officer = restTemplate.getForObject(baseURL + "/find/" + "5555", Officer.class);

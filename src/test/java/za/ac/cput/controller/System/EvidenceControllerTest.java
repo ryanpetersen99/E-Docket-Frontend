@@ -30,7 +30,7 @@ public class EvidenceControllerTest {
     @Test
     public void create() {
         Evidence evidence = EvidenceFactory.getEvidence(null, "Knife");
-        evidence.setEvidenceID("555");
+        evidence.setEvidenceID("5555");
         ResponseEntity<Evidence> postResponse = restTemplate.postForEntity(baseURL + "/new", evidence, Evidence.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -57,7 +57,7 @@ public class EvidenceControllerTest {
 
         Evidence evidence = restTemplate.getForObject(baseURL + "/find/" + "5555", Evidence.class);
         assertNotNull(evidence);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             evidence = restTemplate.getForObject(baseURL + "/find/" + "5555", Evidence.class);

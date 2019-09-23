@@ -23,31 +23,31 @@ import static junit.framework.TestCase.assertNotNull;
 public class SuspectControllerTest {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private TestRestTemplate testRestTemplate;
 
     private String baseURL = "http://localhost:8080/suspect";
 
     @Test
     public void create() {
         Suspect suspect = SuspectFactory.getSuspect(null, "Ryan", "Petersen", "Assault");
-        suspect.setSuspectID("555");
-        ResponseEntity<Suspect> postResponse = restTemplate.postForEntity(baseURL + "/new", suspect, Suspect.class);
+        suspect.setSuspectID("5555");
+        ResponseEntity<Suspect> postResponse = testRestTemplate.postForEntity(baseURL + "/new", suspect, Suspect.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
     }
 
     @Test
     public void findById() {
-        Suspect lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
-        assertNotNull(lookingFor);
+        Suspect find = testRestTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
+        assertNotNull(find);
     }
 
     @Test
     public void update() {
-        Suspect suspect = restTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
+        Suspect suspect = testRestTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
         suspect.setSuspectName("Bryan");
-        restTemplate.put(baseURL + "/update/" + "5555", suspect);
-        Suspect suspectUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Suspect.class);
+        testRestTemplate.put(baseURL + "/update/" + "5555", suspect);
+        Suspect suspectUpdated = testRestTemplate.getForObject(baseURL + "/update/" + "5555", Suspect.class);
         assertNotNull(suspectUpdated);
 
     }
@@ -55,12 +55,12 @@ public class SuspectControllerTest {
     @Test
     public void delete() {
 
-        Suspect suspect = restTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
+        Suspect suspect = testRestTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
         assertNotNull(suspect);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        testRestTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
-            suspect = restTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
+            suspect = testRestTemplate.getForObject(baseURL + "/find/" + "5555", Suspect.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
@@ -70,7 +70,7 @@ public class SuspectControllerTest {
     public void getAll() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = testRestTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
     }
 }

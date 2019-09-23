@@ -30,7 +30,7 @@ public class WitnessControllerTest {
     @Test
     public void create() {
         Witness witness = WitnessFactory.getWitness(null, "Ryan", "Petersen", "Assaulted");
-        witness.setWitnessID("555");
+        witness.setWitnessID("5555");
         ResponseEntity<Witness> postResponse = restTemplate.postForEntity(baseURL + "/new", witness, Witness.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
@@ -57,7 +57,7 @@ public class WitnessControllerTest {
 
         Witness witness = restTemplate.getForObject(baseURL + "/find/" + "5555", Witness.class);
         assertNotNull(witness);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
             witness = restTemplate.getForObject(baseURL + "/find/" + "5555", Witness.class);

@@ -43,7 +43,8 @@ public class SuspectServiceImplementation implements SuspectService {
         this.suspectRepository.delete(s);
     }
 
-    public Set<Suspect> getSuspectSet() {
+    @Override
+    public Set<Suspect> getAll() {
         return this.suspectRepository.getSuspectSet();
     }
 }
