@@ -3,69 +3,69 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.Police.Chief;
 import za.ac.cput.domain.Police.Chief;
 import za.ac.cput.factory.Police.ChiefFactory;
+import za.ac.cput.factory.Police.ChiefFactory;
+import za.ac.cput.repository.implementation.Police.ChiefRepositoryImplementation;
 import za.ac.cput.repository.implementation.Police.ChiefRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class ChiefRepositoryImplementationTest {
 
-    private ChiefRepository chiefRepository;
-    private Chief chief;
-    private Chief chief2;
 
-    public Chief getSavedChief() {
-        Set<Chief> chiefSet = this.chiefRepository.getChiefSet();
-        return chiefSet.iterator().next();
-    }
+    private ChiefRepositoryImplementation chiefRepository;
+    private Chief chief;
 
     @Before
     public void setUp() throws Exception {
-        this.chiefRepository = ChiefRepositoryImplementation.getRepository();
-        this.chief = ChiefFactory.getChief("90003", "Andy", "Herra", "1000");
-        this.chief2 = ChiefFactory.getChief("90003", "Handy", "Andy", "1000");
+
+        chiefRepository = ChiefRepositoryImplementation.getRepository();
+        chief = ChiefFactory.getChief("8888", "Ryan", "Petersen", "5555");
     }
 
     @Test
-    public void create() {
-        Chief createdChief = this.chiefRepository.create(this.chief);
-        Chief createdChief2 = this.chiefRepository.create(this.chief2);
-        System.out.println("Successfully created chief" + "\n" + createdChief);
-        System.out.println("Successfully created chief 2" + "\n" + createdChief2);
-        Assert.assertSame(createdChief, this.chief);
-        Assert.assertSame(createdChief2, this.chief2);
+    public void getAll() {
+        chiefRepository.create(chief);
+        assertNotNull(chiefRepository.getChiefSet());
+        System.out.println("Get All\n" + chiefRepository.getChiefSet());
+    }
+
+    @Test
+    public void ChiefCreateTest() throws IOException {
+        chiefRepository.create(chief);
+        Assert.assertNotNull(chiefRepository.getChiefSet());
+        System.out.println("Created\n" + chiefRepository.getChiefSet());
     }
 
     @Test
     public void update() {
-        String updatedID = "90002";
-        Chief chief = new Chief.Builder().copy(getSavedChief()).chiefID(updatedID).build();
-        this.chiefRepository.update(chief);
-        System.out.println("Updated" + "\n" + chief);
-        Assert.assertSame(updatedID, chief.getChiefID());
+
+        chiefRepository.create(chief);
+
+        Chief updatedChief = ChiefFactory.getChief("37443", "Ryan", "Petersen", "5555");
+
+        chiefRepository.update(updatedChief);
+
+        Assert.assertNotEquals(chief.getChiefID(), updatedChief.getChiefID());
     }
 
     @Test
     public void delete() {
-        Chief chiefSaved = getSavedChief();
-        this.chiefRepository.delete(getSavedChief().getChiefID());
-        getChiefSet();
-
-    }
-
-    @Test
-    public void read() {
-        Chief chiefSaved = getSavedChief();
-        Chief read = this.chiefRepository.read(chiefSaved.getChiefID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(chiefSaved, read);
-    }
-
-    @Test
-    public void getChiefSet() {
-        Set<Chief> chiefSet = this.chiefRepository.getChiefSet();
-        System.out.println("Chief" + "\n" + chiefSet);
-        Assert.assertEquals(1, chiefSet.size());
+        chiefRepository.delete("37443");
+        assertNull(chiefRepository.read("37443"));
+        System.out.println("Deleted\n" + chiefRepository.read("37443"));
     }
 }
+

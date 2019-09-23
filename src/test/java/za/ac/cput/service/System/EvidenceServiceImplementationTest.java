@@ -2,71 +2,79 @@ package za.ac.cput.service.System;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.Evidence;
 import za.ac.cput.factory.System.EvidenceFactory;
-import za.ac.cput.repository.System.EvidenceRepository;
-import za.ac.cput.repository.implementation.System.EvidenceRepositoryImplementation;
+import za.ac.cput.service.System.implementation.EvidenceServiceImplementation;
 
-import java.util.Set;
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class EvidenceServiceImplementationTest {
 
-    private EvidenceRepository evidenceRepository;
-    private Evidence evidence;
-    private Evidence evidence2;
-
-    public Evidence getSavedEvidence() {
-        Set<Evidence> evidenceSet = this.evidenceRepository.getEvidenceSet();
-        return evidenceSet.iterator().next();
-    }
+    EvidenceServiceImplementation service;
+    Evidence evidence;
 
     @Before
     public void setUp() throws Exception {
-        this.evidenceRepository = EvidenceRepositoryImplementation.getRepository();
-        this.evidence = EvidenceFactory.getEvidence("E1003191", "Gun");
-        this.evidence2 = EvidenceFactory.getEvidence("E1003192", "Bullet");
+        service = (EvidenceServiceImplementation) EvidenceServiceImplementation.getRepository();
+        evidence = EvidenceFactory.getEvidence("8888", "Ryan");
+    }
+
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(evidence);
+        assertNotNull(service.getEvidenceSet());
+        System.out.println("Get All\n" + service.getEvidenceSet());
     }
 
     @Test
     public void create() {
-        Evidence createdI = this.evidenceRepository.create(this.evidence);
-        Evidence createdI2 = this.evidenceRepository.create(this.evidence2);
-        System.out.println("Successfully created Evidence" + "\n" + evidence);
-        System.out.println("Successfully created Evidence 2" + "\n" + evidence2);
-        Assert.assertSame(createdI, this.evidence);
-        Assert.assertSame(createdI2, this.evidence2);
-    }
-
-    @Test
-    public void update() {
-        String id = "E1003193";
-        Evidence evidence = new Evidence.Builder().copy(getSavedEvidence()).evidenceID(id).build();
-        this.evidenceRepository.update(evidence);
-        System.out.println("Updated" + "\n" + evidence);
-        Assert.assertSame(id, evidence.getEvidenceID());
-    }
-
-    @Test
-    public void delete() {
-        Evidence evidenceSaved = getSavedEvidence();
-        this.evidenceRepository.delete(evidenceSaved.getEvidenceID());
-        getEvidenceSet();
+        service.create(evidence);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Evidence evidenceSaved = getSavedEvidence();
-        Evidence read = this.evidenceRepository.read(evidenceSaved.getEvidenceID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(getSavedEvidence(), read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getEvidenceSet() {
-        Set<Evidence> evidenceSet = this.evidenceRepository.getEvidenceSet();
-        System.out.println("List of Evidence" + "\n" + evidenceSet);
-        Assert.assertEquals(1, evidenceSet.size());
+    public void update() {
+        service.create(evidence);
+        System.out.println(service.read("8888"));
+
+        Evidence evidenceUpdated = EvidenceFactory.getEvidence("5555", "Ryan");
+        service.update(evidenceUpdated);
+
+        Evidence comp = service.read("8888");
+        Assert.assertNotEquals(evidence.getEvidenceID(), comp.getEvidenceID());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(evidence.getEvidenceID()));
+        System.out.println("Delete\n" + service.read(evidence.getEvidenceID()));
+    }
+
 }

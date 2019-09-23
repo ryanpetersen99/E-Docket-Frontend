@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ChargeControllerTest {
 
@@ -29,38 +29,32 @@ public class ChargeControllerTest {
 
     @Test
     public void create() {
-        Charge charge = ChargeFactory.getCharge("assualt", 0);
-        charge.setNoOfCharges(555);
+        Charge charge = ChargeFactory.getCharge(null, "44");
+        charge.setNatureOfCharge("assault");
         ResponseEntity<Charge> postResponse = restTemplate.postForEntity(baseURL + "/new", charge, Charge.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
     }
 
-    @Test
-    public void findById() {
-        Charge lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Charge.class);
-        assertNotNull(lookingFor);
-    }
-
-    @Test
-    public void update() {
-        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "5555", Charge.class);
-        charge.setNatureOfCharge("Fraud");
-        restTemplate.put(baseURL + "/update/" + "5555", charge);
-        Charge chargeUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Charge.class);
-        assertNotNull(chargeUpdated);
-
-    }
+//    @Test
+//    public void update() {
+//        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "assault" , Charge.class);
+//        charge.setNatureOfCharge("murder");
+//        restTemplate.put(baseURL + "/update/" + "assault" , charge);
+//        Charge chargeUpdated = restTemplate.getForObject(baseURL + "/update/" + "assault" , Charge.class);
+//        assertNotNull(chargeUpdated);
+//
+//    }
 
     @Test
     public void delete() {
 
-        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "5555", Charge.class);
+        Charge charge = restTemplate.getForObject(baseURL + "/find/" + "assault" , Charge.class);
         assertNotNull(charge);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "assault" );
 
         try {
-            charge = restTemplate.getForObject(baseURL + "/find/" + "5555", Charge.class);
+            charge = restTemplate.getForObject(baseURL + "/find/" + "assault" , Charge.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

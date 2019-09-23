@@ -3,69 +3,69 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.Police.DataAnalyst;
 import za.ac.cput.domain.Police.DataAnalyst;
 import za.ac.cput.factory.Police.DataAnalystFactory;
+import za.ac.cput.factory.Police.DataAnalystFactory;
+import za.ac.cput.repository.implementation.Police.DataAnalystRepositoryImplementation;
 import za.ac.cput.repository.implementation.Police.DataAnalystRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class DataAnalystRepositoryImplementationTest {
 
-    private DataAnalystRepository dataAnalystRepository;
-    private DataAnalyst dataAnalyst;
-    private DataAnalyst dataAnalyst2;
 
-
-    public DataAnalyst getSavedDA() {
-        Set<DataAnalyst> dataAnalystSet = this.dataAnalystRepository.getDataAnalystSet();
-        return dataAnalystSet.iterator().next();
-    }
+    private DataAnalystRepositoryImplementation daRepository;
+    private DataAnalyst da;
 
     @Before
     public void setUp() throws Exception {
-        this.dataAnalystRepository = DataAnalystRepositoryImplementation.getRepository();
-        this.dataAnalyst = DataAnalystFactory.getDataAnalyst("90005", "Jane", "Watson");
-        this.dataAnalyst2 = DataAnalystFactory.getDataAnalyst("90002", "Manny", "Wanny");
+
+        daRepository = DataAnalystRepositoryImplementation.getRepository();
+        da = DataAnalystFactory.getDataAnalyst("8888", "Ryan", "Petersen");
     }
 
     @Test
-    public void create() {
-        DataAnalyst createdDA = this.dataAnalystRepository.create(this.dataAnalyst);
-        DataAnalyst createdDA2 = this.dataAnalystRepository.create(this.dataAnalyst2);
-        System.out.println("Successfully created Data Analyst" + "\n" + createdDA);
-        System.out.println("Successfully created Data Analyst 2" + "\n" + createdDA2);
-        Assert.assertSame(createdDA, this.dataAnalyst);
-        Assert.assertSame(createdDA2, this.dataAnalyst2);
+    public void getAll() {
+        daRepository.create(da);
+        assertNotNull(daRepository.getDataAnalystSet());
+        System.out.println("Get All\n" + daRepository.getDataAnalystSet());
+    }
+
+    @Test
+    public void DataAnalystCreateTest() throws IOException {
+        daRepository.create(da);
+        Assert.assertNotNull(daRepository.getDataAnalystSet());
+        System.out.println("Created\n" + daRepository.getDataAnalystSet() );
     }
 
     @Test
     public void update() {
-        String name = "Jamie";
-        DataAnalyst dataAnalyst = new DataAnalyst.Builder().copy(getSavedDA()).daName(name).build();
-        DataAnalyst updatedName = this.dataAnalystRepository.update(dataAnalyst);
-        System.out.println("Updated" + "\n" + updatedName);
-        Assert.assertSame(name, updatedName.getDaName());
+
+        daRepository.create(da);
+
+        DataAnalyst updatedDataAnalyst = DataAnalystFactory.getDataAnalyst("37443", "Ryan", "Petersen");
+
+        daRepository.update(updatedDataAnalyst);
+
+        Assert.assertNotEquals(da.getDaID(), updatedDataAnalyst.getDaID());
     }
 
     @Test
     public void delete() {
-        DataAnalyst dataAnalystSaved = getSavedDA();
-        this.dataAnalystRepository.delete(dataAnalystSaved.getDaID());
-        getDASet();
-    }
-
-    @Test
-    public void read() {
-        DataAnalyst dataAnalystSaved = getSavedDA();
-        DataAnalyst read = this.dataAnalystRepository.read(dataAnalystSaved.getDaID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(dataAnalystSaved, read);
-    }
-
-    @Test
-    public void getDASet() {
-        Set<DataAnalyst> dataAnalystSet = this.dataAnalystRepository.getDataAnalystSet();
-        System.out.println("List of Data Analysts" + "\n" + dataAnalystSet);
+        daRepository.delete("37443");
+        assertNull(daRepository.read("37443"));
+        System.out.println("Deleted\n" + daRepository.read("37443"));
     }
 }

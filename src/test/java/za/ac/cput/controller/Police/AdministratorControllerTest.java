@@ -19,7 +19,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AdministratorControllerTest {
 
@@ -39,13 +39,13 @@ public class AdministratorControllerTest {
 
     @Test
     public void findById() {
-        Administrator lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Administrator.class);
+        Administrator lookingFor = restTemplate.getForObject(baseURL + "/find/" + "555", Administrator.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        Administrator administrator = restTemplate.getForObject(baseURL + "/find/" + "5555", Administrator.class);
+        Administrator administrator = restTemplate.getForObject(baseURL + "/find/" + "555", Administrator.class);
         administrator.setAdminName("Bryan");
         restTemplate.put(baseURL + "/update/" + "5555", administrator);
         Administrator administratorUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Administrator.class);
@@ -56,12 +56,12 @@ public class AdministratorControllerTest {
     @Test
     public void delete() {
 
-        Administrator administrator = restTemplate.getForObject(baseURL + "/find/" + "5555", Administrator.class);
+        Administrator administrator = restTemplate.getForObject(baseURL + "/find/" + "555", Administrator.class);
         assertNotNull(administrator);
         restTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
-            administrator = restTemplate.getForObject(baseURL + "/find/" + "5555", Administrator.class);
+            administrator = restTemplate.getForObject(baseURL + "/find/" + "555", Administrator.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

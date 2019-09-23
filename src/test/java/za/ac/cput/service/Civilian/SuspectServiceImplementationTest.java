@@ -2,71 +2,85 @@ package za.ac.cput.service.Civilian;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Suspect;
+import za.ac.cput.domain.Civilian.Suspect;
+import za.ac.cput.factory.Civilian.SuspectFactory;
 import za.ac.cput.factory.Civilian.SuspectFactory;
 import za.ac.cput.repository.Civilian.SuspectRepository;
 import za.ac.cput.repository.implementation.Civillian.SuspectRepositoryImplementation;
+import za.ac.cput.service.Civilian.implementation.SuspectServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class SuspectServiceImplementationTest {
 
-    private SuspectRepository suspectRepository;
-    private Suspect suspect;
-    private Suspect suspect2;
-
-    public Suspect getSavedSuspect() {
-        Set<Suspect> complainantSet = this.suspectRepository.getSuspectSet();
-        return complainantSet.iterator().next();
-    }
+    SuspectServiceImplementation service;
+    Suspect suspect;
 
     @Before
     public void setUp() throws Exception {
-        this.suspectRepository = SuspectRepositoryImplementation.getRepository();
-        this.suspect = SuspectFactory.getSuspect("9906142935678", "Tonny", "Gunner", "Accused of committing forgery");
-        this.suspect2 = SuspectFactory.getSuspect("9009092935678", "Lary", "Gunner", "Accused of committing forgery");
+        service = SuspectServiceImplementation.getSuspectService();
+        suspect = SuspectFactory.getSuspect("8888", "Ryan","Petersen","Mugged");
+    }
 
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(suspect);
+        assertNotNull(service.getSuspectSet());
+        System.out.println("Get All\n" + service.getSuspectSet());
     }
 
     @Test
     public void create() {
-        Suspect createdSuspect = this.suspectRepository.create(this.suspect);
-        Suspect createdSuspect2 = this.suspectRepository.create(this.suspect2);
-        System.out.println("Successfully created suspect" + "\n" + createdSuspect);
-        Assert.assertSame(createdSuspect, this.suspect);
-        Assert.assertSame(createdSuspect2, this.suspect2);
-    }
-
-    @Test
-    public void update() {
-        String updatedName = "Tony";
-        Suspect suspect = new Suspect.Builder().copy(getSavedSuspect()).suspectName(updatedName).build();
-        Suspect updatedNam = this.suspectRepository.update(suspect);
-        System.out.println("Updated" + "\n" + suspect);
-        Assert.assertSame(updatedName, updatedNam.getSuspectName());
-    }
-
-    @Test
-    public void delete() {
-        Suspect suspectSaved = getSavedSuspect();
-        this.suspectRepository.delete(suspectSaved.getSuspectID());
-        getSuspectSet();
+        service.create(suspect);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Suspect suspectSaved = getSavedSuspect();
-        Suspect read = this.suspectRepository.read(suspectSaved.getSuspectID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertSame(suspectSaved, read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getSuspectSet() {
-        Set<Suspect> suspectSet = this.suspectRepository.getSuspectSet();
-        System.out.println("Suspect List" + "\n" + suspectSet);
-        Assert.assertEquals(1, suspectSet.size());
+    public void update() {
+        service.create(suspect);
+        System.out.println(service.read("8888"));
+
+        Suspect suspectUpdated = SuspectFactory.getSuspect("7777", "Ryan","Petersen","Mugged");
+        service.update(suspectUpdated);
+
+        Suspect sus = service.read("8888");
+        Assert.assertNotEquals(suspect.getSuspectID(), sus.getSuspectID());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(suspect.getSuspectID()));
+        System.out.println("Delete\n" + service.read(suspect.getSuspectID()));
+    }
+
 }

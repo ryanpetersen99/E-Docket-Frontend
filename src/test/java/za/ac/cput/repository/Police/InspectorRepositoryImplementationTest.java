@@ -3,69 +3,67 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Inspector;
 import za.ac.cput.factory.Police.InspectorFactory;
 import za.ac.cput.repository.implementation.Police.InspectorRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class InspectorRepositoryImplementationTest {
 
-    private InspectorRepository inspectorRepository;
-    private Inspector inspector;
-    private Inspector inspector2;
 
-    public Inspector getSavedInspector() {
-        Set<Inspector> inspectorSet = this.inspectorRepository.getInspectorSet();
-        return inspectorSet.iterator().next();
-    }
+    private InspectorRepositoryImplementation inspectorRepository;
+    private Inspector inspector;
 
     @Before
     public void setUp() throws Exception {
-        this.inspectorRepository = InspectorRepositoryImplementation.getRepository();
-        this.inspector = InspectorFactory.getInspector("90005", "Jane", "Watson", "7001");
-        this.inspector2 = InspectorFactory.getInspector("90888", "Killer", "Gumede", "7009");
+
+        inspectorRepository = InspectorRepositoryImplementation.getRepository();
+        inspector = InspectorFactory.getInspector("8888", "Ryan", "Petersen","5555");
     }
 
     @Test
-    public void create() {
-        Inspector createdI = this.inspectorRepository.create(this.inspector);
-        Inspector created2 = this.inspectorRepository.create(this.inspector2);
-        System.out.println("Successfully created Inspector" + "\n" + inspector);
-        System.out.println("Successfully created Inspector 2" + "\n" + inspector2);
-        Assert.assertSame(createdI, this.inspector);
-        Assert.assertSame(created2, this.inspector2);
+    public void getAll() {
+        inspectorRepository.create(inspector);
+        assertNotNull(inspectorRepository.getInspectorSet());
+        System.out.println("Get All\n" + inspectorRepository.getInspectorSet());
+    }
+
+    @Test
+    public void InspectorCreateTest() throws IOException {
+        inspectorRepository.create(inspector);
+        Assert.assertNotNull(inspectorRepository.getInspectorSet());
+        System.out.println("Created\n" + inspectorRepository.getInspectorSet());
     }
 
     @Test
     public void update() {
-        String id = "90009";
-        Inspector inspector = new Inspector.Builder().copy(getSavedInspector()).inspectorID(id).build();
-        this.inspectorRepository.update(inspector);
-        System.out.println("Updated" + "\n" + inspector);
-        Assert.assertSame(id, inspector.getInspectorID());
+
+        inspectorRepository.create(inspector);
+
+        Inspector updatedInspector = InspectorFactory.getInspector("37443", "Ryan", "Petersen","5555");
+
+        inspectorRepository.update(updatedInspector);
+
+        Assert.assertNotEquals(inspector.getInspectorID(), updatedInspector.getInspectorID());
     }
 
     @Test
     public void delete() {
-        Inspector inspectorSaved = getSavedInspector();
-        this.inspectorRepository.delete(inspectorSaved.getInspectorID());
-        getInspectorSet();
+        inspectorRepository.delete("37443");
+        assertNull(inspectorRepository.read("37443"));
+        System.out.println("Deleted\n" + inspectorRepository.read("37443"));
     }
 
-    @Test
-    public void read() {
-        Inspector inspectorSaved = getSavedInspector();
-        Inspector read = this.inspectorRepository.read(inspectorSaved.getInspectorID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(inspectorSaved, read);
-    }
-
-    @Test
-    public void getInspectorSet() {
-        Set<Inspector> inspectorSet = this.inspectorRepository.getInspectorSet();
-        System.out.println("List of Inspectors" + "\n" + inspectorSet);
-        Assert.assertEquals(1, inspectorSet.size());
-    }
 }

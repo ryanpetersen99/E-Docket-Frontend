@@ -2,72 +2,85 @@ package za.ac.cput.service.System;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.SolvedCase;
+import za.ac.cput.domain.System.SolvedCase;
+import za.ac.cput.factory.System.SolvedCaseFactory;
 import za.ac.cput.factory.System.SolvedCaseFactory;
 import za.ac.cput.repository.System.SolvedCaseRepository;
 import za.ac.cput.repository.implementation.System.SolvedCaseRepositoryImplementation;
+import za.ac.cput.service.System.implementation.SolvedCaseServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class SolvedCaseServiceImplementationTest {
 
-    private SolvedCaseRepository solvedCaseRepository;
-    private SolvedCase solvedCase;
-    private SolvedCase solvedCase2;
-
-    public SolvedCase getSavedCase() {
-        Set<SolvedCase> solvedCaseSet = this.solvedCaseRepository.getSolvedCaseSet();
-        return solvedCaseSet.iterator().next();
-    }
+    SolvedCaseServiceImplementation service;
+    SolvedCase sc;
 
     @Before
     public void setUp() throws Exception {
-        this.solvedCaseRepository = SolvedCaseRepositoryImplementation.getRepository();
-        this.solvedCase = SolvedCaseFactory.getSolvedCase("CASE14021922", "Case relating to Mr Smith and Mrs Smith Divorce", 1, "14/02/19");
-        this.solvedCase2 = SolvedCaseFactory.getSolvedCase("CASE14021923", "Case relating to Mr Jones and Mrs Jones Divorce", 1, "14/02/19");
+        service = (SolvedCaseServiceImplementation) SolvedCaseServiceImplementation.getRepository();
+        sc = SolvedCaseFactory.getSolvedCase("8888", "Ryan",7,"15 may 2010");
+    }
 
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(sc);
+        assertNotNull(service.getSolvedCase());
+        System.out.println("Get All\n" + service.getSolvedCase());
     }
 
     @Test
     public void create() {
-        SolvedCase createdI = this.solvedCaseRepository.create(this.solvedCase);
-        SolvedCase createdI2 = this.solvedCaseRepository.create(this.solvedCase2);
-        System.out.println("Successfully created Case" + "\n" + solvedCase);
-        System.out.println("Successfully created Case 2" + "\n" + solvedCase2);
-        Assert.assertSame(createdI, this.solvedCase);
-        Assert.assertSame(createdI2, this.solvedCase2);
-    }
-
-    @Test
-    public void update() {
-        String id = "CASE14021910";
-        SolvedCase solvedCase = new SolvedCase.Builder().copy(getSavedCase()).caseID(id).build();
-        this.solvedCaseRepository.update(solvedCase);
-        System.out.println("Updated" + "\n" + solvedCase);
-        Assert.assertSame(id, solvedCase.getCaseID());
-    }
-
-    @Test
-    public void delete() {
-        SolvedCase caseSaved = getSavedCase();
-        this.solvedCaseRepository.delete(caseSaved.getCaseID());
-
+        service.create(sc);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        SolvedCase caseSaved = getSavedCase();
-        SolvedCase read = this.solvedCaseRepository.read(caseSaved.getCaseID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(getSavedCase(), read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getCaseSet() {
-        Set<SolvedCase> caseSet = this.solvedCaseRepository.getSolvedCaseSet();
-        System.out.println("List of Cases Pending" + "\n" + caseSet);
-        Assert.assertEquals(1, caseSet.size());
+    public void update() {
+        service.create(sc);
+        System.out.println(service.read("8888"));
+
+        SolvedCase scUpdated = SolvedCaseFactory.getSolvedCase("5555", "Ryan",5,"14 may 2010");
+        service.update(scUpdated);
+
+        SolvedCase comp = service.read("8888");
+        Assert.assertNotEquals(sc.getCaseID(), comp.getCaseID());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(sc.getCaseID()));
+        System.out.println("Delete\n" + service.read(sc.getCaseID()));
+    }
+
 }

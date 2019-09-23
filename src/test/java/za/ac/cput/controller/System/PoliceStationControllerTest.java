@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PoliceStationControllerTest {
 
@@ -45,7 +45,7 @@ public class PoliceStationControllerTest {
     @Test
     public void update() {
         PoliceStation policeStation = restTemplate.getForObject(baseURL + "/find/" + "5555", PoliceStation.class);
-        policeStation.setStationName("Maneburg");
+        policeStation.setStationName("Manenburg");
         restTemplate.put(baseURL + "/update/" + "5555", policeStation);
         PoliceStation policeStationUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", PoliceStation.class);
         assertNotNull(policeStationUpdated);

@@ -3,68 +3,68 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.Police.Officer;
 import za.ac.cput.domain.Police.Officer;
 import za.ac.cput.factory.Police.OfficerFactory;
+import za.ac.cput.factory.Police.OfficerFactory;
+import za.ac.cput.repository.implementation.Police.OfficerRepositoryImplementation;
 import za.ac.cput.repository.implementation.Police.OfficerRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class OfficerRepositoryImplementationTest {
 
-    private OfficerRepository officerRepository;
-    private Officer officer;
-    private Officer officer2;
 
-    public Officer getSavedOfficer() {
-        Set<Officer> officerSet = this.officerRepository.getOfficerSet();
-        return officerSet.iterator().next();
-    }
+    private OfficerRepositoryImplementation officerRepository;
+    private Officer officer;
 
     @Before
     public void setUp() throws Exception {
-        this.officerRepository = OfficerRepositoryImplementation.getRepository();
-        this.officer = OfficerFactory.getOfficer("90011", "Nbolo", "May", "7004");
-        this.officer2 = OfficerFactory.getOfficer("90012", "Olo", "June", "7005");
+
+        officerRepository = OfficerRepositoryImplementation.getRepository();
+        officer = OfficerFactory.getOfficer("8888", "Ryan", "Petersen","5555");
     }
 
     @Test
-    public void create() {
-        Officer createdO = this.officerRepository.create(this.officer);
-        Officer createdO2 = this.officerRepository.create(this.officer2);
-        System.out.println("Successfully created officer" + "\n" + officer);
-        System.out.println("Successfully created officer 2" + "\n" + officer2);
-        Assert.assertSame(createdO, this.officer);
-        Assert.assertSame(createdO2, this.officer2);
+    public void getAll() {
+        officerRepository.create(officer);
+        assertNotNull(officerRepository.getOfficerSet());
+        System.out.println("Get All\n" + officerRepository.getOfficerSet());
+    }
+
+    @Test
+    public void OfficerCreateTest() throws IOException {
+        officerRepository.create(officer);
+        Assert.assertNotNull(officerRepository.getOfficerSet());
+        System.out.println("Created\n" + officerRepository.getOfficerSet());
     }
 
     @Test
     public void update() {
-        String id = "90012";
-        Officer officer = new Officer.Builder().copy(getSavedOfficer()).officerID(id).build();
-        this.officerRepository.update(officer);
-        System.out.println("Updated" + "\n" + officer);
-        Assert.assertSame(id, officer.getOfficerID());
+
+        officerRepository.create(officer);
+
+        Officer updatedOfficer = OfficerFactory.getOfficer("37443", "35555", "Petersen","5555");
+
+        officerRepository.update(updatedOfficer);
+
+        Assert.assertNotEquals(officer.getOfficerID(), updatedOfficer.getOfficerID());
     }
 
     @Test
     public void delete() {
-        Officer officerSaved = getSavedOfficer();
-        this.officerRepository.delete(officerSaved.getOfficerID());
-        getOfficerSet();
-    }
-
-    @Test
-    public void read() {
-        Officer officerSaved = getSavedOfficer();
-        Officer read = this.officerRepository.read(officerSaved.getOfficerID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(officerSaved, read);
-    }
-
-    @Test
-    public void getOfficerSet() {
-        Set<Officer> officerSet = this.officerRepository.getOfficerSet();
-        System.out.println("List of Officers" + "\n" + officerSet);
-        Assert.assertEquals(1, officerSet.size());
+        officerRepository.delete("37443");
+        assertNull(officerRepository.read("37443"));
+        System.out.println("Deleted\n" + officerRepository.read("37443"));
     }
 }

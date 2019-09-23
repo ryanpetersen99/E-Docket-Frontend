@@ -3,71 +3,67 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Administrator;
 import za.ac.cput.factory.Police.AdministratorFactory;
 import za.ac.cput.repository.implementation.Police.AdministratorRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class AdministratorRepositoryImplementationTest {
 
-    private AdministratorRepository administratorRepository;
-    private Administrator administrator;
-    private Administrator administrator2;
 
-
-    public Administrator getSavedAdmin() {
-        Set<Administrator> administratorSet = this.administratorRepository.getAdministratorSet();
-        return administratorSet.iterator().next();
-    }
+    private AdministratorRepositoryImplementation adminRepository;
+    private Administrator admin;
 
     @Before
     public void setUp() throws Exception {
-        this.administratorRepository = AdministratorRepositoryImplementation.getRepository();
-        this.administrator = AdministratorFactory.getAdministrator("90001", "Banks", "Kim");
-        this.administrator2 = AdministratorFactory.getAdministrator("90002", "Lee", "Kim");
 
+        adminRepository = AdministratorRepositoryImplementation.getRepository();
+        admin = AdministratorFactory.getAdministrator("8888", "Ryan", "Petersen");
     }
 
     @Test
-    public void create() {
-        Administrator createdAdmin = this.administratorRepository.create(this.administrator);
-        Administrator createdAdmin2 = this.administratorRepository.create(this.administrator2);
-        System.out.println("Successfully created administrator" + "\n" + createdAdmin);
-        System.out.println("Successfully created administrator 2" + "\n" + createdAdmin2);
-        Assert.assertSame(createdAdmin, this.administrator);
-        Assert.assertSame(createdAdmin2, this.administrator2);
+    public void getAll() {
+        adminRepository.create(admin);
+        assertNotNull(adminRepository.getAdministratorSet());
+        System.out.println("Get All\n" + adminRepository.getAdministratorSet());
+    }
+
+    @Test
+    public void AdministratorCreateTest() throws IOException {
+        adminRepository.create(admin);
+        Assert.assertNotNull(adminRepository.getAdministratorSet());
+        System.out.println("Created\n" + adminRepository.getAdministratorSet() );
     }
 
     @Test
     public void update() {
-        String updatedID = "90003";
-        Administrator administrator = new Administrator.Builder().copy(getSavedAdmin()).adminID(updatedID).build();
-        this.administratorRepository.update(administrator);
-        System.out.println("Updated" + "\n" + administrator);
-        Assert.assertSame(updatedID, administrator.getAdminID());
+
+        adminRepository.create(admin);
+
+        Administrator updatedAdministrator = AdministratorFactory.getAdministrator("37443", "Ryan", "Petersen");
+
+        adminRepository.update(updatedAdministrator);
+
+        Assert.assertNotEquals(admin.getAdminID(), updatedAdministrator.getAdminID());
     }
 
     @Test
     public void delete() {
-        Administrator administratorSaved = getSavedAdmin();
-        this.administratorRepository.delete(administratorSaved.getAdminID());
+        adminRepository.delete("37443");
+        assertNull(adminRepository.read("37443"));
+        System.out.println("Deleted\n" + adminRepository.read("37443"));
     }
 
-    @Test
-    public void read() {
-        Administrator administratorSaved = getSavedAdmin();
-        Administrator read = this.administratorRepository.read(administratorSaved.getAdminID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(getSavedAdmin(), read);
-    }
-
-    @Test
-    public void getAdminSet() {
-        Set<Administrator> administratorSet = this.administratorRepository.getAdministratorSet();
-        System.out.println("List of Administrators" + "\n" + administratorSet);
-        Assert.assertEquals(1, administratorSet.size());
-
-    }
 }

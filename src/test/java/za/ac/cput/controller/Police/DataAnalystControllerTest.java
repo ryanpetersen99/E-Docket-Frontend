@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DataAnalystControllerTest {
 
@@ -38,13 +38,13 @@ public class DataAnalystControllerTest {
 
     @Test
     public void findById() {
-        DataAnalyst lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", DataAnalyst.class);
+        DataAnalyst lookingFor = restTemplate.getForObject(baseURL + "/find/" + "555", DataAnalyst.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        DataAnalyst dataAnalyst = restTemplate.getForObject(baseURL + "/find/" + "5555", DataAnalyst.class);
+        DataAnalyst dataAnalyst = restTemplate.getForObject(baseURL + "/find/" + "555", DataAnalyst.class);
         dataAnalyst.setDaName("Bryan");
         restTemplate.put(baseURL + "/update/" + "5555", dataAnalyst);
         DataAnalyst dataAnalystUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", DataAnalyst.class);
@@ -55,7 +55,7 @@ public class DataAnalystControllerTest {
     @Test
     public void delete() {
 
-        DataAnalyst dataAnalyst = restTemplate.getForObject(baseURL + "/find/" + "5555", DataAnalyst.class);
+        DataAnalyst dataAnalyst = restTemplate.getForObject(baseURL + "/find/" + "555", DataAnalyst.class);
         assertNotNull(dataAnalyst);
         restTemplate.delete(baseURL + "/delete/" + "5555");
 

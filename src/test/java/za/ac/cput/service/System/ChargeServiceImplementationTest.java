@@ -2,71 +2,81 @@ package za.ac.cput.service.System;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.Charge;
 import za.ac.cput.factory.System.ChargeFactory;
-import za.ac.cput.repository.System.ChargeRepository;
-import za.ac.cput.repository.implementation.System.ChargeRepositoryImplementation;
+import za.ac.cput.service.System.implementation.ChargeServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class ChargeServiceImplementationTest {
 
-    private ChargeRepository chargeRepository;
-    private Charge charge;
-    private Charge charge2;
-
-    public Charge getSavedCharges() {
-        Set<Charge> chargeSet = this.chargeRepository.getChargeSet();
-        return chargeSet.iterator().next();
-    }
+    ChargeServiceImplementation service;
+    Charge charge;
 
     @Before
     public void setUp() throws Exception {
-        this.chargeRepository = ChargeRepositoryImplementation.getRepository();
-        this.charge = ChargeFactory.getCharge("Murder", 1);
-        this.charge2 = ChargeFactory.getCharge("Rape,Murder", 1);
+        service = (ChargeServiceImplementation) ChargeServiceImplementation.getRepository();
+        charge = ChargeFactory.getCharge("8888", "12");
+    }
+
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(charge);
+        assertNotNull(service.getChargeSet());
+        System.out.println("Get All\n" + service.getChargeSet());
     }
 
     @Test
     public void create() {
-        Charge createdI = this.chargeRepository.create(this.charge);
-        Charge createdI2 = this.chargeRepository.create(this.charge2);
-        System.out.println("Successfully created charge" + "\n" + charge);
-        System.out.println("Successfully created charge 2" + "\n" + charge2);
-        Assert.assertSame(createdI, this.charge);
-        Assert.assertSame(createdI2, this.charge2);
-    }
-
-    @Test
-    public void update() {
-        int no = 2;
-        Charge charge = new Charge.Builder().copy(getSavedCharges()).noOfChargers(no).build();
-        Charge updatedNO = this.chargeRepository.update(charge);
-        System.out.println("Updated" + "\n" + updatedNO);
-        Assert.assertSame(no, updatedNO.getNoOfCharges());
-    }
-
-    @Test
-    public void delete() {
-        Charge chargeSaved = getSavedCharges();
-        this.chargeRepository.delete(chargeSaved.getNatureOfCharge());
-        getChargeSet();
+        service.create(charge);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Charge chargeSaved = getSavedCharges();
-        Charge read = this.chargeRepository.read(chargeSaved.getNatureOfCharge());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(chargeSaved, read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getChargeSet() {
-        Set<Charge> chargeSet = this.chargeRepository.getChargeSet();
-        System.out.println("List of Charges" + "\n" + chargeSet);
-        Assert.assertEquals(1, chargeSet.size());
+    public void update() {
+        service.create(charge);
+        System.out.println(service.read("8888"));
+
+        Charge chargeUpdated = ChargeFactory.getCharge("5555", "15");
+        service.update(chargeUpdated);
+
+        Charge comp = service.read("8888");
+        Assert.assertNotEquals(charge.getNoOfCharges(), comp.getNoOfCharges());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(charge.getNatureOfCharge()));
+        System.out.println("Delete\n" + service.read(charge.getNatureOfCharge()));
+    }
+
 }

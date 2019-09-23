@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class InspectorControllerTest {
 
@@ -36,31 +36,30 @@ public class InspectorControllerTest {
         assertNotNull(postResponse.getBody());
     }
 
-    @Test
-    public void findById() {
-        Inspector lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Inspector.class);
-        assertNotNull(lookingFor);
-    }
+//    @Test
+//    public void findById() {
+//        Inspector find = restTemplate.getForObject(baseURL + "/find/" + "555", Inspector.class);
+//        assertNotNull(find);
+//    }
 
-    @Test
-    public void update() {
-        Inspector inspector = restTemplate.getForObject(baseURL + "/find/" + "5555", Inspector.class);
-        inspector.setInspectorName("Bryan");
-        restTemplate.put(baseURL + "/update/" + "5555", inspector);
-        Inspector inspectorUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Inspector.class);
-        assertNotNull(inspectorUpdated);
-
-    }
+//    @Test
+//    public void update() {
+//        Inspector inspector = restTemplate.getForObject(baseURL + "/find/" + "555", Inspector.class);
+//        inspector.setInspectorName("yan");
+//        restTemplate.put(baseURL + "/update/" + "555", inspector);
+//        Inspector inspectorUpdated = restTemplate.getForObject(baseURL + "/update/" + "555", Inspector.class);
+//        assertNotNull(inspectorUpdated);
+//    }
 
     @Test
     public void delete() {
 
-        Inspector inspector = restTemplate.getForObject(baseURL + "/find/" + "5555", Inspector.class);
+        Inspector inspector = restTemplate.getForObject(baseURL + "/find/" + "555", Inspector.class);
         assertNotNull(inspector);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
-            inspector = restTemplate.getForObject(baseURL + "/find/" + "5555", Inspector.class);
+            inspector = restTemplate.getForObject(baseURL + "/find/" + "555", Inspector.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class PendingCaseControllerTest {
 
@@ -38,16 +38,16 @@ public class PendingCaseControllerTest {
 
     @Test
     public void findById() {
-        PendingCase lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", PendingCase.class);
+        PendingCase lookingFor = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        PendingCase pendingCase = restTemplate.getForObject(baseURL + "/find/" + "5555", PendingCase.class);
+        PendingCase pendingCase = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);
         pendingCase.setCaseNoOfDockets(20);
-        restTemplate.put(baseURL + "/update/" + "5555", pendingCase);
-        PendingCase pendingCaseUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", PendingCase.class);
+        restTemplate.put(baseURL + "/update/" + "555", pendingCase);
+        PendingCase pendingCaseUpdated = restTemplate.getForObject(baseURL + "/update/" + "555", PendingCase.class);
         assertNotNull(pendingCaseUpdated);
 
     }
@@ -55,12 +55,12 @@ public class PendingCaseControllerTest {
     @Test
     public void delete() {
 
-        PendingCase pendingCase = restTemplate.getForObject(baseURL + "/find/" + "5555", PendingCase.class);
+        PendingCase pendingCase = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);
         assertNotNull(pendingCase);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        restTemplate.delete(baseURL + "/delete/" + "555");
 
         try {
-            pendingCase = restTemplate.getForObject(baseURL + "/find/" + "5555", PendingCase.class);
+            pendingCase = restTemplate.getForObject(baseURL + "/find/" + "555", PendingCase.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

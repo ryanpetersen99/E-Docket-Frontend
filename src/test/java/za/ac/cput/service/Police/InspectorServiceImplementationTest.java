@@ -2,71 +2,85 @@ package za.ac.cput.service.Police;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Inspector;
+import za.ac.cput.domain.Police.Inspector;
+import za.ac.cput.factory.Police.InspectorFactory;
 import za.ac.cput.factory.Police.InspectorFactory;
 import za.ac.cput.repository.Police.InspectorRepository;
 import za.ac.cput.repository.implementation.Police.InspectorRepositoryImplementation;
+import za.ac.cput.service.Police.implementation.InspectorServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class InspectorServiceImplementationTest {
 
-    private InspectorRepository inspectorRepository;
-    private Inspector inspector;
-    private Inspector inspector2;
-
-    public Inspector getSavedInspector() {
-        Set<Inspector> inspectorSet = this.inspectorRepository.getInspectorSet();
-        return inspectorSet.iterator().next();
-    }
+    InspectorServiceImplementation service;
+    Inspector inspector;
 
     @Before
     public void setUp() throws Exception {
-        this.inspectorRepository = InspectorRepositoryImplementation.getRepository();
-        this.inspector = InspectorFactory.getInspector("90005", "Jane", "Watson", "7001");
-        this.inspector2 = InspectorFactory.getInspector("90888", "Killer", "Gumede", "7009");
+        service = (InspectorServiceImplementation) InspectorServiceImplementation.getInspectorService();
+        inspector = InspectorFactory.getInspector("8888", "Ryan","Petersen","5555");
+    }
+
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(inspector);
+        assertNotNull(service.getInspectorSet());
+        System.out.println("Get All\n" + service.getInspectorSet());
     }
 
     @Test
     public void create() {
-        Inspector createdI = this.inspectorRepository.create(this.inspector);
-        Inspector created2 = this.inspectorRepository.create(this.inspector2);
-        System.out.println("Successfully created Inspector" + "\n" + inspector);
-        System.out.println("Successfully created Inspector 2" + "\n" + inspector2);
-        Assert.assertSame(createdI, this.inspector);
-        Assert.assertSame(created2, this.inspector2);
-    }
-
-    @Test
-    public void update() {
-        String id = "90009";
-        Inspector inspector = new Inspector.Builder().copy(getSavedInspector()).inspectorID(id).build();
-        this.inspectorRepository.update(inspector);
-        System.out.println("Updated" + "\n" + inspector);
-        Assert.assertSame(id, inspector.getInspectorID());
-    }
-
-    @Test
-    public void delete() {
-        Inspector inspectorSaved = getSavedInspector();
-        this.inspectorRepository.delete(inspectorSaved.getInspectorID());
-        getInspectorSet();
+        service.create(inspector);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Inspector inspectorSaved = getSavedInspector();
-        Inspector read = this.inspectorRepository.read(inspectorSaved.getInspectorID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(inspectorSaved, read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getInspectorSet() {
-        Set<Inspector> inspectorSet = this.inspectorRepository.getInspectorSet();
-        System.out.println("List of Inspectors" + "\n" + inspectorSet);
-        Assert.assertEquals(1, inspectorSet.size());
+    public void update() {
+        service.create(inspector);
+        System.out.println(service.read("8888"));
+
+        Inspector inspectorUpdated = InspectorFactory.getInspector("5555", "Ryaaan","Petersen","5555");
+        service.update(inspectorUpdated);
+
+        Inspector comp = service.read("8888");
+        Assert.assertNotEquals(inspector.getInspectorName(), comp.getInspectorName());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(inspector.getInspectorID()));
+        System.out.println("Delete\n" + service.read(inspector.getInspectorID()));
+    }
+
 }

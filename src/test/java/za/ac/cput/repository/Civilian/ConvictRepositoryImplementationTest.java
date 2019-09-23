@@ -1,71 +1,72 @@
 package za.ac.cput.repository.Civilian;
-
+//Ryan Petersen 217027806
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.Civilian.Convict;
 import za.ac.cput.domain.Civilian.Convict;
 import za.ac.cput.factory.Civilian.ConvictFactory;
+import za.ac.cput.factory.Civilian.ConvictFactory;
+import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
 import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class ConvictRepositoryImplementationTest {
 
-    private ConvictRepository convictRepository;
-    private Convict convict;
-    private Convict convict2;
 
-    public Convict getSavedConvict() {
-        Set<Convict> convicts = this.convictRepository.getConvictSet();
-        return convicts.iterator().next();
-    }
+    private ConvictRepositoryImplementation convictRep;
+    private Convict convict;
 
     @Before
     public void setUp() throws Exception {
-        this.convictRepository = ConvictRepositoryImplementation.getRepository();
-        this.convict = ConvictFactory.getConvict("9906145463245", "Tim", "Smith", "Sentenced to 5 months in jail for assault");
-        this.convict2 = ConvictFactory.getConvict("9206155463245", "Johnny", "Smith", "Sentenced to 5 months in jail for assault");
 
+        convictRep = ConvictRepositoryImplementation.getRepository();
+        convict = ConvictFactory.getConvict("8888", "Ryan", "Petersen","Fraud");
     }
 
     @Test
-    public void create() {
-        Convict createdConvict = this.convictRepository.create(this.convict);
-        System.out.println("Successfully created convict" + "\n" + createdConvict);
-        Convict createdConvict2 = this.convictRepository.create(this.convict2);
-        System.out.println("Successfully created convict" + "\n" + createdConvict2);
-        Assert.assertSame(createdConvict, this.convict);
+    public void getAll() {
+        convictRep.create(convict);
+        assertNotNull(convictRep.getConvictSet());
+        System.out.println("Get All\n" + convictRep.getConvictSet());
+    }
+
+    @Test
+    public void ConvictCreateTest() throws IOException {
+        convictRep.create(convict);
+        Assert.assertNotNull(convictRep.getConvictSet());
+        System.out.println("Created\n" + convictRep.getConvictSet() );
     }
 
     @Test
     public void update() {
-        String updatedConviction = "Sentenced to 12 months for assault";
-        Convict convict = new Convict.Builder().copy(getSavedConvict()).natureOfConviction(updatedConviction).build();
-        Convict updatedConID = this.convictRepository.update(convict);
-        System.out.println("Updated" + "\n" + updatedConID);
-        Assert.assertSame(updatedConviction, updatedConID.getNatureOfConviction());
+
+        convictRep.create(convict);
+
+        Convict updatedConvict = ConvictFactory.getConvict("37443", "Ryan", "Petersen","murder");
+
+        convictRep.update(updatedConvict);
+
+        Assert.assertNotEquals(convict.getConvictID(), updatedConvict.getConvictID());
     }
 
     @Test
     public void delete() {
-        Convict convictSaved = getSavedConvict();
-        this.convictRepository.delete(convictSaved.getConvictID());
-
+        convictRep.delete("37443");
+        assertNull(convictRep.read("37443"));
+        System.out.println("Deleted\n" + convictRep.read("37443"));
     }
 
-    @Test
-    public void read() {
-        Convict convictSaved = getSavedConvict();
-        Convict read = this.convictRepository.read(convictSaved.getConvictID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertSame(convictSaved, read);
-    }
-
-    @Test
-    public void getConvictSet() {
-        Set<Convict> convict = this.convictRepository.getConvictSet();
-        System.out.println("List of convicts" + "\n" + convict);
-        Assert.assertEquals(1, convict.size());
-    }
 }

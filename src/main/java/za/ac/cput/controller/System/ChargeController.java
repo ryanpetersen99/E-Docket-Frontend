@@ -24,14 +24,12 @@ public class ChargeController {
 
     @GetMapping(path = "/find/{id}")
     public Charge findById(@PathVariable String id) {
-
         Charge read = chargeServiceImplementation.read(id);
         return read;
     }
 
     @PutMapping("/update")
     public void update(@RequestBody Charge update) {
-
         chargeServiceImplementation.update(update);
 
     }

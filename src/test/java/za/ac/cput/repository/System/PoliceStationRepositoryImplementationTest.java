@@ -3,69 +3,69 @@ package za.ac.cput.repository.System;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.System.PoliceStation;
 import za.ac.cput.domain.System.PoliceStation;
 import za.ac.cput.factory.System.PoliceStationFactory;
+import za.ac.cput.factory.System.PoliceStationFactory;
+import za.ac.cput.repository.implementation.System.PoliceStationRepositoryImplementation;
 import za.ac.cput.repository.implementation.System.PoliceStationRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class PoliceStationRepositoryImplementationTest {
 
-    private PoliceStationRepository policeStationRepository;
-    private PoliceStation policeStation;
-    private PoliceStation policeStation2;
 
-    public PoliceStation getSavedStation() {
-        Set<PoliceStation> policeStationSet = this.policeStationRepository.getPoliceStationSet();
-        return policeStationSet.iterator().next();
-    }
+    private PoliceStationRepositoryImplementation policeStationRepository;
+    private PoliceStation policeStation;
 
     @Before
     public void setUp() throws Exception {
-        this.policeStationRepository = PoliceStationRepositoryImplementation.getRepository();
-        this.policeStation = PoliceStationFactory.getPoliceStation("Mitchells Plain Station");
-        this.policeStation2 = PoliceStationFactory.getPoliceStation("Manenberg Station");
+
+        policeStationRepository = PoliceStationRepositoryImplementation.getRepository();
+        policeStation = PoliceStationFactory.getPoliceStation("Manenburg");
     }
 
     @Test
-    public void create() {
-        PoliceStation createdI = this.policeStationRepository.create(this.policeStation);
-        PoliceStation createdI2 = this.policeStationRepository.create(this.policeStation2);
-        System.out.println("Successfully created Police Station" + "\n" + policeStation);
-        System.out.println("Successfully created Police Station 2" + "\n" + policeStation2);
-        Assert.assertSame(createdI, this.policeStation);
-        Assert.assertSame(createdI2, this.policeStation2);
+    public void getAll() {
+        policeStationRepository.create(policeStation);
+        assertNotNull(policeStationRepository.getPoliceStationSet());
+        System.out.println("Get All\n" + policeStationRepository.getPoliceStationSet());
+    }
+
+    @Test
+    public void PoliceStationCreateTest() throws IOException {
+        policeStationRepository.create(policeStation);
+        Assert.assertNotNull(policeStationRepository.getPoliceStationSet());
+        System.out.println("Created\n" + policeStationRepository.getPoliceStationSet());
     }
 
     @Test
     public void update() {
-        String name = "Woodstock Station";
-        PoliceStation policeStation = new PoliceStation.Builder().copy(getSavedStation()).stationName(name).build();
-        this.policeStationRepository.update(policeStation);
-        System.out.println("Updated" + "\n" + policeStation);
-        Assert.assertSame(name, policeStation.getStationName());
+
+        policeStationRepository.create(policeStation);
+
+        PoliceStation updatedPoliceStation = PoliceStationFactory.getPoliceStation("Woodstock");
+
+        policeStationRepository.update(updatedPoliceStation);
+
+        Assert.assertNotEquals(policeStation.getStationName(), updatedPoliceStation.getStationName());
     }
 
     @Test
     public void delete() {
-        PoliceStation policeStation = getSavedStation();
-        this.policeStationRepository.delete(policeStation.getStationName());
-        getStationSet();
-    }
-
-    @Test
-    public void read() {
-        PoliceStation policeStation = getSavedStation();
-        PoliceStation read = this.policeStationRepository.read(policeStation.getStationName());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(getSavedStation(), read);
-    }
-
-    @Test
-    public void getStationSet() {
-        Set<PoliceStation> policeStationSet = this.policeStationRepository.getPoliceStationSet();
-        System.out.println("List of Police Stations" + "\n" + policeStationSet);
-        Assert.assertEquals(1, policeStationSet.size());
+        policeStationRepository.delete("37443");
+        assertNull(policeStationRepository.read("37443"));
+        System.out.println("Deleted\n" + policeStationRepository.read("37443"));
     }
 }

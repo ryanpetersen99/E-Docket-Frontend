@@ -3,71 +3,67 @@ package za.ac.cput.repository.Police;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.EvidenceTechnician;
 import za.ac.cput.factory.Police.Evidence_TechnicianFactory;
 import za.ac.cput.repository.implementation.Police.EvidenceTechnicianRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
-;
+;import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
 
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class EvidenceTechnicianRepositoryImplementationTest {
 
-    private Evidence_TechnicianRepository evidenceTechnicianRepository;
-    private EvidenceTechnician evidenceTechnician;
-    private EvidenceTechnician evidenceTechnician2;
 
-    public EvidenceTechnician getSavedET() {
-        Set<EvidenceTechnician> evidenceTechnicianSet = this.evidenceTechnicianRepository.getEvidenceTechnicianSet();
-        return evidenceTechnicianSet.iterator().next();
-    }
+    private EvidenceTechnicianRepositoryImplementation etRepository;
+    private EvidenceTechnician et;
 
     @Before
     public void setUp() throws Exception {
-        this.evidenceTechnicianRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
-        this.evidenceTechnician = Evidence_TechnicianFactory.getEvidence_Technician("90009", "Deni", "Ali", "8008");
-        this.evidenceTechnician2 = Evidence_TechnicianFactory.getEvidence_Technician("90089", "Marus", "Rashford", "7890");
+
+        etRepository = EvidenceTechnicianRepositoryImplementation.getRepository();
+        et = Evidence_TechnicianFactory.getEvidence_Technician("8888", "Ryan", "Petersen","5555");
     }
 
     @Test
-    public void create() {
-        EvidenceTechnician createdET = this.evidenceTechnicianRepository.create(this.evidenceTechnician);
-        EvidenceTechnician createdET2 = this.evidenceTechnicianRepository.create(this.evidenceTechnician2);
-        System.out.println("Successfully created Evidence Technician" + "\n" + evidenceTechnician);
-        System.out.println("Successfully created Evidence Technician 2" + "\n" + evidenceTechnician2);
-        Assert.assertSame(createdET, this.evidenceTechnician);
-        Assert.assertSame(createdET2, this.evidenceTechnician2);
+    public void getAll() {
+        etRepository.create(et);
+        assertNotNull(etRepository.getEvidenceTechnicianSet());
+        System.out.println("Get All\n" + etRepository.getEvidenceTechnicianSet());
+    }
+
+    @Test
+    public void EvidenceTechnicianCreateTest() throws IOException {
+        etRepository.create(et);
+        Assert.assertNotNull(etRepository.getEvidenceTechnicianSet());
+        System.out.println("Created\n" + etRepository.getEvidenceTechnicianSet());
     }
 
     @Test
     public void update() {
-        String id = "90010";
-        EvidenceTechnician evidenceTechnician = new EvidenceTechnician.Builder().copy(getSavedET()).evidenceTechID(id).build();
-        this.evidenceTechnicianRepository.update(evidenceTechnician);
-        System.out.println("Updated" + "\n" + evidenceTechnician);
-        Assert.assertSame(id, evidenceTechnician.getEvidenceTechID());
+
+        etRepository.create(et);
+
+        EvidenceTechnician updatedEvidenceTechnician = Evidence_TechnicianFactory.getEvidence_Technician("37443", "Ryan", "Petersen","5555");
+
+        etRepository.update(updatedEvidenceTechnician);
+
+        Assert.assertNotEquals(et.getEvidenceTechID(), updatedEvidenceTechnician.getEvidenceTechID());
     }
 
     @Test
     public void delete() {
-        EvidenceTechnician evidenceTechnicianSaved = getSavedET();
-        this.evidenceTechnicianRepository.delete(evidenceTechnicianSaved.getEvidenceTechID());
-        getSavedET();
+        etRepository.delete("37443");
+        assertNull(etRepository.read("37443"));
+        System.out.println("Deleted\n" + etRepository.read("37443"));
     }
 
-    @Test
-    public void read() {
-        EvidenceTechnician evidenceTechnicianSaved = getSavedET();
-        EvidenceTechnician read = this.evidenceTechnicianRepository.read(evidenceTechnicianSaved.getEvidenceTechID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertSame(evidenceTechnicianSaved, read);
-    }
-
-    @Test
-    public void getETSet() {
-        Set<EvidenceTechnician> evidenceTechnicianSet = this.evidenceTechnicianRepository.getEvidenceTechnicianSet();
-        System.out.println("List of Evidence Technician" + "\n" + evidenceTechnicianSet);
-        Assert.assertEquals(1, evidenceTechnicianSet.size());
-    }
 }

@@ -1,38 +1,69 @@
 package za.ac.cput.repository.Civilian;
+//RyanPetersen
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Complainant;
 import za.ac.cput.factory.Civilian.ComplainantFactory;
 import za.ac.cput.repository.implementation.Civillian.ComplainantRepositoryImplementation;
 
 import java.io.IOException;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertEquals;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = EDocketSystem.class)
 public class ComplainantRepositoryImplementationTest {
 
-    @Autowired
+
     private ComplainantRepositoryImplementation complainantRepository;
+    private Complainant complainant;
+
+    @Before
+    public void setUp() throws Exception {
+
+        complainantRepository = ComplainantRepositoryImplementation.getRepository();
+        complainant = ComplainantFactory.getComplainant("8888", "Ryan", "Petersen","Fraud");
+    }
+
+    @Test
+    public void getAll() {
+        complainantRepository.create(complainant);
+        assertNotNull(complainantRepository.getComplainantSet());
+        System.out.println("Get All\n" + complainantRepository.getComplainantSet());
+    }
 
     @Test
     public void ComplainantCreateTest() throws IOException{
-        Complainant complainant = ComplainantFactory.getComplainant("99847328234","Jodi","Smit","Got Mugged");
         complainantRepository.create(complainant);
         Assert.assertNotNull(complainantRepository.getComplainantSet());
+        System.out.println("Created\n" + complainantRepository.getComplainantSet() );
     }
 
-    public void read() throws  IOException {
-        Complainant complainant = ComplainantFactory.getComplainant("99847328234","Jodi","Smit","Got Mugged");
+    @Test
+    public void update() {
+
         complainantRepository.create(complainant);
-        Assert.assertNotNull(complainantRepository.getComplainantSet());
-        Complainant complainant1 = complainantRepository.read(complainant.getComplainantID());
-        assertEquals(complainant,complainant1);
+
+        Complainant updatedComplainant = ComplainantFactory.getComplainant("37443", "Ryan", "Petersen","murder");
+
+        complainantRepository.update(updatedComplainant);
+
+        Assert.assertNotEquals(complainant.getComplainantID(), updatedComplainant.getComplainantID());
     }
+
+    @Test
+    public void delete() {
+        complainantRepository.delete("37443");
+        assertNull(complainantRepository.read("37443"));
+        System.out.println("Deleted\n" + complainantRepository.read("37443"));
+    }
+
 }

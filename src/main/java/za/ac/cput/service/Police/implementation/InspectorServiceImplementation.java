@@ -15,10 +15,10 @@ import java.util.Set;
 public class InspectorServiceImplementation implements InspectorService {
 
     private static InspectorServiceImplementation inspectorService = null;
-    private InspectorRepository dataAnalystRepository;
+    private InspectorRepository inspectorRepository;
 
     private InspectorServiceImplementation() {
-        this.dataAnalystRepository = InspectorRepositoryImplementation.getRepository();
+        this.inspectorRepository = InspectorRepositoryImplementation.getRepository();
     }
 
     public static InspectorServiceImplementation getInspectorService() {
@@ -27,26 +27,26 @@ public class InspectorServiceImplementation implements InspectorService {
     }
 
     @Override
-    public Inspector create(Inspector dataAnalyst) {
-        return this.dataAnalystRepository.create(dataAnalyst);
+    public Inspector create(Inspector inspector) {
+        return this.inspectorRepository.create(inspector);
     }
 
     @Override
     public Inspector read(String d) {
-        return this.dataAnalystRepository.read(d);
+        return this.inspectorRepository.read(d);
     }
 
     @Override
-    public Inspector update(Inspector dataAnalyst) {
-        return this.dataAnalystRepository.update(dataAnalyst);
+    public Inspector update(Inspector inspector) {
+        return this.inspectorRepository.update(inspector);
     }
 
     @Override
     public void delete(String d) {
-        this.dataAnalystRepository.delete(d);
+        this.inspectorRepository.delete(d);
     }
 
     public Set<Inspector> getInspectorSet() {
-        return this.dataAnalystRepository.getInspectorSet();
+        return this.inspectorRepository.getInspectorSet();
     }
 }

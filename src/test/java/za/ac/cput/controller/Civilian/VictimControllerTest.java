@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class VictimControllerTest {
 
@@ -38,13 +38,13 @@ public class VictimControllerTest {
 
     @Test
     public void findById() {
-        Victim lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Victim.class);
+        Victim lookingFor = restTemplate.getForObject(baseURL + "/find/" + "555", Victim.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        Victim victim = restTemplate.getForObject(baseURL + "/find/" + "5555", Victim.class);
+        Victim victim = restTemplate.getForObject(baseURL + "/find/" + "555", Victim.class);
         victim.setVictimName("Bryan");
         restTemplate.put(baseURL + "/update/" + "5555", victim);
         Victim victimUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Victim.class);
@@ -55,12 +55,12 @@ public class VictimControllerTest {
     @Test
     public void delete() {
 
-        Victim victim = restTemplate.getForObject(baseURL + "/find/" + "5555", Victim.class);
+        Victim victim = restTemplate.getForObject(baseURL + "/find/" + "555", Victim.class);
         assertNotNull(victim);
         restTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
-            victim = restTemplate.getForObject(baseURL + "/find/" + "5555", Victim.class);
+            victim = restTemplate.getForObject(baseURL + "/find/" + "555", Victim.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }

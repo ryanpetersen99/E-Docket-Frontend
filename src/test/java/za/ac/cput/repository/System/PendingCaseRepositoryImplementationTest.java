@@ -3,69 +3,66 @@ package za.ac.cput.repository.System;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.System.PendingCase;
 import za.ac.cput.factory.System.PendingCaseFactory;
 import za.ac.cput.repository.implementation.System.PendingCaseRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class PendingCaseRepositoryImplementationTest {
 
-    private PendingCaseRepository pendingCaseRepository;
-    private PendingCase pendingCase;
-    private PendingCase pendingCase2;
 
-    public PendingCase getSavedCase() {
-        Set<PendingCase> pendingCaseSet = this.pendingCaseRepository.getPendingCaseSet();
-        return pendingCaseSet.iterator().next();
-    }
+    private PendingCaseRepositoryImplementation pendingCaseRepository;
+    private PendingCase pendingCase;
 
     @Before
     public void setUp() throws Exception {
-        this.pendingCaseRepository = PendingCaseRepositoryImplementation.getRepository();
-        this.pendingCase = PendingCaseFactory.getPendingCase("CASE14021922", "Case relating to Mr Smith and Mrs Smith Divorce", 1, "14/02/19");
-        this.pendingCase2 = PendingCaseFactory.getPendingCase("CASE14021923", "Case relating to Mr Jones and Mrs Jones Divorce", 1, "14/02/19");
+
+        pendingCaseRepository = PendingCaseRepositoryImplementation.getRepository();
+        pendingCase = PendingCaseFactory.getPendingCase("8888", "Ryan", 5,"14 May 2010");
     }
 
     @Test
-    public void create() {
-        PendingCase createdI = this.pendingCaseRepository.create(this.pendingCase);
-        PendingCase createdI2 = this.pendingCaseRepository.create(this.pendingCase2);
-        System.out.println("Successfully created Case" + "\n" + pendingCase);
-        System.out.println("Successfully created Case 2" + "\n" + pendingCase2);
-        Assert.assertSame(createdI, this.pendingCase);
-        Assert.assertSame(createdI2, this.pendingCase2);
+    public void getAll() {
+        pendingCaseRepository.create(pendingCase);
+        assertNotNull(pendingCaseRepository.getPendingCaseSet());
+        System.out.println("Get All\n" + pendingCaseRepository.getPendingCaseSet());
+    }
+
+    @Test
+    public void PendingCaseCreateTest() throws IOException {
+        pendingCaseRepository.create(pendingCase);
+        Assert.assertNotNull(pendingCaseRepository.getPendingCaseSet());
+        System.out.println("Created\n" + pendingCaseRepository.getPendingCaseSet());
     }
 
     @Test
     public void update() {
-        String id = "CASE14021910";
-        PendingCase pendingCase = new PendingCase.Builder().copy(getSavedCase()).caseID(id).build();
-        this.pendingCaseRepository.update(pendingCase);
-        System.out.println("Updated" + "\n" + pendingCase);
-        Assert.assertSame(id, pendingCase.getCaseID());
+
+        pendingCaseRepository.create(pendingCase);
+
+        PendingCase updatedPendingCase = PendingCaseFactory.getPendingCase("37443", "Ryan", 5,"14 may 2010");
+
+        pendingCaseRepository.update(updatedPendingCase);
+
+        Assert.assertNotEquals(pendingCase.getCaseID(), updatedPendingCase.getCaseID());
     }
 
     @Test
     public void delete() {
-        PendingCase caseSaved = getSavedCase();
-        this.pendingCaseRepository.delete(caseSaved.getCaseID());
-        getCaseSet();
-    }
-
-    @Test
-    public void read() {
-        PendingCase caseSaved = getSavedCase();
-        PendingCase read = this.pendingCaseRepository.read(caseSaved.getCaseID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(getSavedCase(), read);
-    }
-
-    @Test
-    public void getCaseSet() {
-        Set<PendingCase> caseSet = this.pendingCaseRepository.getPendingCaseSet();
-        System.out.println("List of Cases Pending" + "\n" + caseSet);
-        Assert.assertEquals(1, caseSet.size());
+        pendingCaseRepository.delete("37443");
+        assertNull(pendingCaseRepository.read("37443"));
+        System.out.println("Deleted\n" + pendingCaseRepository.read("37443"));
     }
 }

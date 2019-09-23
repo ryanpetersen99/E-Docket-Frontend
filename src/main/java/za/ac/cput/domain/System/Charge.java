@@ -3,9 +3,9 @@ package za.ac.cput.domain.System;
 public class Charge {
 
     private String natureOfCharge;
-    private int noOfCharges;
+    private String noOfCharges;
 
-    private Charge() {
+    public  Charge() {
     }
 
     private Charge(Builder builder) {
@@ -13,7 +13,7 @@ public class Charge {
         this.noOfCharges = builder.noOfCharges;
     }
 
-    public int getNoOfCharges() {
+    public  String getNoOfCharges() {
         return noOfCharges;
     }
 
@@ -21,7 +21,7 @@ public class Charge {
         return natureOfCharge;
     }
 
-    public int setNoOfCharges(Integer noOfCharges) {
+    public String setNoOfCharges(String noOfCharges) {
         return this.noOfCharges = noOfCharges;
     }
 
@@ -32,14 +32,14 @@ public class Charge {
     public static class Builder {
 
         private String natureOfCharge;
-        private int noOfCharges;
+        private String noOfCharges;
 
         public Builder natureOfCharge(String natureOfCharge) {
             this.natureOfCharge = natureOfCharge;
             return this;
         }
 
-        public Builder noOfChargers(int noOfChargers) {
+        public Builder noOfChargers(String noOfChargers) {
             this.noOfCharges = noOfChargers;
             return this;
         }

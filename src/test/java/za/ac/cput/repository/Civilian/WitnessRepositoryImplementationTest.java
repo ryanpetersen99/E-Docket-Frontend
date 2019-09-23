@@ -3,71 +3,70 @@ package za.ac.cput.repository.Civilian;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
+import za.ac.cput.domain.Civilian.Witness;
 import za.ac.cput.domain.Civilian.Witness;
 import za.ac.cput.factory.Civilian.WitnessFactory;
+import za.ac.cput.factory.Civilian.WitnessFactory;
+import za.ac.cput.repository.implementation.Civillian.WitnessRepositoryImplementation;
 import za.ac.cput.repository.implementation.Civillian.WitnessRepositoryImplementation;
 
+import java.io.IOException;
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = EDocketSystem.class)
 public class WitnessRepositoryImplementationTest {
 
-    private WitnessRepository witnessRepository;
+
+    private WitnessRepositoryImplementation witnessRepository;
     private Witness witness;
-    private Witness witness2;
-
-
-    public Witness getSavedWitness() {
-        Set<Witness> witnessSet = this.witnessRepository.getWitnessSet();
-        return witnessSet.iterator().next();
-    }
 
     @Before
     public void setUp() throws Exception {
-        this.witnessRepository = WitnessRepositoryImplementation.getRepository();
-        this.witness = WitnessFactory.getWitness("9412125658364", "Ryan", "Petersen", "Witnessed a gentlemen getting assaulted");
-        this.witness2 = WitnessFactory.getWitness("944525658364", "Reagen", "Peters", "Witnessed a gentlemen getting assaulted");
 
+        witnessRepository = WitnessRepositoryImplementation.getRepository();
+        witness = WitnessFactory.getWitness("8888", "Ryan", "Petersen","Fraud");
     }
 
     @Test
-    public void create() {
-        Witness createdWitness = this.witnessRepository.create(this.witness);
-        Witness createdWitness2 = this.witnessRepository.create(this.witness2);
-        System.out.println("Successfully created witness" + "\n" + createdWitness);
-        System.out.println("Successfully created witness 2" + "\n" + createdWitness2);
-        Assert.assertSame(createdWitness, this.witness);
-        Assert.assertSame(createdWitness2, this.witness2);
+    public void getAll() {
+        witnessRepository.create(witness);
+        assertNotNull(witnessRepository.getWitnessSet());
+        System.out.println("Get All\n" + witnessRepository.getWitnessSet());
+    }
+
+    @Test
+    public void WitnessCreateTest() throws IOException {
+        witnessRepository.create(witness);
+        Assert.assertNotNull(witnessRepository.getWitnessSet());
+        System.out.println("Created\n" + witnessRepository.getWitnessSet() );
     }
 
     @Test
     public void update() {
-        String updatedSname = "Peterson";
-        Witness witness = new Witness.Builder().copy(getSavedWitness()).witnessSurname(updatedSname).build();
-        Witness updatedSurname = this.witnessRepository.update(witness);
-        System.out.println("Updated" + "\n" + witness);
-        Assert.assertSame(updatedSname, updatedSurname.getWitnessSurname());
+
+        witnessRepository.create(witness);
+
+        Witness updatedWitness = WitnessFactory.getWitness("37443", "Ryan", "Petersen","murder");
+
+        witnessRepository.update(updatedWitness);
+
+        Assert.assertNotEquals(witness.getWitnessID(), updatedWitness.getWitnessID());
     }
 
     @Test
     public void delete() {
-        Witness witnessSaved = getSavedWitness();
-        this.witnessRepository.delete(witnessSaved.getWitnessID());
-        getWitnessSet();
+        witnessRepository.delete("37443");
+        assertNull(witnessRepository.read("37443"));
+        System.out.println("Deleted\n" + witnessRepository.read("37443"));
     }
 
-    @Test
-    public void read() {
-        Witness witnessSaved = getSavedWitness();
-        Witness read = this.witnessRepository.read(witnessSaved.getWitnessID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(witnessSaved, read);
-    }
-
-    @Test
-    public void getWitnessSet() {
-        Set<Witness> witnesstSet = this.witnessRepository.getWitnessSet();
-        System.out.println("List of witness" + "\n" + witnesstSet);
-        Assert.assertEquals(1, witnesstSet.size());
-    }
 }

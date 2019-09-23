@@ -2,71 +2,85 @@ package za.ac.cput.service.Civilian;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Civilian.Convict;
+import za.ac.cput.domain.Civilian.Convict;
+import za.ac.cput.factory.Civilian.ConvictFactory;
 import za.ac.cput.factory.Civilian.ConvictFactory;
 import za.ac.cput.repository.Civilian.ConvictRepository;
 import za.ac.cput.repository.implementation.Civillian.ConvictRepositoryImplementation;
+import za.ac.cput.service.Civilian.implementation.ConvictServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
 
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class ConvictServiceImplementationTest {
 
-    private ConvictRepository convictRepository;
-    private Convict convict;
-    private Convict convict2;
-
-    public Convict getSavedConvict() {
-        Set<Convict> convicts = this.convictRepository.getConvictSet();
-        return convicts.iterator().next();
-    }
+    ConvictServiceImplementation service;
+    Convict convict;
 
     @Before
     public void setUp() throws Exception {
-        this.convictRepository = ConvictRepositoryImplementation.getRepository();
-        this.convict = ConvictFactory.getConvict("9906145463245", "Tim", "Smith", "Sentenced to 5 months in jail for assault");
-        this.convict2 = ConvictFactory.getConvict("9206155463245", "Johnny", "Smith", "Sentenced to 5 months in jail for assault");
+        service = ConvictServiceImplementation.getRepository();
+        convict = ConvictFactory.getConvict("8888", "Ryan","Petersen","Mugged");
+    }
 
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(convict);
+        assertNotNull(service.getConvictSet());
+        System.out.println("Get All\n" + service.getConvictSet());
     }
 
     @Test
     public void create() {
-        Convict createdConvict = this.convictRepository.create(this.convict);
-        System.out.println("Successfully created convict" + "\n" + createdConvict);
-        Convict createdConvict2 = this.convictRepository.create(this.convict2);
-        System.out.println("Successfully created convict" + "\n" + createdConvict2);
-        Assert.assertSame(createdConvict, this.convict);
-    }
-
-    @Test
-    public void update() {
-        String updatedConviction = "Sentenced to 12 months for assault";
-        Convict convict = new Convict.Builder().copy(getSavedConvict()).natureOfConviction(updatedConviction).build();
-        Convict updatedConID = this.convictRepository.update(convict);
-        System.out.println("Updated" + "\n" + updatedConID);
-        Assert.assertSame(updatedConviction, updatedConID.getNatureOfConviction());
-    }
-
-    @Test
-    public void delete() {
-        Convict convictSaved = getSavedConvict();
-        this.convictRepository.delete(convictSaved.getConvictID());
-        getConvictSet();
+        service.create(convict);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Convict convictSaved = getSavedConvict();
-        Convict read = this.convictRepository.read(convictSaved.getConvictID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertSame(convictSaved, read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getConvictSet() {
-        Set<Convict> convict = this.convictRepository.getConvictSet();
-        System.out.println("List of convicts" + "\n" + convict);
-        Assert.assertEquals(1, convict.size());
+    public void update() {
+        service.create(convict);
+        System.out.println(service.read("8888"));
+
+        Convict convictUpdated = ConvictFactory.getConvict("8888", "Ty","Petersen","Mugged");
+        service.update(convictUpdated);
+
+        Convict con = service.read("8888");
+        Assert.assertNotEquals(convict.getConvictName(), con.getConvictName());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(convict.getConvictID()));
+        System.out.println("Delete\n" + service.read(convict.getConvictID()));
+    }
+
 }

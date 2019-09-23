@@ -2,71 +2,84 @@ package za.ac.cput.service.Police;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+import za.ac.cput.EDocketSystem;
 import za.ac.cput.domain.Police.Chief;
+import za.ac.cput.domain.Police.Chief;
+import za.ac.cput.factory.Police.ChiefFactory;
 import za.ac.cput.factory.Police.ChiefFactory;
 import za.ac.cput.repository.Police.ChiefRepository;
 import za.ac.cput.repository.implementation.Police.ChiefRepositoryImplementation;
+import za.ac.cput.service.Police.implementation.ChiefServiceImplementation;
 
 import java.util.Set;
 
+import static junit.framework.TestCase.assertNotNull;
+import static junit.framework.TestCase.assertNull;
+
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@SpringBootTest(classes = EDocketSystem.class)
+@RunWith(SpringRunner.class)
 public class ChiefServiceImplementationTest {
 
-    private ChiefRepository chiefRepository;
-    private Chief chief;
-    private Chief chief2;
-
-    public Chief getSavedChief() {
-        Set<Chief> chiefSet = this.chiefRepository.getChiefSet();
-        return chiefSet.iterator().next();
-    }
+    ChiefServiceImplementation service;
+    Chief chief;
 
     @Before
     public void setUp() throws Exception {
-        this.chiefRepository = ChiefRepositoryImplementation.getRepository();
-        this.chief = ChiefFactory.getChief("90003", "Andy", "Herra", "1000");
-        this.chief2 = ChiefFactory.getChief("90003", "Handy", "Andy", "1000");
+        service = (ChiefServiceImplementation) ChiefServiceImplementation.getChiefService();
+        chief = ChiefFactory.getChief("8888", "Ryan","Petersen","6666");
+    }
+
+    @Test
+    public void getService() {
+        assertNotNull(service);
+        System.out.println(service);
+    }
+
+    @Test
+    public void getAll() {
+        service.create(chief);
+        assertNotNull(service.getChiefSet());
+        System.out.println("Get All\n" + service.getChiefSet());
     }
 
     @Test
     public void create() {
-        Chief createdChief = this.chiefRepository.create(this.chief);
-        Chief createdChief2 = this.chiefRepository.create(this.chief2);
-        System.out.println("Successfully created chief" + "\n" + createdChief);
-        System.out.println("Successfully created chief 2" + "\n" + createdChief2);
-        Assert.assertSame(createdChief, this.chief);
-        Assert.assertSame(createdChief2, this.chief2);
-    }
-
-    @Test
-    public void update() {
-        String updatedID = "90002";
-        Chief chief = new Chief.Builder().copy(getSavedChief()).chiefID(updatedID).build();
-        this.chiefRepository.update(chief);
-        System.out.println("Updated" + "\n" + chief);
-        Assert.assertSame(updatedID, chief.getChiefID());
-    }
-
-    @Test
-    public void delete() {
-        Chief chiefSaved = getSavedChief();
-        this.chiefRepository.delete(getSavedChief().getChiefID());
-        getChiefSet();
-
+        service.create(chief);
+        assertNotNull(service.read("8888"));
+        System.out.println("Created\n" + service.read("8888"));
     }
 
     @Test
     public void read() {
-        Chief chiefSaved = getSavedChief();
-        Chief read = this.chiefRepository.read(chiefSaved.getChiefID());
-        System.out.println("Read" + "\n" + read);
-        Assert.assertEquals(chiefSaved, read);
+        assertNotNull(service.read("8888"));
+        System.out.println("Read\n" + service.read("8888"));
     }
 
     @Test
-    public void getChiefSet() {
-        Set<Chief> chiefSet = this.chiefRepository.getChiefSet();
-        System.out.println("Chief" + "\n" + chiefSet);
-        Assert.assertEquals(1, chiefSet.size());
+    public void update() {
+        service.create(chief);
+        System.out.println(service.read("8888"));
+
+        Chief chiefUpdated = ChiefFactory.getChief("5555", "Ryan","Petersen","5555");
+        service.update(chiefUpdated);
+
+        Chief comp = service.read("8888");
+        Assert.assertNotEquals(chief.getChiefID(), comp.getChiefID());
+        System.out.println("Updated\n" + service.read("8888"));
     }
+
+    @Test
+    public void delete() {
+        service.delete("8888");
+        assertNull(service.read(chief.getChiefID()));
+        System.out.println("Delete\n" + service.read(chief.getChiefID()));
+    }
+
 }

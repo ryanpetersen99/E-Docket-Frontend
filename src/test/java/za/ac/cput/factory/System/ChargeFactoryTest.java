@@ -13,7 +13,7 @@ public class ChargeFactoryTest {
     public void getCharge() {
 
         String natureOfCharge = "Murder,Assault";
-        Integer noOfCharges = 2;
+        String noOfCharges = "2";
 
         Charge charge = ChargeFactory.getCharge(natureOfCharge, noOfCharges);
         System.out.println(charge);

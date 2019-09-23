@@ -19,12 +19,12 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ComplainantControllerTest {
 
     @Autowired
-    private TestRestTemplate restTemplate;
+    private TestRestTemplate testRestTemplate;
 
     private String baseURL = "http://localhost:8080/complainant";
 
@@ -32,23 +32,23 @@ public class ComplainantControllerTest {
     public void create() {
         Complainant complainant = ComplainantFactory.getComplainant(null, "Ryan", "Petersen", "Assaulted");
         complainant.setComplainantID("555");
-        ResponseEntity<Complainant> postResponse = restTemplate.postForEntity(baseURL + "/new", complainant, Complainant.class);
+        ResponseEntity<Complainant> postResponse = testRestTemplate.postForEntity(baseURL + "/new", complainant, Complainant.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
     }
 
     @Test
     public void findById() {
-        Complainant lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Complainant.class);
+        Complainant lookingFor = testRestTemplate.getForObject(baseURL + "/find/" + "555", Complainant.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        Complainant complainant = restTemplate.getForObject(baseURL + "/find/" + "5555", Complainant.class);
+        Complainant complainant = testRestTemplate.getForObject(baseURL + "/find/" + "555", Complainant.class);
         complainant.setComplainantName("Bryan");
-        restTemplate.put(baseURL + "/update/" + "5555", complainant);
-        Complainant complainantUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Complainant.class);
+        testRestTemplate.put(baseURL + "/update/" + "5555", complainant);
+        Complainant complainantUpdated = testRestTemplate.getForObject(baseURL + "/update/" + "5555", Complainant.class);
         assertNotNull(complainantUpdated);
 
     }
@@ -56,12 +56,12 @@ public class ComplainantControllerTest {
     @Test
     public void delete() {
 
-        Complainant complainant = restTemplate.getForObject(baseURL + "/find/" + "5555", Complainant.class);
+        Complainant complainant = testRestTemplate.getForObject(baseURL + "/find/" + "555", Complainant.class);
         assertNotNull(complainant);
-        restTemplate.delete(baseURL + "/delete/" + "5555");
+        testRestTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
-            complainant = restTemplate.getForObject(baseURL + "/find/" + "5555", Complainant.class);
+            complainant = testRestTemplate.getForObject(baseURL + "/find/" + "555", Complainant.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
@@ -71,7 +71,7 @@ public class ComplainantControllerTest {
     public void getAll() {
         HttpHeaders headers = new HttpHeaders();
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
+        ResponseEntity<String> response = testRestTemplate.exchange(baseURL + "/getAll", HttpMethod.GET, entity, String.class);
         assertNotNull(response.getBody());
     }
 }

@@ -18,7 +18,7 @@ import static junit.framework.TestCase.assertNotNull;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ConvictControllerTest {
 
@@ -38,13 +38,13 @@ public class ConvictControllerTest {
 
     @Test
     public void findById() {
-        Convict lookingFor = restTemplate.getForObject(baseURL + "/find/" + "5555", Convict.class);
+        Convict lookingFor = restTemplate.getForObject(baseURL + "/find/" + "555", Convict.class);
         assertNotNull(lookingFor);
     }
 
     @Test
     public void update() {
-        Convict convict = restTemplate.getForObject(baseURL + "/find/" + "5555", Convict.class);
+        Convict convict = restTemplate.getForObject(baseURL + "/find/" + "555", Convict.class);
         convict.setConvictName("Bryan");
         restTemplate.put(baseURL + "/update/" + "5555", convict);
         Convict convictUpdated = restTemplate.getForObject(baseURL + "/update/" + "5555", Convict.class);
@@ -55,12 +55,12 @@ public class ConvictControllerTest {
     @Test
     public void delete() {
 
-        Convict convict = restTemplate.getForObject(baseURL + "/find/" + "5555", Convict.class);
+        Convict convict = restTemplate.getForObject(baseURL + "/find/" + "555", Convict.class);
         assertNotNull(convict);
         restTemplate.delete(baseURL + "/delete/" + "5555");
 
         try {
-            convict = restTemplate.getForObject(baseURL + "/find/" + "5555", Convict.class);
+            convict = restTemplate.getForObject(baseURL + "/find/" + "555", Convict.class);
         } catch (final HttpClientErrorException e) {
             assertEquals(e.getStatusCode(), HttpStatus.NOT_FOUND);
         }
