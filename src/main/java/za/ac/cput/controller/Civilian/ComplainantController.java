@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import za.ac.cput.domain.Civilian.Complainant;
 import za.ac.cput.service.Civilian.implementation.ComplainantServiceImplementation;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -46,5 +47,9 @@ public class ComplainantController {
         return complainantServiceImplementation.getAll();
     }
 
+    @GetMapping("{id}")
+    public List<Complainant> getAllCourses(@PathVariable String id) {
+        return complainantServiceImplementation.findAll();
+    }
 
 }

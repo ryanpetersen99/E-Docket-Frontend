@@ -6,10 +6,25 @@ import za.ac.cput.repository.Civilian.ComplainantRepository;
 import za.ac.cput.repository.implementation.Civillian.ComplainantRepositoryImplementation;
 import za.ac.cput.service.Civilian.ComplainantService;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Service("complainantServiceImplementation")
 public class ComplainantServiceImplementation implements ComplainantService {
+
+    private static List<Complainant> complainantList = new ArrayList<>();
+
+    static {
+        complainantList.add(new Complainant("1", "Ryan",  "Petersen" ,"Learn Full stack with Spring Boot and Angular"));
+        complainantList.add(new Complainant("2", "Ryan", "Petersen" ,"Learn Full stack with Spring Boot and React"));
+        complainantList.add(new Complainant("3", "Ryan", "Petersen" ,"Master Microservices with Spring Boot and Spring Cloud"));
+        complainantList.add(new Complainant("4", "Ryan", "Petersen"  ,"Deploy Spring Boot Microservices to Cloud with Docker and Kubernetes"));
+    }
+
+    public List<Complainant> findAll() {
+        return complainantList;
+    }
 
     private static ComplainantServiceImplementation compService = null;
     private ComplainantRepository complainantRepository;

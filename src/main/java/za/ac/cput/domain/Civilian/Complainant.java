@@ -17,6 +17,9 @@ public class Complainant {
         this.complainantStatement = builder.complainantStatement;
     }
 
+    public Complainant(String s, String ryan, String petersen, String s1) {
+    }
+
     public String getComplainantID() {
         return complainantID;
     }
