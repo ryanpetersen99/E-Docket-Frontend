@@ -1,74 +1,60 @@
 package za.ac.cput.domain.Police;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class DataAnalyst {
 
-    private String daID, daName, daSurname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private DataAnalyst() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+
+    public DataAnalyst() {}
+
+    public DataAnalyst(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private DataAnalyst(Builder builder) {
-        this.daID = builder.daID;
-        this.daName = builder.daName;
-        this.daSurname = builder.daSurname;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getDaID() {
-        return daID;
+    public long getId() {
+        return id;
     }
 
-    public String getDaName() {
-        return daName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDaSurname() {
-        return daSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String setDaID(String daID) {
-        return this.daID = daID;
+
+    public String getName() {
+        return name;
     }
 
-    public String setDaName(String daName) {
-        return this.daName = daName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setDaSurname(String daSurname) {
-        return this.daSurname = daSurname;
-    }
 
-    public static class Builder {
-
-        private String daID, daName, daSurname;
-
-        public Builder daID(String daID) {
-            this.daID = daID;
-            return this;
-        }
-
-        public Builder daName(String daName) {
-            this.daName = daName;
-            return this;
-        }
-
-        public Builder daSurname(String daSurname) {
-            this.daSurname = daSurname;
-            return this;
-        }
-
-        public Builder copy(DataAnalyst dataAnalyst) {
-            this.daID = dataAnalyst.daID;
-            this.daName = dataAnalyst.daName;
-            this.daSurname = dataAnalyst.daSurname;
-            return this;
-        }
-
-        public DataAnalyst build() {
-            return new DataAnalyst(this);
-        }
-    }
-
-    public String toString() {
-        return "Data Analyst Details" + "\n" + "ID: " + daID + "\n" + "Name: " + daName + "\n" + "Surname: " + daSurname;
-    }
 }
+

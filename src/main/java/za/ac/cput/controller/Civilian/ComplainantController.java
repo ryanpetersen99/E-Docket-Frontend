@@ -1,55 +1,79 @@
 package za.ac.cput.controller.Civilian;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import za.ac.cput.domain.Civilian.Complainant;
-import za.ac.cput.service.Civilian.implementation.ComplainantServiceImplementation;
+import za.ac.cput.repository.Civilian.ComplainantRepository;
 
-import java.util.List;
-import java.util.Set;
 
-@RestController
-@RequestMapping("/complainant")
+@Controller
+@RequestMapping("/complainants/")
 public class ComplainantController {
 
+    private final ComplainantRepository complainantRepository;
+
     @Autowired
-    @Qualifier("complainantServiceImplementation")
-    private ComplainantServiceImplementation complainantServiceImplementation;
-
-    @PostMapping("/new")
-    public Complainant create(@RequestBody Complainant create) {
-
-        return complainantServiceImplementation.create(create);
+    public ComplainantController(ComplainantRepository complainantRepository) {
+        this.complainantRepository = complainantRepository;
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Complainant findById(@PathVariable String id) {
-
-        Complainant read = complainantServiceImplementation.read(id);
-        return read;
+    @GetMapping("signup")
+    public String showSignUpForm(Complainant complainant) {
+        return "add-complainant";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody Complainant update) {
-
-        complainantServiceImplementation.update(update);
-
+    @GetMapping("list")
+    public String showUpdateForm(Model model) {
+        model.addAttribute("complainants", complainantRepository.findAll());
+        return "complainant";
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void delete(@PathVariable String id) {
-        complainantServiceImplementation.delete(id);
+    @PostMapping("add")
+    public String addComplainant(@Valid Complainant complainant, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-complainant";
+        }
+
+        complainantRepository.save(complainant);
+        return "redirect:list";
     }
 
-    @GetMapping("/getAll")
-    public Set<Complainant> getAll() {
-        return complainantServiceImplementation.getAll();
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Complainant complainant = complainantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid complainant Id:" + id));
+        model.addAttribute("complainant", complainant);
+        return "update-complainant";
     }
 
-    @GetMapping("{id}")
-    public List<Complainant> getAllCourses(@PathVariable String id) {
-        return complainantServiceImplementation.findAll();
+    @PostMapping("update/{id}")
+    public String updateComplainant(@PathVariable("id") long id, @Valid Complainant complainant, BindingResult result,
+                                    Model model) {
+        if (result.hasErrors()) {
+            complainant.setId(id);
+            return "update-complainant";
+        }
+
+        complainantRepository.save(complainant);
+        model.addAttribute("complainants", complainantRepository.findAll());
+        return "complainant";
     }
 
+    @GetMapping("delete/{id}")
+    public String deleteComplainant(@PathVariable("id") long id, Model model) {
+        Complainant complainant = complainantRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid complainant Id:" + id));
+        complainantRepository.delete(complainant);
+        model.addAttribute("complainants", complainantRepository.findAll());
+        return "complainant";
+    }
 }

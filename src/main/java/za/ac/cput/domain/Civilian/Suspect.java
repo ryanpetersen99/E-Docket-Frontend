@@ -1,92 +1,78 @@
 package za.ac.cput.domain.Civilian;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
-@EntityScan
+@Entity
 public class Suspect {
 
-    private String suspectID, suspectName, suspectSurname, suspectAccusation;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Suspect() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone_no")
+    private long phoneNo;
+
+    @Column(name = "statement")
+    private String statement;
+
+    public Suspect() {}
+
+    public Suspect(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Suspect(Builder builder) {
-        this.suspectID = builder.suspectID;
-        this.suspectName = builder.suspectName;
-        this.suspectSurname = builder.suspectSurname;
-        this.suspectAccusation = builder.suspectAccusation;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getSuspectID() {
-        return suspectID;
+    public long getId() {
+        return id;
     }
 
-    public String getSuspectName() {
-        return suspectName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSuspectSurname() {
-        return suspectSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getSuspectAccusation() {
-        return suspectAccusation;
+    public void setPhoneNo(long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    public String setSuspectID(String suspectID) {
-        return this.suspectID = suspectID;
+    public void setStatement(String statement) {
+        this.statement = statement;
     }
 
-    public String setSuspectName(String suspectName) {
-        return this.suspectName = suspectName;
+    public String getName() {
+        return name;
     }
 
-    public String setSuspectSurname(String suspectSurname) {
-        return this.suspectSurname = suspectSurname;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setSuspectAccusation(String suspectAccusation) {
-        return this.suspectAccusation = suspectAccusation;
+    public long getPhoneNo() {
+        return phoneNo;
     }
 
-    public static class Builder {
-
-        private String suspectID, suspectName, suspectSurname, suspectAccusation;
-
-        public Builder suspectID(String suspectID) {
-            this.suspectID = suspectID;
-            return this;
-        }
-
-        public Builder suspectName(String suspectName) {
-            this.suspectName = suspectName;
-            return this;
-        }
-
-        public Builder suspectSurname(String suspectSurname) {
-            this.suspectSurname = suspectSurname;
-            return this;
-        }
-
-        public Builder suspectAccusation(String suspectAccusation) {
-            this.suspectAccusation = suspectAccusation;
-            return this;
-        }
-
-        public Builder copy(Suspect suspect) {
-            this.suspectID = suspect.suspectID;
-            this.suspectName = suspect.suspectName;
-            this.suspectSurname = suspect.suspectSurname;
-            this.suspectAccusation = suspect.suspectAccusation;
-            return this;
-        }
-
-        public Suspect build() {
-            return new Suspect(this);
-        }
-    }
-
-    public String toString() {
-        return "Suspect Details" + "\n" + "ID: " + suspectID + "\n" + "Name: " + suspectName + "\n" + "Surname: " + suspectSurname + "\n" + "Accused of: " + suspectAccusation;
+    public String getStatement() {
+        return statement;
     }
 }
+

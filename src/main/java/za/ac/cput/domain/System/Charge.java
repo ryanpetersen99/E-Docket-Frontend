@@ -1,61 +1,57 @@
 package za.ac.cput.domain.System;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Charge {
 
-    private String natureOfCharge;
-    private String noOfCharges;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Charge() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Description is mandatory")
+    @Column(name = "description")
+    private String description;
+
+    public Charge() {}
+
+    public Charge(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    private Charge(Builder builder) {
-        this.natureOfCharge = builder.natureOfCharge;
-        this.noOfCharges = builder.noOfCharges;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getNoOfCharges() {
-        return noOfCharges;
+    public long getId() {
+        return id;
     }
 
-    public String getNatureOfCharge() {
-        return natureOfCharge;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String setNoOfCharges(String noOfCharges) {
-        return this.noOfCharges = noOfCharges;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String setNatureOfCharge(String natureOfCharge) {
-        return this.natureOfCharge = natureOfCharge;
+    public String getName() {
+        return name;
     }
 
-    public static class Builder {
-
-        private String natureOfCharge;
-        private String noOfCharges;
-
-        public Builder natureOfCharge(String natureOfCharge) {
-            this.natureOfCharge = natureOfCharge;
-            return this;
-        }
-
-        public Builder noOfChargers(String noOfChargers) {
-            this.noOfCharges = noOfChargers;
-            return this;
-        }
-
-        public Builder copy(Charge charge) {
-            this.natureOfCharge = charge.natureOfCharge;
-            this.noOfCharges = charge.noOfCharges;
-            return this;
-        }
-
-        public Charge build() {
-            return new Charge(this);
-        }
+    public String getDescription() {
+        return description;
     }
 
-    public String toString() {
-        return "Suspect is charged with: " + "\n" + natureOfCharge + "\n" + "Amount of chargers: " + noOfCharges;
-    }
 }
+

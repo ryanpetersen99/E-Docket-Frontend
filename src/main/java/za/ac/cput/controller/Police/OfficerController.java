@@ -1,50 +1,79 @@
 package za.ac.cput.controller.Police;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import za.ac.cput.domain.Police.Officer;
-import za.ac.cput.service.Police.implementation.OfficerServiceImplementation;
+import za.ac.cput.repository.Police.OfficerRepository;
 
-import java.util.Set;
 
-@RestController
-@RequestMapping("/officer")
+@Controller
+@RequestMapping("/officers/")
 public class OfficerController {
 
+    private final OfficerRepository officerRepository;
+
     @Autowired
-    @Qualifier("OfficerServiceImplementation")
-    private OfficerServiceImplementation officerServiceImplementation;
-
-    @PostMapping("/new")
-    public Officer create(@RequestBody Officer create) {
-
-        return officerServiceImplementation.create(create);
+    public OfficerController(OfficerRepository officerRepository) {
+        this.officerRepository = officerRepository;
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Officer findById(@PathVariable String id) {
-
-        Officer read = officerServiceImplementation.read(id);
-        return read;
+    @GetMapping("signup")
+    public String showSignUpForm(Officer officer) {
+        return "add-officer";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody Officer update) {
-
-        officerServiceImplementation.update(update);
-
+    @GetMapping("list")
+    public String showUpdateForm(Model model) {
+        model.addAttribute("officers", officerRepository.findAll());
+        return "index";
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void delete(@PathVariable String id) {
-        officerServiceImplementation.delete(id);
+    @PostMapping("add")
+    public String addOfficer(@Valid Officer officer, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-officer";
+        }
+
+        officerRepository.save(officer);
+        return "redirect:list";
     }
 
-    @GetMapping("/getAll")
-    public Set<Officer> getAll() {
-        return officerServiceImplementation.getAll();
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Officer officer = officerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid officer Id:" + id));
+        model.addAttribute("officer", officer);
+        return "update-officer";
     }
 
+    @PostMapping("update/{id}")
+    public String updateOfficer(@PathVariable("id") long id, @Valid Officer officer, BindingResult result,
+                                           Model model) {
+        if (result.hasErrors()) {
+            officer.setId(id);
+            return "update-officer";
+        }
 
+        officerRepository.save(officer);
+        model.addAttribute("officers", officerRepository.findAll());
+        return "index";
+    }
+
+    @GetMapping("delete/{id}")
+    public String deleteOfficer(@PathVariable("id") long id, Model model) {
+        Officer officer = officerRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid officer Id:" + id));
+        officerRepository.delete(officer);
+        model.addAttribute("officers", officerRepository.findAll());
+        return "index";
+    }
 }

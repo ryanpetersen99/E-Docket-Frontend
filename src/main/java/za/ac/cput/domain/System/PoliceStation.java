@@ -1,56 +1,47 @@
 package za.ac.cput.domain.System;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class PoliceStation {
 
-    private String stationName,number;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private PoliceStation() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+
+    public PoliceStation() {}
+
+    public PoliceStation(String name, String description) {
+        this.name = name;
     }
 
-    private PoliceStation(Builder builder) {
-        this.stationName = builder.stationName;
-        this.number = builder.number;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getStationName() {
-        return stationName;
-    }
-    public String getStationNum() {
-        return number;
+    public long getId() {
+        return id;
     }
 
-    public String setStationName(String stationName) {
-        return this.stationName = stationName;
-    }
-    public String setStationNum(String number) {
-        return this.number = number;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public static class Builder {
 
-        private String stationName,number;
-
-        public Builder stationName(String stationName) {
-            this.stationName = stationName;
-            return this;
-        }
-        public Builder stationNum(String number) {
-            this.number = number;
-            return this;
-        }
-
-        public Builder copy(PoliceStation policeStation) {
-            this.stationName = policeStation.stationName;
-            this.number = policeStation.number;
-            return this;
-        }
-
-        public PoliceStation build() {
-            return new PoliceStation(this);
-        }
+    public String getName() {
+        return name;
     }
 
-    public String toString() {
-        return "Police Station name: " + stationName + number;
-    }
+
 }
+

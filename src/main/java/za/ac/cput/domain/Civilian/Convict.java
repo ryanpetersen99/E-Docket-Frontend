@@ -1,89 +1,78 @@
 package za.ac.cput.domain.Civilian;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Convict {
 
-    private String convictID, convictName, convictSurname, natureOfConviction;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Convict() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone_no")
+    private long phoneNo;
+
+    @Column(name = "natureofconviction")
+    private String natureofconviction;
+
+    public Convict() {}
+
+    public Convict(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Convict(Builder builder) {
-        this.convictID = builder.convictID;
-        this.convictName = builder.convictName;
-        this.convictSurname = builder.convictSurname;
-        this.natureOfConviction = builder.natureOfConviction;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getConvictID() {
-        return convictID;
+    public long getId() {
+        return id;
     }
 
-    public String getConvictName() {
-        return convictName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getConvictSurname() {
-        return convictSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getNatureOfConviction() {
-        return natureOfConviction;
+    public void setPhoneNo(long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    public String setConvictID(String convictID) {
-        return this.convictID = convictID;
+    public void setconviction(String natureofconviction) {
+        this.natureofconviction = natureofconviction;
     }
 
-    public String setConvictName(String convictName) {
-        return this.convictName = convictName;
+    public String getName() {
+        return name;
     }
 
-    public String setConvictSurname(String convictSurname) {
-        return this.convictSurname = convictSurname;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setNatureOfConviction(String natureOfConviction) {
-        return this.natureOfConviction = natureOfConviction;
+    public long getPhoneNo() {
+        return phoneNo;
     }
 
-    public static class Builder {
-
-        private String convictID, convictName, convictSurname, natureOfConviction;
-
-        public Builder convictID(String convictID) {
-            this.convictID = convictID;
-            return this;
-        }
-
-        public Builder convictName(String convictName) {
-            this.convictName = convictName;
-            return this;
-        }
-
-        public Builder convictSurname(String convictSurname) {
-            this.convictSurname = convictSurname;
-            return this;
-        }
-
-        public Builder natureOfConviction(String natureOfConviction) {
-            this.natureOfConviction = natureOfConviction;
-            return this;
-        }
-
-        public Builder copy(Convict convict) {
-            this.convictID = convict.convictID;
-            this.convictName = convict.convictName;
-            this.convictSurname = convict.convictSurname;
-            this.natureOfConviction = convict.natureOfConviction;
-            return this;
-        }
-
-        public Convict build() {
-            return new Convict(this);
-        }
-    }
-
-    public String toString() {
-        return "Details of convicted suspect" + "\n" + "ID: " + convictID + "\n" + "Name: " + convictName + "\n" + "Surname: " + convictSurname + "\n" + "Convicted of: " + natureOfConviction;
+    public String getconviction() {
+        return natureofconviction;
     }
 }
+

@@ -1,50 +1,79 @@
 package za.ac.cput.controller.Civilian;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import za.ac.cput.domain.Civilian.Convict;
-import za.ac.cput.service.Civilian.implementation.ConvictServiceImplementation;
+import za.ac.cput.repository.Civilian.ConvictRepository;
 
-import java.util.Set;
 
-@RestController
-@RequestMapping("/convict")
+@Controller
+@RequestMapping("/c/")
 public class ConvictController {
 
+    private final ConvictRepository convictRepository;
+
     @Autowired
-    @Qualifier("ConvictServiceImplementation")
-    private ConvictServiceImplementation convictServiceImplementation;
-
-    @PostMapping("/new")
-    public Convict create(@RequestBody Convict create) {
-
-        return convictServiceImplementation.create(create);
+    public ConvictController(ConvictRepository convictRepository) {
+        this.convictRepository = convictRepository;
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Convict findById(@PathVariable String id) {
-
-        Convict read = convictServiceImplementation.read(id);
-        return read;
+    @GetMapping("signup")
+    public String showSignUpForm(Convict convict) {
+        return "add-convict";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody Convict update) {
-
-        convictServiceImplementation.update(update);
-
+    @GetMapping("list")
+    public String showUpdateForm(Model model) {
+        model.addAttribute("convicts", convictRepository.findAll());
+        return "index";
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void delete(@PathVariable String id) {
-        convictServiceImplementation.delete(id);
+    @PostMapping("add")
+    public String addConvict(@Valid Convict convict, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-convict";
+        }
+
+        convictRepository.save(convict);
+        return "redirect:list";
     }
 
-    @GetMapping("/getAll")
-    public Set<Convict> getAll() {
-        return convictServiceImplementation.getConvictSet();
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Convict convict = convictRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid convict Id:" + id));
+        model.addAttribute("convict", convict);
+        return "update-convict";
     }
 
+    @PostMapping("update/{id}")
+    public String updateConvict(@PathVariable("id") long id, @Valid Convict convict, BindingResult result,
+                                    Model model) {
+        if (result.hasErrors()) {
+            convict.setId(id);
+            return "update-convict";
+        }
 
+        convictRepository.save(convict);
+        model.addAttribute("convicts", convictRepository.findAll());
+        return "index";
+    }
+
+    @GetMapping("delete/{id}")
+    public String deleteConvict(@PathVariable("id") long id, Model model) {
+        Convict convict = convictRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid convict Id:" + id));
+        convictRepository.delete(convict);
+        model.addAttribute("convicts", convictRepository.findAll());
+        return "index";
+    }
 }

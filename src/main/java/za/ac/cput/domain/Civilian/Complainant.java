@@ -1,96 +1,78 @@
 package za.ac.cput.domain.Civilian;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
-@EntityScan
+@Entity
 public class Complainant {
 
-    private String complainantID, complainantName, complainantSurname, complainantStatement;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Complainant() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone_no")
+    private long phoneNo;
+
+    @Column(name = "statement")
+    private String statement;
+
+    public Complainant() {}
+
+    public Complainant(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Complainant(Builder builder) {
-        this.complainantID = builder.complainantID;
-        this.complainantName = builder.complainantName;
-        this.complainantSurname = builder.complainantSurname;
-        this.complainantStatement = builder.complainantStatement;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Complainant(String s, String ryan, String petersen, String s1) {
+    public long getId() {
+        return id;
     }
 
-    public String getComplainantID() {
-        return complainantID;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getComplainantName() {
-        return complainantName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getComplainantSurname() {
-        return complainantSurname;
+    public void setPhoneNo(long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    public String getComplainantStatement() {
-        return complainantStatement;
+    public void setStatement(String statement) {
+        this.statement = statement;
     }
 
-    public String setComplainantID(String complainantID) {
-        return this.complainantID = complainantID;
+    public String getName() {
+        return name;
     }
 
-    public String setComplainantName(String complainantName) {
-        return this.complainantName = complainantName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setComplainantSurname(String complainantSurname) {
-        return this.complainantSurname = complainantSurname;
+    public long getPhoneNo() {
+        return phoneNo;
     }
 
-    public String setComplainantStatement(String complainantStatement) {
-        return this.complainantStatement = complainantStatement;
+    public String getStatement() {
+        return statement;
     }
-
-    public static class Builder {
-
-        private String complainantID, complainantName, complainantSurname, complainantStatement;
-
-        public Builder complainantID(String complainantID) {
-            this.complainantID = complainantID;
-            return this;
-        }
-
-        public Builder complainantName(String complainantName) {
-            this.complainantName = complainantName;
-            return this;
-        }
-
-        public Builder complainantSurname(String complainantSurname) {
-            this.complainantSurname = complainantSurname;
-            return this;
-        }
-
-        public Builder complainantStatement(String complainantStatement) {
-            this.complainantStatement = complainantStatement;
-            return this;
-        }
-
-        public Builder copy(Complainant complainant) {
-            this.complainantID = complainant.complainantID;
-            this.complainantName = complainant.complainantName;
-            this.complainantSurname = complainant.complainantSurname;
-            this.complainantStatement = complainant.complainantStatement;
-            return this;
-        }
-
-        public Complainant build() {
-            return new Complainant(this);
-        }
-    }
-
-    public String toString() {
-        return "Complainant Details" + "\n" + "ID: " + complainantID + "\n" + "Name: " + complainantName + "\n" + "Surname: " + complainantSurname + "\n" + "Statement: " + complainantStatement;
-    }
-
 }
+

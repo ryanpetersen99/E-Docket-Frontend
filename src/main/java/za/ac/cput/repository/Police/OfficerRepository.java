@@ -1,10 +1,14 @@
 package za.ac.cput.repository.Police;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.Officer;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface OfficerRepository extends impRepository<Officer, String> {
-    Set<Officer> getOfficerSet();
+@Repository
+public interface OfficerRepository extends JpaRepository<Officer, Long> {
+    List<Officer> findByName(String name);
 }

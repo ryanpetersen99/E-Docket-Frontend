@@ -1,89 +1,78 @@
 package za.ac.cput.domain.Civilian;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Victim {
 
-    private String victimID, victimName, victimSurname, statement;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Victim() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone_no")
+    private long phoneNo;
+
+    @Column(name = "statement")
+    private String statement;
+
+    public Victim() {}
+
+    public Victim(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Victim(Builder builder) {
-        this.victimID = builder.victimID;
-        this.victimName = builder.victimName;
-        this.victimSurname = builder.victimSurname;
-        this.statement = builder.statement;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getVictimID() {
-        return victimID;
+    public long getId() {
+        return id;
     }
 
-    public String getVictimName() {
-        return victimName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getVictimSurname() {
-        return victimSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setPhoneNo(long phoneNo) {
+        this.phoneNo = phoneNo;
+    }
+
+    public void setStatement(String statement) {
+        this.statement = statement;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public long getPhoneNo() {
+        return phoneNo;
     }
 
     public String getStatement() {
         return statement;
     }
-
-    public String setVictimID(String victimID) {
-        return this.victimID = victimID;
-    }
-
-    public String setVictimName(String victimName) {
-        return this.victimName = victimName;
-    }
-
-    public String setVictimSurname(String victimSurname) {
-        return this.victimSurname = victimSurname;
-    }
-
-    public String setStatement(String statement) {
-        return this.statement = statement;
-    }
-
-    public static class Builder {
-
-        private String victimID, victimName, victimSurname, statement;
-
-        public Builder victimID(String victimID) {
-            this.victimID = victimID;
-            return this;
-        }
-
-        public Builder victimName(String victimName) {
-            this.victimName = victimName;
-            return this;
-        }
-
-        public Builder victimSurname(String victimSurname) {
-            this.victimSurname = victimSurname;
-            return this;
-        }
-
-        public Builder statement(String statement) {
-            this.statement = statement;
-            return this;
-        }
-
-        public Builder copy(Victim victim) {
-            this.victimID = victim.victimID;
-            this.victimName = victim.victimName;
-            this.victimSurname = victim.victimSurname;
-            this.statement = victim.statement;
-            return this;
-        }
-
-        public Victim build() {
-            return new Victim(this);
-        }
-    }
-
-    public String toString() {
-        return "Victim Details" + "\n" + "ID: " + victimID + "\n" + "Name: " + victimName + "\n" + "Surname: " + victimSurname + "\n" + "Statement: " + statement;
-    }
 }
+

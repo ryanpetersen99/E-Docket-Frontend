@@ -1,10 +1,14 @@
 package za.ac.cput.repository.Civilian;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Civilian.Convict;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface ConvictRepository extends impRepository<Convict, String> {
-    Set<Convict> getConvictSet();
+@Repository
+public interface ConvictRepository extends JpaRepository<Convict, Long> {
+    List<Convict> findByName(String name);
 }

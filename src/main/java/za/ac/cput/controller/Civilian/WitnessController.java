@@ -1,49 +1,79 @@
 package za.ac.cput.controller.Civilian;
 
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import za.ac.cput.domain.Civilian.Witness;
-import za.ac.cput.service.Civilian.implementation.WitnessServiceImplementation;
+import za.ac.cput.repository.Civilian.WitnessRepository;
 
-import java.util.Set;
 
-@RestController
-@RequestMapping("/witness")
+@Controller
+@RequestMapping("/witnesss/")
 public class WitnessController {
 
+    private final WitnessRepository witnessRepository;
+
     @Autowired
-    @Qualifier("WitnessServiceImplementation")
-    private WitnessServiceImplementation witnessServiceImplementation;
-
-    @PostMapping("/new")
-    public Witness create(@RequestBody Witness create) {
-
-        return witnessServiceImplementation.create(create);
+    public WitnessController(WitnessRepository witnessRepository) {
+        this.witnessRepository = witnessRepository;
     }
 
-    @GetMapping(path = "/find/{id}")
-    public Witness findById(@PathVariable String id) {
-
-        Witness read = witnessServiceImplementation.read(id);
-        return read;
+    @GetMapping("signup")
+    public String showSignUpForm(Witness witness) {
+        return "add-witness";
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody Witness update) {
-
-
-        witnessServiceImplementation.update(update);
-
+    @GetMapping("list")
+    public String showUpdateForm(Model model) {
+        model.addAttribute("witnesss", witnessRepository.findAll());
+        return "index";
     }
 
-    @DeleteMapping(path = "/delete/{id}")
-    public void delete(@PathVariable String id) {
-        witnessServiceImplementation.delete(id);
+    @PostMapping("add")
+    public String addWitness(@Valid Witness witness, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "add-witness";
+        }
+
+        witnessRepository.save(witness);
+        return "redirect:list";
     }
 
-    @GetMapping("/getAll")
-    public Set<Witness> getAll() {
-        return witnessServiceImplementation.getWitnessSet();
+    @GetMapping("edit/{id}")
+    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+        Witness witness = witnessRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid witness Id:" + id));
+        model.addAttribute("witness", witness);
+        return "update-witness";
+    }
+
+    @PostMapping("update/{id}")
+    public String updateWitness(@PathVariable("id") long id, @Valid Witness witness, BindingResult result,
+                                    Model model) {
+        if (result.hasErrors()) {
+            witness.setId(id);
+            return "update-witness";
+        }
+
+        witnessRepository.save(witness);
+        model.addAttribute("witnesss", witnessRepository.findAll());
+        return "index";
+    }
+
+    @GetMapping("delete/{id}")
+    public String deleteWitness(@PathVariable("id") long id, Model model) {
+        Witness witness = witnessRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid witness Id:" + id));
+        witnessRepository.delete(witness);
+        model.addAttribute("witnesss", witnessRepository.findAll());
+        return "index";
     }
 }

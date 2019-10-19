@@ -1,92 +1,79 @@
 package za.ac.cput.domain.System;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class SolvedCase {
 
-    private String caseID, caseDetails, dateSolved;
-    private int caseNoOfDockets;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private SolvedCase() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Description is mandatory")
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "number")
+    private String number;
+
+    @Column(name = "dateSolved")
+    private String dateSolved;
+
+    public SolvedCase() {}
+
+    public SolvedCase(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    private SolvedCase(Builder builder) {
-        this.caseID = builder.caseID;
-        this.caseDetails = builder.caseDetails;
-        this.caseNoOfDockets = builder.caseNoOfDockets;
-        this.dateSolved = builder.dateSolved;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getCaseID() {
-        return caseID;
+    public long getId() {
+        return id;
     }
 
-    public String getCaseDetails() {
-        return caseDetails;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Integer getCaseNoOfDockets() {
-        return caseNoOfDockets;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDateSolved(String dateSolved) {
+        this.dateSolved = dateSolved;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getNumber() {
+        return number;
     }
 
     public String getDateSolved() {
         return dateSolved;
     }
 
-    public String setCaseID(String caseID) {
-        return this.caseID = caseID;
-    }
-
-    public String setCaseDetails(String caseDetails) {
-        return this.caseDetails = caseDetails;
-    }
-
-    public Integer setCaseNoOfDockets(Integer caseNoOfDockets) {
-        return this.caseNoOfDockets = caseNoOfDockets;
-    }
-
-    public String setDateSolved(String dateSolved) {
-        return this.dateSolved = dateSolved;
-    }
-
-
-    public static class Builder {
-
-        private String caseID, caseDetails, dateSolved;
-        private Integer caseNoOfDockets;
-
-        public Builder caseID(String caseID) {
-            this.caseID = caseID;
-            return this;
-        }
-
-        public Builder caseDetails(String caseDetails) {
-            this.caseDetails = caseDetails;
-            return this;
-        }
-
-        public Builder caseNoOfDockets(Integer caseNoOfDockets) {
-            this.caseNoOfDockets = caseNoOfDockets;
-            return this;
-        }
-
-        public Builder dateSolved(String dateSolved) {
-            this.dateSolved = dateSolved;
-            return this;
-        }
-
-        public Builder copy(SolvedCase solvedCase) {
-            this.caseID = solvedCase.caseID;
-            this.caseNoOfDockets = solvedCase.caseNoOfDockets;
-            this.caseDetails = solvedCase.caseDetails;
-            this.dateSolved = solvedCase.dateSolved;
-            return this;
-        }
-
-        public SolvedCase build() {
-            return new SolvedCase(this);
-        }
-    }
-
-    public String toString() {
-        return "Case Details" + "\n" + "Case ID: " + caseID + "\n" + "Details of Case: " + caseDetails + "\n" + "Number of dockets in case: " + caseNoOfDockets + "\n" + "Date Solved: " + dateSolved;
-    }
 }
+

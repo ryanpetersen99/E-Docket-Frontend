@@ -1,89 +1,71 @@
 package za.ac.cput.domain.Police;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class EvidenceTechnician {
 
-    private String evidenceTechID, evidenceTechName, evidenceTechSurname, evidenceTechBadgeID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private EvidenceTechnician() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "badNO")
+    private String badgeNO;
+
+
+    public EvidenceTechnician() {}
+
+    public EvidenceTechnician(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private EvidenceTechnician(Builder builder) {
-        this.evidenceTechID = builder.evidenceTechID;
-        this.evidenceTechName = builder.evidenceTechName;
-        this.evidenceTechSurname = builder.evidenceTechSurname;
-        this.evidenceTechBadgeID = builder.evidenceTechBadgeID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getEvidenceTechID() {
-        return evidenceTechID;
+    public long getId() {
+        return id;
     }
 
-    public String getEvidenceTechName() {
-        return evidenceTechName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getEvidenceTechSurname() {
-        return evidenceTechSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getEvidenceTechBadgeID() {
-        return evidenceTechBadgeID;
+    public void setBadgeNO(String badgeNO) {
+        this.badgeNO = badgeNO;
+    }
+    public String getBadgeNO() {
+        return badgeNO;
     }
 
-    public String setEvidenceTechID(String evidenceTechID) {
-        return this.evidenceTechID = evidenceTechID;
+
+
+    public String getName() {
+        return name;
     }
 
-    public String setEvidenceTechName(String evidenceTechName) {
-        return this.evidenceTechName = evidenceTechName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setEvidenceTechSurname(String evidenceTechSurname) {
-        return this.evidenceTechSurname = evidenceTechSurname;
-    }
 
-    public String setEvidenceTechBadgeID(String evidenceTechBadgeID) {
-        return this.evidenceTechBadgeID = evidenceTechBadgeID;
-    }
-
-    public static class Builder {
-
-        private String evidenceTechID, evidenceTechName, evidenceTechSurname, evidenceTechBadgeID;
-
-        public Builder evidenceTechID(String evidenceTechID) {
-            this.evidenceTechID = evidenceTechID;
-            return this;
-        }
-
-        public Builder evidenceTechName(String evidenceTechName) {
-            this.evidenceTechName = evidenceTechName;
-            return this;
-        }
-
-        public Builder evidenceTechSurname(String evidenceTechSurname) {
-            this.evidenceTechSurname = evidenceTechSurname;
-            return this;
-        }
-
-        public Builder evidenceTechBadgeID(String evidenceTechBadgeID) {
-            this.evidenceTechBadgeID = evidenceTechBadgeID;
-            return this;
-        }
-
-        public Builder copy(EvidenceTechnician evidenceTechnician) {
-            this.evidenceTechID = evidenceTechnician.evidenceTechID;
-            this.evidenceTechName = evidenceTechnician.evidenceTechName;
-            this.evidenceTechSurname = evidenceTechnician.evidenceTechSurname;
-            this.evidenceTechBadgeID = evidenceTechnician.evidenceTechBadgeID;
-            return this;
-        }
-
-        public EvidenceTechnician build() {
-            return new EvidenceTechnician(this);
-        }
-    }
-
-    public String toString() {
-        return "Evidence Technician Details" + "\n" + "ID: " + evidenceTechID + "\n" + "Name: " + evidenceTechName + "\n" + "Surname: " + evidenceTechSurname + "\n" + "Badge ID: " + evidenceTechBadgeID;
-    }
 }
+

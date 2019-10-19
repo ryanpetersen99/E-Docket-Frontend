@@ -1,58 +1,57 @@
 package za.ac.cput.domain.System;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Evidence {
-    private String evidenceID, evidenceDetails;
 
-    private Evidence() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Description is mandatory")
+    @Column(name = "description")
+    private String description;
+
+    public Evidence() {}
+
+    public Evidence(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
-    private Evidence(Builder builder) {
-        this.evidenceID = builder.evidenceID;
-        this.evidenceDetails = builder.evidenceDetails;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getEvidenceID() {
-        return evidenceID;
+    public long getId() {
+        return id;
     }
 
-    public String getEvidenceDetails() {
-        return evidenceDetails;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String setEvidenceID(String evidenceID) {
-        return this.evidenceID = evidenceID;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String setEvidenceDetails(String evidenceDetails) {
-        return this.evidenceDetails = evidenceDetails;
+    public String getName() {
+        return name;
     }
 
-    public static class Builder {
-
-        private String evidenceID, evidenceDetails;
-
-        public Builder evidenceID(String evidenceID) {
-            this.evidenceID = evidenceID;
-            return this;
-        }
-
-        public Builder evidenceDetails(String evidenceDetails) {
-            this.evidenceDetails = evidenceDetails;
-            return this;
-        }
-
-        public Builder copy(Evidence evidence) {
-            this.evidenceID = evidence.evidenceID;
-            this.evidenceDetails = evidence.evidenceDetails;
-            return this;
-        }
-
-        public Evidence build() {
-            return new Evidence(this);
-        }
+    public String getDescription() {
+        return description;
     }
 
-    public String toString() {
-        return "Evidence ID: " + evidenceID + "\n" + "Evidence Details: " + evidenceDetails;
-    }
 }
+

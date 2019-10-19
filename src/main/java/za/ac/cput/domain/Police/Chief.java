@@ -1,89 +1,71 @@
 package za.ac.cput.domain.Police;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Chief {
 
-    private String chiefID, chiefName, chiefSurname, chiefBadgeID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Chief() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "badNO")
+    private String badgeNO;
+
+
+    public Chief() {}
+
+    public Chief(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Chief(Builder builder) {
-        this.chiefID = builder.chiefID;
-        this.chiefName = builder.chiefName;
-        this.chiefSurname = builder.chiefSurname;
-        this.chiefBadgeID = builder.chiefBadgeID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getChiefID() {
-        return chiefID;
+    public long getId() {
+        return id;
     }
 
-    public String getChiefName() {
-        return chiefName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getChiefSurname() {
-        return chiefSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getChiefBadgeID() {
-        return chiefBadgeID;
+    public void setBadgeNO(String badgeNO) {
+        this.badgeNO = badgeNO;
+    }
+    public String getBadgeNO() {
+        return badgeNO;
     }
 
-    public String setChiefID(String chiefID) {
-        return this.chiefID = chiefID;
+
+
+    public String getName() {
+        return name;
     }
 
-    public String setChiefName(String chiefName) {
-        return this.chiefName = chiefName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setChiefSurname(String chiefSurname) {
-        return this.chiefSurname = chiefSurname;
-    }
 
-    public String setChiefBadgeID(String chiefBadgeID) {
-        return this.chiefBadgeID = chiefBadgeID;
-    }
-
-    public static class Builder {
-
-        private String chiefID, chiefName, chiefSurname, chiefBadgeID;
-
-        public Builder chiefID(String chiefID) {
-            this.chiefID = chiefID;
-            return this;
-        }
-
-        public Builder chiefName(String chiefName) {
-            this.chiefName = chiefName;
-            return this;
-        }
-
-        public Builder chiefSurname(String chiefSurname) {
-            this.chiefSurname = chiefSurname;
-            return this;
-        }
-
-        public Builder chiefBadgeID(String chiefBadgeID) {
-            this.chiefBadgeID = chiefBadgeID;
-            return this;
-        }
-
-        public Builder copy(Chief chief) {
-            this.chiefID = chief.chiefID;
-            this.chiefName = chief.chiefName;
-            this.chiefSurname = chief.chiefSurname;
-            this.chiefBadgeID = chief.chiefBadgeID;
-            return this;
-        }
-
-        public Chief build() {
-            return new Chief(this);
-        }
-    }
-
-    public String toString() {
-        return "Station Chief Details" + "\n" + "ID: " + chiefID + "\n" + "Name: " + chiefName + "\n" + "Surname: " + chiefSurname + "\n" + "Badge ID: " + chiefBadgeID;
-    }
 }
+

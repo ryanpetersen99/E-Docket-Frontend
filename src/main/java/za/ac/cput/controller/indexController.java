@@ -1,20 +1,16 @@
 package za.ac.cput.controller;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class indexController {
 
     @GetMapping("/")
-    public String root() {
+    public String homePage() {
         return "index";
-    }
-
-    @GetMapping("/user")
-    public String userIndex() {
-        return "user/index";
     }
 
     @GetMapping("/login")

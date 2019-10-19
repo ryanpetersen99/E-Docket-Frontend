@@ -1,89 +1,71 @@
 package za.ac.cput.domain.Police;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Inspector {
 
-    private String inspectorID, inspectorName, inspectorSurname, inspectorBadgeID;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Inspector() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "badNO")
+    private String badgeNO;
+
+
+    public Inspector() {}
+
+    public Inspector(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Inspector(Builder builder) {
-        this.inspectorID = builder.inspectorID;
-        this.inspectorName = builder.inspectorName;
-        this.inspectorSurname = builder.inspectorSurname;
-        this.inspectorBadgeID = builder.inspectorBadgeID;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getInspectorID() {
-        return inspectorID;
+    public long getId() {
+        return id;
     }
 
-    public String getInspectorName() {
-        return inspectorName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getInspectorSurname() {
-        return inspectorSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getInspectorBadgeID() {
-        return inspectorBadgeID;
+    public void setBadgeNO(String badgeNO) {
+        this.badgeNO = badgeNO;
+    }
+    public String getBadgeNO() {
+        return badgeNO;
     }
 
-    public String setInspectorID(String inspectorID) {
-        return this.inspectorID = inspectorID;
+
+
+    public String getName() {
+        return name;
     }
 
-    public String setInspectorName(String inspectorName) {
-        return this.inspectorName = inspectorName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setInspectorSurname(String inspectorSurname) {
-        return this.inspectorSurname = inspectorSurname;
-    }
 
-    public String setInspectorBadgeID(String inspectorBadgeID) {
-        return this.inspectorBadgeID = inspectorBadgeID;
-    }
-
-    public static class Builder {
-
-        private String inspectorID, inspectorName, inspectorSurname, inspectorBadgeID;
-
-        public Builder inspectorID(String inspectorID) {
-            this.inspectorID = inspectorID;
-            return this;
-        }
-
-        public Builder inspectorName(String inspectorName) {
-            this.inspectorName = inspectorName;
-            return this;
-        }
-
-        public Builder inspectorSurname(String inspectorSurname) {
-            this.inspectorSurname = inspectorSurname;
-            return this;
-        }
-
-        public Builder inspectorBadgeID(String inspectorBadgeID) {
-            this.inspectorBadgeID = inspectorBadgeID;
-            return this;
-        }
-
-        public Builder copy(Inspector inspector) {
-            this.inspectorID = inspector.inspectorID;
-            this.inspectorName = inspector.inspectorName;
-            this.inspectorSurname = inspector.inspectorSurname;
-            this.inspectorBadgeID = inspector.inspectorBadgeID;
-            return this;
-        }
-
-        public Inspector build() {
-            return new Inspector(this);
-        }
-    }
-
-    public String toString() {
-        return "Inspector Details" + "\n" + "ID: " + inspectorID + "\n" + "Name: " + inspectorName + "\n" + "Surname: " + inspectorSurname + "\n" + "Badge ID: " + inspectorBadgeID;
-    }
 }
+

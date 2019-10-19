@@ -1,10 +1,14 @@
 package za.ac.cput.repository.Civilian;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Civilian.Witness;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface WitnessRepository extends impRepository<Witness, String> {
-    Set<Witness> getWitnessSet();
+@Repository
+public interface WitnessRepository extends JpaRepository<Witness, Long> {
+    List<Witness> findByName(String name);
 }

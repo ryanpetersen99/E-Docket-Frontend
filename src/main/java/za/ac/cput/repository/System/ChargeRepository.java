@@ -1,10 +1,14 @@
 package za.ac.cput.repository.System;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.Charge;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface ChargeRepository extends impRepository<Charge, String> {
-    Set<Charge> getChargeSet();
+@Repository
+public interface ChargeRepository extends JpaRepository<Charge, Long> {
+    List<Charge> findByName(String name);
 }

@@ -1,10 +1,14 @@
 package za.ac.cput.repository.Police;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Police.Administrator;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface AdministratorRepository extends impRepository<Administrator, String> {
-    Set<Administrator> getAdministratorSet();
+@Repository
+public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
+    List<Administrator> findByName(String name);
 }

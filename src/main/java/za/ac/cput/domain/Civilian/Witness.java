@@ -1,89 +1,78 @@
 package za.ac.cput.domain.Civilian;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Witness {
 
-    private String witnessID, witnessName, witnessSurname, witnessStatement;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    private Witness() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "phone_no")
+    private long phoneNo;
+
+    @Column(name = "statement")
+    private String statement;
+
+    public Witness() {}
+
+    public Witness(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Witness(Builder builder) {
-        this.witnessID = builder.witnessID;
-        this.witnessName = builder.witnessName;
-        this.witnessSurname = builder.witnessSurname;
-        this.witnessStatement = builder.witnessStatement;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getWitnessID() {
-        return witnessID;
+    public long getId() {
+        return id;
     }
 
-    public String getWitnessName() {
-        return witnessName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getWitnessSurname() {
-        return witnessSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String getWitnessStatement() {
-        return witnessStatement;
+    public void setPhoneNo(long phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
-    public String setWitnessID(String witnessID) {
-        return this.witnessID = witnessID;
+    public void setStatement(String statement) {
+        this.statement = statement;
     }
 
-    public String setWitnessName(String witnessName) {
-        return this.witnessName = witnessName;
+    public String getName() {
+        return name;
     }
 
-    public String setWitnessSurname(String witnessSurname) {
-        return this.witnessSurname = witnessSurname;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setWitnessStatement(String witnessStatement) {
-        return this.witnessStatement = witnessStatement;
+    public long getPhoneNo() {
+        return phoneNo;
     }
 
-    public static class Builder {
-
-        private String witnessID, witnessName, witnessSurname, witnessStatement;
-
-        public Builder witnessID(String witnessID) {
-            this.witnessID = witnessID;
-            return this;
-        }
-
-        public Builder witnessName(String witnessName) {
-            this.witnessName = witnessName;
-            return this;
-        }
-
-        public Builder witnessSurname(String witnessSurname) {
-            this.witnessSurname = witnessSurname;
-            return this;
-        }
-
-        public Builder witnessStatement(String witnessStatement) {
-            this.witnessStatement = witnessStatement;
-            return this;
-        }
-
-        public Builder copy(Witness witness) {
-            this.witnessID = witness.witnessID;
-            this.witnessName = witness.witnessName;
-            this.witnessSurname = witness.witnessSurname;
-            this.witnessStatement = witness.witnessStatement;
-            return this;
-        }
-
-        public Witness build() {
-            return new Witness(this);
-        }
-    }
-
-    public String toString() {
-        return "Witness Details" + "\n" + "ID: " + witnessID + "\n" + "Name: " + witnessName + "\n" + "Surname: " + witnessSurname + "\n" + "Statement: " + witnessStatement;
+    public String getStatement() {
+        return statement;
     }
 }
+

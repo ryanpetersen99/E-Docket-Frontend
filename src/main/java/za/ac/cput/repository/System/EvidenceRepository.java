@@ -1,10 +1,14 @@
 package za.ac.cput.repository.System;
 
+import java.util.List;
+
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.System.Evidence;
-import za.ac.cput.repository.impRepository;
 
-import java.util.Set;
 
-public interface EvidenceRepository extends impRepository<Evidence, String> {
-    Set<Evidence> getEvidenceSet();
+@Repository
+public interface EvidenceRepository extends JpaRepository<Evidence, Long> {
+    List<Evidence> findByName(String name);
 }

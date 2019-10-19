@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
 </head>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
 <body>
 <div layout:fragment="content" th:remove="tag">
 
@@ -56,23 +59,6 @@
 
     <p><a href="/" th:href="@{/}">Back to home page</a></p>
 
-</div>
-</body>
-</html>
-Creating the Secured User Page
-Next, we create the Secured User Page. This page is secured, and only visible for users who have the ROLE_USER. The user page is located at src/main/resources/templates/user/index.html.
-
-<!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{fragments/layout}">
-<head>
-    <title>Secured</title>
-</head>
-<body>
-<div layout:fragment="content" th:remove="tag">
-    <h1>This is a secured page!</h1>
-    <p><a href="/" th:href="@{/}">Back to home page</a></p>
 </div>
 </body>
 </html>

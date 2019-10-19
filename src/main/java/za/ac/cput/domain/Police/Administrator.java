@@ -1,74 +1,60 @@
 package za.ac.cput.domain.Police;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+
+@Entity
 public class Administrator {
 
-    private String adminID, adminName, adminSurname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-    public Administrator() {
+    @NotBlank(message = "Name is mandatory")
+    @Column(name = "name")
+    private String name;
+
+    @NotBlank(message = "Surname is mandatory")
+    @Column(name = "surname")
+    private String surname;
+
+
+    public Administrator() {}
+
+    public Administrator(String name, String surname) {
+        this.name = name;
+        this.surname = surname;
     }
 
-    private Administrator(Builder builder) {
-        this.adminID = builder.adminID;
-        this.adminName = builder.adminName;
-        this.adminSurname = builder.adminSurname;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getAdminID() {
-        return adminID;
+    public long getId() {
+        return id;
     }
 
-    public String getAdminName() {
-        return adminName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getAdminSurname() {
-        return adminSurname;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
-    public String setAdminID(String adminID) {
-        return this.adminID = adminID;
+
+    public String getName() {
+        return name;
     }
 
-    public String setAdminName(String adminName) {
-        return this.adminName = adminName;
+    public String getSurname() {
+        return surname;
     }
 
-    public String setAdminSurname(String adminSurname) {
-        return this.adminSurname = adminSurname;
-    }
 
-    public static class Builder {
-
-        private String adminID, adminName, adminSurname;
-
-        public Builder adminID(String adminID) {
-            this.adminID = adminID;
-            return this;
-        }
-
-        public Builder adminName(String adminName) {
-            this.adminName = adminName;
-            return this;
-        }
-
-        public Builder adminSurname(String adminSurname) {
-            this.adminSurname = adminSurname;
-            return this;
-        }
-
-        public Builder copy(Administrator administrator) {
-            this.adminID = administrator.adminID;
-            this.adminName = administrator.adminName;
-            this.adminSurname = administrator.adminSurname;
-            return this;
-        }
-
-        public Administrator build() {
-            return new Administrator(this);
-        }
-    }
-
-    public String toString() {
-        return "Administrator Details " + "\n" + "ID: " + adminID + "\n" + "Name: " + adminName + "\n" + "Surname: " + adminSurname;
-    }
 }
+
