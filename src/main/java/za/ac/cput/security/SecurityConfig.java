@@ -1,48 +1,53 @@
 package za.ac.cput.security;
 //Ryan Petersen 217027806
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String COMPLAINANT_ROLE = "COMPLAINANT";
-    private static final String ADMIN_ROLE = "ADMIN";
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(encoder().encode("admin"))
-                .roles(ADMIN_ROLE)
-                .and()
-                .withUser("complainant")
-                .password(encoder().encode("complainant"))
-                .roles(COMPLAINANT_ROLE);
-    }
+    @Autowired
+    private LoggingAccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.httpBasic()
-                .and()
+        http
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/report/getall")
-                .hasRole(ADMIN_ROLE)
+                .antMatchers(
+                        "/",
+                        "/js/**",
+                        "/css/**",
+                        "/img/**",
+                        "/webjars/**").permitAll()
+                .antMatchers("/user/**").hasRole("USER")
+                .anyRequest().authenticated()
                 .and()
-                .csrf().disable();
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login?logout")
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler);
     }
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication()
+                .withUser("user").password("password").roles("USER")
+                .and()
+                .withUser("manager").password("password").roles("MANAGER");
     }
+
 }
