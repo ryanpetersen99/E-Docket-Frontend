@@ -16,7 +16,7 @@ import za.ac.cput.repository.Civilian.ConvictRepository;
 
 
 @Controller
-@RequestMapping("/c/")
+@RequestMapping("/convicts/")
 public class ConvictController {
 
     private final ConvictRepository convictRepository;
@@ -28,19 +28,19 @@ public class ConvictController {
 
     @GetMapping("signup")
     public String showSignUpForm(Convict convict) {
-        return "add-convict";
+        return "convict/add-convict";
     }
 
     @GetMapping("list")
     public String showUpdateForm(Model model) {
         model.addAttribute("convicts", convictRepository.findAll());
-        return "index";
+        return "convict/convict";
     }
 
     @PostMapping("add")
     public String addConvict(@Valid Convict convict, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-convict";
+            return "convict/add-convict";
         }
 
         convictRepository.save(convict);
@@ -52,7 +52,7 @@ public class ConvictController {
         Convict convict = convictRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid convict Id:" + id));
         model.addAttribute("convict", convict);
-        return "update-convict";
+        return "convict/update-convict";
     }
 
     @PostMapping("update/{id}")
@@ -60,12 +60,12 @@ public class ConvictController {
                                     Model model) {
         if (result.hasErrors()) {
             convict.setId(id);
-            return "update-convict";
+            return "convict/update-convict";
         }
 
         convictRepository.save(convict);
         model.addAttribute("convicts", convictRepository.findAll());
-        return "index";
+        return "convict/convict";
     }
 
     @GetMapping("delete/{id}")
@@ -74,6 +74,6 @@ public class ConvictController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid convict Id:" + id));
         convictRepository.delete(convict);
         model.addAttribute("convicts", convictRepository.findAll());
-        return "index";
+        return "convict/convict";
     }
 }

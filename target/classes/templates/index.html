@@ -5,10 +5,82 @@
     <title>Index</title>
 </head>
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" >
 
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
-<h1>Home</h1>
+<!--<div th:replace="fragments/navbar :: navigation">-->
+<div class="ui container">
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Welcome</h1>
+        <p class="lead">This is an e-docket management system</p>
+    </div>
 </div>
+<br>
+    <div class="ui container">
+        <div class="ui card">
+            <div class="content">
+                <div class="header">Complainant</div>
+            </div>
+            <div class="content">
+                <h4 class="ui sub header">Add new complainant</h4>
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                Create new complainants here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                <a href="complainants/list" ><button  class="ui button">Go</button></a>
+            </div>
+        </div>
+
+        <div class="ui card">
+            <div class="content">
+                <div class="header">Convict</div>
+            </div>
+            <div class="content">
+                <h4 class="ui sub header">Add new convict</h4>
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                Register new convicts here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+                <a href="convicts/list" ><button  class="ui button">Go</button></a>
+            </div>
+        </div>
+
+        <div class="ui card">
+            <div class="content">
+                <div class="header">Docket</div>
+            </div>
+            <div class="content">
+                <h4 class="ui sub header">Add new docket</h4>
+                <div class="ui small feed">
+                    <div class="event">
+                        <div class="content">
+                            <div class="summary">
+                                Create new dockets here
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="extra content">
+               <a href="dockets/list" ><button  class="ui button">Go</button></a>
+            </div>
+        </div>
+
+</div>
+
 </body>

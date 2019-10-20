@@ -28,19 +28,19 @@ public class ComplainantController {
 
     @GetMapping("signup")
     public String showSignUpForm(Complainant complainant) {
-        return "add-complainant";
+        return "complainant/add-complainant";
     }
 
     @GetMapping("list")
     public String showUpdateForm(Model model) {
         model.addAttribute("complainants", complainantRepository.findAll());
-        return "complainant";
+        return "complainant/complainant";
     }
 
     @PostMapping("add")
     public String addComplainant(@Valid Complainant complainant, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-complainant";
+            return "complainant/add-complainant";
         }
 
         complainantRepository.save(complainant);
@@ -52,7 +52,7 @@ public class ComplainantController {
         Complainant complainant = complainantRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid complainant Id:" + id));
         model.addAttribute("complainant", complainant);
-        return "update-complainant";
+        return "complainant/update-complainant";
     }
 
     @PostMapping("update/{id}")
@@ -60,12 +60,12 @@ public class ComplainantController {
                                     Model model) {
         if (result.hasErrors()) {
             complainant.setId(id);
-            return "update-complainant";
+            return "complainant/update-complainant";
         }
 
         complainantRepository.save(complainant);
         model.addAttribute("complainants", complainantRepository.findAll());
-        return "complainant";
+        return "complainant/complainant";
     }
 
     @GetMapping("delete/{id}")
@@ -74,6 +74,6 @@ public class ComplainantController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid complainant Id:" + id));
         complainantRepository.delete(complainant);
         model.addAttribute("complainants", complainantRepository.findAll());
-        return "complainant";
+        return "complainant/complainant";
     }
 }

@@ -28,19 +28,19 @@ public class DocketController {
 
     @GetMapping("signup")
     public String showSignUpForm(Docket docket) {
-        return "add-docket";
+        return "docket/add-docket";
     }
 
     @GetMapping("list")
     public String showUpdateForm(Model model) {
         model.addAttribute("dockets", docketRepository.findAll());
-        return "index";
+        return "docket/docket";
     }
 
     @PostMapping("add")
     public String addDocket(@Valid Docket docket, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-docket";
+            return "docket/add-docket";
         }
 
         docketRepository.save(docket);
@@ -52,7 +52,7 @@ public class DocketController {
         Docket docket = docketRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid docket Id:" + id));
         model.addAttribute("docket", docket);
-        return "update-docket";
+        return "docket/update-docket";
     }
 
     @PostMapping("update/{id}")
@@ -60,12 +60,12 @@ public class DocketController {
                                Model model) {
         if (result.hasErrors()) {
             docket.setId(id);
-            return "update-docket";
+            return "docket/update-docket";
         }
 
         docketRepository.save(docket);
         model.addAttribute("dockets", docketRepository.findAll());
-        return "index";
+        return "docket/docket";
     }
 
     @GetMapping("delete/{id}")
@@ -74,6 +74,6 @@ public class DocketController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid docket Id:" + id));
         docketRepository.delete(docket);
         model.addAttribute("dockets", docketRepository.findAll());
-        return "index";
+        return "docket/docket";
     }
 }
