@@ -24,44 +24,39 @@
     </div>
 </div>
 
+<div class="ui container ">
 
-
-<div class="ui container">
-
-
-            <div th:switch="${complainants}">
-                <p><a href="/complainants/signup" class="btn btn-primary"><i class="user icon"> Add Complainant</i></a></p>
-
-                    <h2 th:case="null">No Complainant yet!</h2>
+            <div th:switch="${administrators}" class="container my-5">
+                <p class="my-5">
+                    <a href="/administrators/signup" class=""><i
+                            class="user icon"> Add Administrator</i></a>
+                </p>
+                <div class="col-md-10">
+                    <h2 th:case="null">No Administrator yet!</h2>
                     <div th:case="*">
                         <table class="ui celled table">
                             <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Surname</th>
-                                <th>Phone No</th>
-                                <th>Statement</th>
                                 <th>Edit</th>
                                 <th>Delete</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="complainant : ${complainants}">
-                                <td th:text="${complainant.name}"></td>
-                                <td th:text="${complainant.surname}"></td>
-                                <td th:text="${complainant.phoneNo}"></td>
-                                <td th:text="${complainant.statement}"></td>
-                                <td><a th:href="@{/complainants/edit/{id}(id=${complainant.id})}" class="ui green button"><i class="pencil alternate icon"></i></a></td>
-                                <td><a th:href="@{/complainants/delete/{id}(id=${complainant.id})}" class="ui red button"><i class="trash alternate outline icon"></i></a></td>
+                            <tr th:each="administrator : ${administrators}">
+                                <td th:text="${administrator.name}"></td>
+                                <td th:text="${administrator.surname}"></td>
+                                <td><a th:href="@{/administrators/edit/{id}(id=${administrator.id})}" class="ui green button"><i class="pencil alternate icon"></i></a></td>
+                                <td><a th:href="@{/administrators/delete/{id}(id=${administrator.id})}" class="ui red button"><i class="trash alternate outline icon"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
 
-
+                </div>
             </div>
 
-    </div>
 </div>
 </body>
 

@@ -28,19 +28,19 @@ public class AdministratorController {
 
     @GetMapping("signup")
     public String showSignUpForm(Administrator administrator) {
-        return "add-administrator";
+        return "administrator/add-administrator";
     }
 
     @GetMapping("list")
     public String showUpdateForm(Model model) {
         model.addAttribute("administrators", administratorRepository.findAll());
-        return "index";
+        return "administrator/administrator";
     }
 
     @PostMapping("add")
     public String addAdministrator(@Valid Administrator administrator, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "add-administrator";
+            return "administrator/add-administrator";
         }
 
         administratorRepository.save(administrator);
@@ -52,7 +52,7 @@ public class AdministratorController {
         Administrator administrator = administratorRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid administrator Id:" + id));
         model.addAttribute("administrator", administrator);
-        return "update-administrator";
+        return "administrator/update-administrator";
     }
 
     @PostMapping("update/{id}")
@@ -60,12 +60,12 @@ public class AdministratorController {
                                     Model model) {
         if (result.hasErrors()) {
             administrator.setId(id);
-            return "update-administrator";
+            return "administrator/update-administrator";
         }
 
         administratorRepository.save(administrator);
         model.addAttribute("administrators", administratorRepository.findAll());
-        return "index";
+        return "administrator/administrator";
     }
 
     @GetMapping("delete/{id}")
@@ -74,6 +74,6 @@ public class AdministratorController {
                 .orElseThrow(() -> new IllegalArgumentException("Invalid administrator Id:" + id));
         administratorRepository.delete(administrator);
         model.addAttribute("administrators", administratorRepository.findAll());
-        return "index";
+        return "administrator/administrator";
     }
 }

@@ -8,16 +8,31 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" >
 
 <body>
-<!--<div th:replace="fragments/navbar :: navigation">-->
-<div class="ui container">
-<div class="jumbotron jumbotron-fluid">
-    <div class="container">
-        <h1 class="display-4">Welcome</h1>
-        <p class="lead">This is an e-docket management system</p>
+
+<div class="ui secondary pointing menu">
+    <a class="active item" href="/">
+        Home
+    </a>
+
+    <div class="right menu">
+        <a class="ui item" th:href="@{/logout}" >
+            Logout
+        </a>
     </div>
 </div>
+
+<div class="ui container">
+
+   <div>
+        <h1 class="">Welcome <span th:text="${#authentication.name}"></span></h1>
+        <p class="">This is an e-docket management system</p>
+    </div>
+
 <br>
     <div class="ui container">
+        <div class="ui grid equal width stackable">
+
+            <div class="column">
         <div class="ui card">
             <div class="content">
                 <div class="header">Complainant</div>
@@ -38,28 +53,32 @@
                 <a href="complainants/list" ><button  class="ui button">Go</button></a>
             </div>
         </div>
+            </div>
 
+            <div class="column">
         <div class="ui card">
             <div class="content">
-                <div class="header">Convict</div>
+                <div class="header">Admin</div>
             </div>
             <div class="content">
-                <h4 class="ui sub header">Add new convict</h4>
+                <h4 class="ui sub header">Add new admin</h4>
                 <div class="ui small feed">
                     <div class="event">
                         <div class="content">
                             <div class="summary">
-                                Register new convicts here
+                                Register new admins here
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="extra content">
-                <a href="convicts/list" ><button  class="ui button">Go</button></a>
+                <a href="administrators/list" ><button  class="ui button">Go</button></a>
             </div>
         </div>
+            </div>
 
+            <div class="column">
         <div class="ui card">
             <div class="content">
                 <div class="header">Docket</div>
@@ -80,7 +99,8 @@
                <a href="dockets/list" ><button  class="ui button">Go</button></a>
             </div>
         </div>
-
+        </div>
+        </div>
 </div>
 
 </body>

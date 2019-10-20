@@ -6,23 +6,35 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Dockets</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" >
 
 </head>
 
 <body>
-<div class="container my-2">
+<div class="ui secondary pointing menu">
+    <a class="active item" href="/">
+        Home
+    </a>
+
+    <div class="right menu">
+        <a class="ui item">
+            Logout
+        </a>
+    </div>
+</div>
+
+<div class="ui container ">
     <div class="card">
         <div class="card-body">
             <div th:switch="${dockets}" class="container my-5">
                 <p class="my-5">
                     <a href="/dockets/signup" class="btn btn-primary"><i
-                            class="fas fa-user-plus ml-2"> Add Docket</i></a>
+                            class="user icon"> Add Docket</i></a>
                 </p>
                 <div class="col-md-10">
                     <h2 th:case="null">No Docket yet!</h2>
                     <div th:case="*">
-                        <table class="table table-striped table-responsive-md">
+                        <table class="ui celled table ">
                             <thead>
                             <tr>
                                 <th>Name</th>
@@ -35,8 +47,8 @@
                             <tr th:each="docket : ${dockets}">
                                 <td th:text="${docket.name}"></td>
                                 <td th:text="${docket.date}"></td>
-                                <td><a th:href="@{/dockets/edit/{id}(id=${docket.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{/dockets/delete/{id}(id=${docket.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td><a th:href="@{/dockets/edit/{id}(id=${docket.id})}" class="ui green button"><i class="pencil alternate icon"></i></a></td>
+                                <td><a th:href="@{/dockets/delete/{id}(id=${docket.id})}" class="ui red button"><i class="trash alternate outline icon"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
